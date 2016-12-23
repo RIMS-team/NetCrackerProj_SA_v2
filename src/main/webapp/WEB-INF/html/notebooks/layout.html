@@ -1,0 +1,17 @@
+
+<h3 style="margin-left:100px;">Notebook List</h3>
+<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notebook.length == 0">
+    No notebooks found
+</div>
+<table class="table table-bordered table-striped" style="width:450px; margin-left: 100px;" ng-show="notebook.length > 0">
+    <thead>
+    <tr>
+        <th style="text-align: center;">Note Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="elem in notebook">
+        <td>{{elem}}</td>
+    </tr>
+    </tbody>
+</table>

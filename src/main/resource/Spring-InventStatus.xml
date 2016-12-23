@@ -3,12 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="inventStatusDAO" class="app.dao.impl.JdbcInventStatus">
+    <bean id="inventStatusDAO" class="com.xvitcoder.springmvcangularjs.dao.impl.JdbcInventStatus">
         <property name="dataSource" ref="dataSource" />
         <property name="transactionManager" ref="transactionManager" />
     </bean>
 
-    <bean id="inventStatusServiceImpl" class="app.service.impl.InventStatusServiceImpl">
+    <bean id="inventStatusServiceImpl" class="com.xvitcoder.springmvcangularjs.service.impl.InventStatusServiceImpl">
         <property name="inventStatusDao" ref="inventStatusDAO"/>
     </bean>
 </beans>

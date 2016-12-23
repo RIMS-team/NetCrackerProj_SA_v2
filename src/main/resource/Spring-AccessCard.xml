@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="accessCardDAO" class="app.dao.JdbcAccessCardTemplate">
+    <bean id="accessCardDAO" class="com.xvitcoder.springmvcangularjs.dao.JdbcAccessCardTemplate">
         <property name="dataSource" ref="dataSource" />
         <property name="transactionManager" ref="transactionManager" />
     </bean>

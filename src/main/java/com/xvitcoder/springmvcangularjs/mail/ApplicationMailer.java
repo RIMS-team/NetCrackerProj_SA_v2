@@ -5,7 +5,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-@Service("mailService")
+
 public class ApplicationMailer
 {
     @Autowired

@@ -26,5 +26,10 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: RailwayStationController
     });
 
+    $routeProvider.when('/notebooks', {
+        templateUrl: 'notebook/layout',
+        controller: NotebookController
+    });
+
     $routeProvider.otherwise({redirectTo: '/cars'});
 }]);

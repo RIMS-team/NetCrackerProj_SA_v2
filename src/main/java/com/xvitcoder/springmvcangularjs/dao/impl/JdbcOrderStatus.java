@@ -18,6 +18,7 @@ import java.util.Locale;
  * Created by dell on 08-Dec-16.
  */
 public class JdbcOrderStatus implements OrderStatusDao {
+
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
 
@@ -28,8 +29,6 @@ public class JdbcOrderStatus implements OrderStatusDao {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         this.transactionManager = transactionManager;
     }
-
-
 
     @Override
     public List<OrderStatus> findAll() {

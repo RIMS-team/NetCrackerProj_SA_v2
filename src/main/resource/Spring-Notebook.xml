@@ -8,8 +8,8 @@
         <property name="transactionManager" ref="transactionManager" />
     </bean>
 
-    <!--<bean id="notebookServiceImpl" class="com.xvitcoder.springmvcangularjs.service.impl.NotebookServiceImpl">-->
-        <!--<property name="notebookDao" ref="notebookDAO"/>-->
-    <!--</bean>-->
+    <bean id="notebookServiceImpl" class="com.xvitcoder.springmvcangularjs.service.impl.NotebookServiceImpl">
+        <property name="notebookDao" ref="notebookDAO"/>
+    </bean>
 
 </beans>

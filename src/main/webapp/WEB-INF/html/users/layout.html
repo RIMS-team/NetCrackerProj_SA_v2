@@ -1,0 +1,16 @@
+<h3 style="margin-left:100px;">User List</h3>
+<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="user.length == 0">
+    No users found
+</div>
+<table class="table table-bordered table-striped" style="width:450px; margin-left: 100px;" ng-show="user.length > 0">
+    <thead>
+    <tr>
+        <th style="text-align: center;">User Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="elem in user">
+        <td>{{user}}</td>
+    </tr>
+    </tbody>
+</table>

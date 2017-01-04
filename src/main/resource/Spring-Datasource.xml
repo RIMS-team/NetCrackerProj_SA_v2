@@ -6,7 +6,7 @@
 
 
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
-        <property name="URL" value="jdbc:oracle:thin:@Admin-pc:1521:XE" />
+        <property name="URL" value="jdbc:oracle:thin:@localhost:1521:XE" />
         <property name="user" value="kurator2"/>
         <property name="password" value="12345"/>
     </bean>

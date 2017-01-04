@@ -39,7 +39,7 @@ public class JdbcUser implements UserDAO {
         try {
             String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD " +
                     "FROM OBJECTS USR, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR, ATTRIBUTES PASS_ATTR " +
-                    "WHERE USR.OBJECT_TYPE_ID = 2 " +
+                    "WHERE USR.OBJECT_TYPE_ID = 2" +
                     "AND USR.OBJECT_ID = FNAME_ATTR.OBJECT_ID " +
                     "AND USR.OBJECT_ID = EMAIL_ATTR.OBJECT_ID " +
                     "AND USR.OBJECT_ID = PHONE_ATTR.OBJECT_ID " +
@@ -54,10 +54,6 @@ public class JdbcUser implements UserDAO {
             transactionManager.rollback(status);
             throw e;
         }
-        System.out.println("DAO");
-        for (User x : users){
-            System.out.println(x.getFullName());
-        }
         return users;
     }
 
@@ -70,7 +66,7 @@ public class JdbcUser implements UserDAO {
         try {
             String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD\n" +
                     "                    FROM OBJECTS USR, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR, ATTRIBUTES PASS_ATTR\n" +
-                    "                    WHERE USR.OBJECT_TYPE_ID = 2 /* USER */\n" +
+                    "                    WHERE (USR.OBJECT_TYPE_ID = 2 OR USR.OBJECT_TYPE_ID = 3)/* USER */\n" +
                     "                    AND USR.OBJECT_ID = FNAME_ATTR.OBJECT_ID\n" +
                     "                    AND USR.OBJECT_ID = EMAIL_ATTR.OBJECT_ID\n" +
                     "                    AND USR.OBJECT_ID = PHONE_ATTR.OBJECT_ID\n" +

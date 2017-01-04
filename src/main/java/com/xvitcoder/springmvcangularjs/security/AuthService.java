@@ -8,20 +8,20 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by trvler135 on 06.12.2016.
  */
-public class CustomUserDetailsService implements UserDetailsService {
+@Service("authService")
+public class AuthService implements UserDetailsService {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
         JdbcUser jdbcUser = (JdbcUser) context.getBean("userDAO");
-        User user = new User();
-        user.setPassword("1");
-        user.seteMail("Ivan");
+        User user = jdbcUser.findByEmail(email);
         return new org.springframework.security.core.userdetails.User(
                 user.geteMail(),
                 user.getPassword(),

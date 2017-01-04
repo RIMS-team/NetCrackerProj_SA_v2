@@ -26,6 +26,7 @@ import java.util.List;
 public class CarController {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+
     @Autowired
     private CarService carService;
 

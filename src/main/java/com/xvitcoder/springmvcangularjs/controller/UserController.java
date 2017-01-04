@@ -1,7 +1,9 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.model.Notebook;
+import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.NotebookService;
+import com.xvitcoder.springmvcangularjs.service.UserService;
 import com.xvitcoder.springmvcangularjs.service.impl.NotebookServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,24 +14,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * Created by trvler135 on 23.12.2016.
+ * Created by trvler135 on 04.01.2017.
  */
 @Controller
-@RequestMapping("/notebook")
-public class NotebookController {
+@RequestMapping("/user")
+public class UserController {
 
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-    private NotebookService notebookService = (NotebookServiceImpl) context.getBean("notebookServiceImpl");
+    private UserService userService = (UserService) context.getBean("userServiceImpl");
 
     @RequestMapping("/all")
     @ResponseBody
-    public List<Notebook> getNotebooks(){
-        return notebookService.findAll();
+    public List<User> getUsers(){
+        for (User user : userService.findAll()) {
+            System.out.println(user.toString());
+        }
+        return userService.findAll();
     }
 
     @RequestMapping("/layout")
-    public String getNotebooksPartialPage() {
-        return "notebooks/layout";
+    public String getUsersPartialPage() {
+        return "users/layout";
     }
-
 }

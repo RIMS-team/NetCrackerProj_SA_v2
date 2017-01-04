@@ -30,7 +30,6 @@
         <property name="validationInterval" value="10000" />
     </bean>
 
-
     <bean id="transactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource"  ref="dataSource" />

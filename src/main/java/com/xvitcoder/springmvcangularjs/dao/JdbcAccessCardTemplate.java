@@ -49,15 +49,19 @@ public class JdbcAccessCardTemplate implements AccessCardDao {
         TransactionStatus status = transactionManager.getTransaction(def);
         AccessCard accessCard = null;
         try {
-            String sql = "SELECT CARD.OBJECT_ID AS OBJECT_ID, STATUS.NAME AS CARD_STATUS, CARD_ID.VALUE AS CARD_ID\n" +
-                    "FROM OBJECTS CARD, ATTRIBUTES ATTR_CARD_ID, ATTRIBUTES ATTR_STATUS, LISTTYPE STATUS\n" +
-                    "WHERE CARD.OBJECT_TYPE_ID = 6 /* CARD */\n" +
-                    "AND CARD.OBJECT_ID = ATTR_CARD_ID.OBJECT_ID\n" +
-                    "AND CARD.OBJECT_ID = ATTR_STATUS.OBJECT_ID\n" +
-                    "AND ATTR_CARD_ID.ATTR_ID = 17 /* CARD_ID */\n" +
-                    "AND ATTR_STATUS.ATTR_ID = 16 /* INVENTORY_STATUS */\n" +
-                    "AND ATTR_STATUS.VALUE = STATUS.ID\n" +
-                    "AND CARD.OBJECT_ID = ?";
+            String sql =
+                    "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
+                            ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
+                            ",ATTR_STATUS.VALUE  AS INV_STATUS_ID " +
+                            ",LIST_STATUS.NAME   AS INV_STATUS_NAME " +
+                            "FROM OBJECTS CARD, ATTRIBUTES ATTR_INVENTORY_NUM, ATTRIBUTES ATTR_STATUS, LISTTYPE LIST_STATUS " +
+                            "WHERE CARD.OBJECT_TYPE_ID = 6 /* CARD */ " +
+                            "AND CARD.OBJECT_ID = ATTR_INVENTORY_NUM.OBJECT_ID " +
+                            "AND CARD.OBJECT_ID = ATTR_STATUS.OBJECT_ID " +
+                            "AND ATTR_INVENTORY_NUM.ATTR_ID = 13 /* INVENTORY_NUM */ " +
+                            "AND ATTR_STATUS.ATTR_ID = 16 /* STATUS */ " +
+                            "AND ATTR_STATUS.VALUE = LIST_STATUS.ID " +
+                            "AND CARD.OBJECT_ID = ?";
             accessCard = jdbcTemplateObject.queryForObject(sql,
                     new Object[]{cardId}, new AccessCardMapper());
         } catch (DataAccessException e) {
@@ -74,14 +78,18 @@ public class JdbcAccessCardTemplate implements AccessCardDao {
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);
 
-        String sql = "SELECT CARD.OBJECT_ID AS OBJECT_ID, LIST_STATUS.NAME AS CARD_STATUS, ATTR_CARD_ID.VALUE AS CARD_ID\n" +
-                "FROM OBJECTS CARD, ATTRIBUTES ATTR_CARD_ID, ATTRIBUTES ATTR_STATUS, LISTTYPE LIST_STATUS\n" +
-                "WHERE CARD.OBJECT_TYPE_ID = 6 /* CARD */\n" +
-                "AND CARD.OBJECT_ID = ATTR_CARD_ID.OBJECT_ID\n" +
-                "AND CARD.OBJECT_ID = ATTR_STATUS.OBJECT_ID\n" +
-                "AND ATTR_CARD_ID.ATTR_ID = 17 /* CARD_ID */\n" +
-                "AND ATTR_STATUS.ATTR_ID = 16 /* INVENTORY_STATUS */\n" +
-                "AND ATTR_STATUS.VALUE = LIST_STATUS.ID";
+        String sql =
+                "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
+                        ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
+                        ",ATTR_STATUS.VALUE  AS INV_STATUS_ID " +
+                        ",LIST_STATUS.NAME   AS INV_STATUS_NAME " +
+                        "FROM OBJECTS CARD, ATTRIBUTES ATTR_INVENTORY_NUM, ATTRIBUTES ATTR_STATUS, LISTTYPE LIST_STATUS " +
+                        "WHERE CARD.OBJECT_TYPE_ID = 6 /* CARD */ " +
+                        "AND CARD.OBJECT_ID = ATTR_INVENTORY_NUM.OBJECT_ID " +
+                        "AND CARD.OBJECT_ID = ATTR_STATUS.OBJECT_ID " +
+                        "AND ATTR_INVENTORY_NUM.ATTR_ID = 13 /* INVENTORY_NUM */ " +
+                        "AND ATTR_STATUS.ATTR_ID = 16 /* STATUS */ " +
+                        "AND ATTR_STATUS.VALUE = LIST_STATUS.ID ";
         List <AccessCard> accessCards = null;
         try {
             accessCards = jdbcTemplateObject.query(sql,

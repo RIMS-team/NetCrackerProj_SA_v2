@@ -5,17 +5,31 @@ package com.xvitcoder.springmvcangularjs.model;
  */
 abstract class Inventory extends Entity {
 
-    protected String status;
+    protected int statusId;
+    protected String statusName;
+    protected long inventoryNum;
 
     public Inventory() {
-        throw new IllegalArgumentException();
+        //throw new IllegalArgumentException();
     }
 
-    public String getStatus() {
-        return status;
+    public int getStatusId() {
+        return statusId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public long getInventoryNum() {
+        return inventoryNum;
     }
 }

@@ -1,0 +1,189 @@
+﻿insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+1, 1, NULL, 'FUll_NAME', 'Имя' );
+
+update ATTRTYPE set
+"ATTR_ID" = 1, "OBJECT_TYPE_ID" = 1, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'FUll_NAME', "NAME" = 'Имя'
+where ATTR_ID = 1;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+2, 1, NULL, 'EMAIL', 'Почтовый адрес' );
+
+update ATTRTYPE set
+"ATTR_ID" = 2, "OBJECT_TYPE_ID" = 1, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'EMAIL', "NAME" = 'Почтовый адрес'
+where ATTR_ID = 2;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+3, 1, NULL, 'PHONE_NUMBER', 'Телефонный номер' );
+
+update ATTRTYPE set
+"ATTR_ID" = 3, "OBJECT_TYPE_ID" = 1, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'PHONE_NUMBER', "NAME" = 'Телефонный номер'
+where ATTR_ID = 3;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+4, 2, NULL, 'PASSWORD', 'Пароль' );
+
+update ATTRTYPE set
+"ATTR_ID" = 4, "OBJECT_TYPE_ID" = 2, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'PASSWORD', "NAME" = 'Пароль'
+where ATTR_ID = 4;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+6, 5, 2, 'USER_FROM', 'Кто выдал' );
+
+update ATTRTYPE set
+"ATTR_ID" = 6, "OBJECT_TYPE_ID" = 5, "OBJECT_TYPE_ID_REF" = 2, "CODE" = 'USER_FROM', "NAME" = 'Кто выдал'
+where ATTR_ID = 6;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+7, 5, 1, 'EMPLOYEE_TO', 'Кому выдан' );
+
+update ATTRTYPE set
+"ATTR_ID" = 7, "OBJECT_TYPE_ID" = 5, "OBJECT_TYPE_ID_REF" = 1, "CODE" = 'EMPLOYEE_TO', "NAME" = 'Кому выдан'
+where ATTR_ID = 7;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+8, 5, 4, 'INVENTORY', 'Инвентарь' );
+
+update ATTRTYPE set
+"ATTR_ID" = 8, "OBJECT_TYPE_ID" = 5, "OBJECT_TYPE_ID_REF" = 4, "CODE" = 'INVENTORY', "NAME" = 'Инвентарь'
+where ATTR_ID = 8;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+9, 7, NULL, 'NAME', 'Имя' );
+
+update ATTRTYPE set
+"ATTR_ID" = 9, "OBJECT_TYPE_ID" = 7, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'NAME', "NAME" = 'Имя'
+where ATTR_ID = 9;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+10, 7, NULL, 'LOCATION', 'Место' );
+
+update ATTRTYPE set
+"ATTR_ID" = 10, "OBJECT_TYPE_ID" = 7, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'LOCATION', "NAME" = 'Место'
+where ATTR_ID = 10;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+11, 7, NULL, 'MEMORY_TYPE', 'Тип памяти' );
+
+update ATTRTYPE set
+"ATTR_ID" = 11, "OBJECT_TYPE_ID" = 7, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'MEMORY_TYPE', "NAME" = 'Тип памяти'
+where ATTR_ID = 11;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+12, 7, NULL, 'MODEL', 'Модель' );
+
+update ATTRTYPE set
+"ATTR_ID" = 12, "OBJECT_TYPE_ID" = 7, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'MODEL', "NAME" = 'Модель'
+where ATTR_ID = 12;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+13, 4, NULL, 'INVENTORY_NUM', 'Ключевой инвентарный номер' );
+
+update ATTRTYPE set
+"ATTR_ID" = 13, "OBJECT_TYPE_ID" = 4, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'INVENTORY_NUM', "NAME" = 'Ключевой инвентарный номер'
+where ATTR_ID = 13;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+14, 7, NULL, 'SERIAL_NUMBER', 'Серийный номер' );
+
+update ATTRTYPE set
+"ATTR_ID" = 14, "OBJECT_TYPE_ID" = 7, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'SERIAL_NUMBER', "NAME" = 'Серийный номер'
+where ATTR_ID = 14;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+15, 5, NULL, 'DATE', 'Дата' );
+
+update ATTRTYPE set
+"ATTR_ID" = 15, "OBJECT_TYPE_ID" = 5, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'DATE', "NAME" = 'Дата'
+where ATTR_ID = 15;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+16, 4, 9, 'STATUS', 'Статус устройства' );
+
+update ATTRTYPE set
+"ATTR_ID" = 16, "OBJECT_TYPE_ID" = 4, "OBJECT_TYPE_ID_REF" = 9, "CODE" = 'STATUS', "NAME" = 'Статус устройства'
+where ATTR_ID = 16;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+19, 5, 10, 'ORDER_STATUS', 'Статус заявки' );
+
+update ATTRTYPE set
+"ATTR_ID" = 19, "OBJECT_TYPE_ID" = 5, "OBJECT_TYPE_ID_REF" = 10, "CODE" = 'ORDER_STATUS', "NAME" = 'Статус заявки'
+where ATTR_ID = 19;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+20, 8, NULL, 'FIRST_NOTIFICATION', 'Первое уведомление' );
+
+update ATTRTYPE set
+"ATTR_ID" = 20, "OBJECT_TYPE_ID" = 8, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'FIRST_NOTIFICATION', "NAME" = 'Первое уведомление'
+where ATTR_ID = 20;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+21, 8, NULL, 'SECOND_NOTIFICATION', 'Второе уведомление' );
+
+update ATTRTYPE set
+"ATTR_ID" = 21, "OBJECT_TYPE_ID" = 8, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'SECOND_NOTIFICATION', "NAME" = 'Второе уведомление'
+where ATTR_ID = 21;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+22, 8, NULL, 'THIRD_NOTIFICATION', 'Третье уведомление' );
+
+update ATTRTYPE set
+"ATTR_ID" = 22, "OBJECT_TYPE_ID" = 8, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'THIRD_NOTIFICATION', "NAME" = 'Третье уведомление'
+where ATTR_ID = 22;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+23, 9, NULL, 'INV_STATUS', 'Значение INV_STATUS_ENUM' );
+
+update ATTRTYPE set
+"ATTR_ID" = 23, "OBJECT_TYPE_ID" = 9, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'INV_STATUS', "NAME" = 'Значение INV_STATUS_ENUM'
+where ATTR_ID = 23;
+
+insert into ATTRTYPE (
+"ATTR_ID", "OBJECT_TYPE_ID", "OBJECT_TYPE_ID_REF", "CODE", "NAME" )
+values (
+24, 10, NULL, 'ORD_STATUS', 'Значение ORD_STATUS_ENUM' );
+
+update ATTRTYPE set
+"ATTR_ID" = 24, "OBJECT_TYPE_ID" = 10, "OBJECT_TYPE_ID_REF" = NULL, "CODE" = 'ORD_STATUS', "NAME" = 'Значение ORD_STATUS_ENUM'
+where ATTR_ID = 24;
+

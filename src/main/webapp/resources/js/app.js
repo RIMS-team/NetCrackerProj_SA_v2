@@ -31,5 +31,5 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: NotebookController
     });
 
-    $routeProvider.otherwise({redirectTo: '/cars'});
+    $routeProvider.otherwise({redirectTo: '/employees'});
 }]);

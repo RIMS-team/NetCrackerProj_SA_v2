@@ -1,0 +1,27 @@
+﻿insert into OBJECTS (
+"OBJECT_ID", "PARENT_ID", "OBJECT_TYPE_ID", "NAME", "DESCRIPTION" )
+values (
+1, NULL, 3, 'Евгений', NULL );
+
+update OBJECTS set
+"OBJECT_ID" = 1, "PARENT_ID" = NULL, "OBJECT_TYPE_ID" = 3, "NAME" = 'Евгений', "DESCRIPTION" = NULL
+where OBJECT_ID = 1;
+
+insert into OBJECTS (
+"OBJECT_ID", "PARENT_ID", "OBJECT_TYPE_ID", "NAME", "DESCRIPTION" )
+values (
+13, NULL, 2, 'Наташа', NULL );
+
+update OBJECTS set
+"OBJECT_ID" = 13, "PARENT_ID" = NULL, "OBJECT_TYPE_ID" = 2, "NAME" = 'Наташа', "DESCRIPTION" = NULL
+where OBJECT_ID = 13;
+
+insert into OBJECTS (
+"OBJECT_ID", "PARENT_ID", "OBJECT_TYPE_ID", "NAME", "DESCRIPTION" )
+values (
+14, NULL, 2, 'Гоша', NULL );
+
+update OBJECTS set
+"OBJECT_ID" = 14, "PARENT_ID" = NULL, "OBJECT_TYPE_ID" = 2, "NAME" = 'Гоша', "DESCRIPTION" = NULL
+where OBJECT_ID = 14;
+

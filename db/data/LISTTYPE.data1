@@ -1,0 +1,72 @@
+﻿insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+1, 'INV_STATUS', 'IN_USE', 'Используется', 'Статус инвентаря' );
+
+update LISTTYPE set
+"ID" = 1, "ATTRTYPE_CODE" = 'INV_STATUS', "CODE" = 'IN_USE', "NAME" = 'Используется', "COMMENTS" = 'Статус инвентаря'
+where ID = 1;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+2, 'INV_STATUS', 'IN_STOCK', 'На складе', 'Статус инвентаря' );
+
+update LISTTYPE set
+"ID" = 2, "ATTRTYPE_CODE" = 'INV_STATUS', "CODE" = 'IN_STOCK', "NAME" = 'На складе', "COMMENTS" = 'Статус инвентаря'
+where ID = 2;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+3, 'INV_STATUS', 'ON_DIAGNOSTICS', 'На диагностике', 'Статус инвентаря' );
+
+update LISTTYPE set
+"ID" = 3, "ATTRTYPE_CODE" = 'INV_STATUS', "CODE" = 'ON_DIAGNOSTICS', "NAME" = 'На диагностике', "COMMENTS" = 'Статус инвентаря'
+where ID = 3;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+4, 'ORD_STATUS', 'REQUEST', 'Затребован', 'Статус ордера' );
+
+update LISTTYPE set
+"ID" = 4, "ATTRTYPE_CODE" = 'ORD_STATUS', "CODE" = 'REQUEST', "NAME" = 'Затребован', "COMMENTS" = 'Статус ордера'
+where ID = 4;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+5, 'ORD_STATUS', 'ISSUED', 'Открыт', 'Статус ордера' );
+
+update LISTTYPE set
+"ID" = 5, "ATTRTYPE_CODE" = 'ORD_STATUS', "CODE" = 'ISSUED', "NAME" = 'Открыт', "COMMENTS" = 'Статус ордера'
+where ID = 5;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+6, 'ORD_STATUS', 'EXTENDED', 'Продлен', 'Статус ордера' );
+
+update LISTTYPE set
+"ID" = 6, "ATTRTYPE_CODE" = 'ORD_STATUS', "CODE" = 'EXTENDED', "NAME" = 'Продлен', "COMMENTS" = 'Статус ордера'
+where ID = 6;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+7, 'ORD_STATUS', 'OVERDUE', 'Просрочен', 'Статус ордера' );
+
+update LISTTYPE set
+"ID" = 7, "ATTRTYPE_CODE" = 'ORD_STATUS', "CODE" = 'OVERDUE', "NAME" = 'Просрочен', "COMMENTS" = 'Статус ордера'
+where ID = 7;
+
+insert into LISTTYPE (
+"ID", "ATTRTYPE_CODE", "CODE", "NAME", "COMMENTS" )
+values (
+8, 'ORD_STATUS', 'CLOSED', 'Закрыт', 'Статус ордера' );
+
+update LISTTYPE set
+"ID" = 8, "ATTRTYPE_CODE" = 'ORD_STATUS', "CODE" = 'CLOSED', "NAME" = 'Закрыт', "COMMENTS" = 'Статус ордера'
+where ID = 8;
+

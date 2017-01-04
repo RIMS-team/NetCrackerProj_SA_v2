@@ -15,12 +15,13 @@ public class NotebookMapper implements RowMapper<Notebook> {
     public Notebook mapRow(ResultSet rs, int rowNum) throws SQLException {
         Notebook notebook = new Notebook(
                 rs.getInt("NOTE_ID"),
-                rs.getString("STATUS"),
+                rs.getInt("INV_STATUS_ID"),
+                rs.getString("INV_STATUS_NAME"),
                 rs.getString("NAME"),
                 rs.getString("LOCATION"),
                 rs.getString("MEM_TYPE"),
                 rs.getString("MODEL"),
-                rs.getInt("A_F_N"),
+                rs.getLong("INVENTORY_NUM"),
                 rs.getString("SERIAL_NUMBER")
         );
         return notebook;

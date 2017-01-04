@@ -16,8 +16,9 @@ public class AccessCardMapper implements RowMapper<AccessCard> {
     public AccessCard mapRow(ResultSet rs, int rowNum) throws SQLException {
         AccessCard accessCard = new AccessCard(
                 rs.getInt("OBJECT_ID"),
-                rs.getString("CARD_STATUS"),
-                rs.getInt("CARD_ID")
+                rs.getInt("INV_STATUS_ID"),
+                rs.getString("INV_STATUS_NAME"),
+                rs.getLong("INVENTORY_NUM")
         );
         return accessCard;
     }

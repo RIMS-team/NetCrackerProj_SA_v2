@@ -5,26 +5,25 @@ package com.xvitcoder.springmvcangularjs.model;
  */
 public class AccessCard extends Inventory {
 
-    private int cardId;
-
     public AccessCard() {}
 
-    public AccessCard(int id, String status, int cardId) {
+    public AccessCard(int id, int statusId, String statusName, long inventoryNum) {
         this.id = id;
-        this.status = status;
-        this.cardId = cardId;
+        this.statusId = statusId;
+        this.statusName = statusName;
+        this.inventoryNum = inventoryNum;
     }
 
-    public int getCardId() {
-        return cardId;
+    public long getInventoryNum() {
+        return inventoryNum;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("AccessCard{");
         sb.append("id='").append(id).append('\'');
-        sb.append(", status='").append(status).append('\'');
-        sb.append(", cardId=").append(cardId);
+        sb.append(", status='").append(statusName).append('\'');
+        sb.append(", inventoryNum=").append(inventoryNum);
         sb.append('}');
         return sb.toString();
     }

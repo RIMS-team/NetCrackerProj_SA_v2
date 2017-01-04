@@ -73,50 +73,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
 
-//    @Override
-//    public Employee findByEmployeeId(int employeeId) {
-//        //String sql = "SELECT * FROM employees WHERE employee_ID = ?";
-//        String sql = "SELECT EMP.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL\n" +
-//                "FROM OBJECTS EMP, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR\n" +
-//                "WHERE EMP.OBJECT_TYPE_ID = 1 /* EMPLOYEE */\n" +
-//                "AND EMP.OBJECT_ID = FNAME_ATTR.OBJECT_ID\n" +
-//                "AND EMP.OBJECT_ID = EMAIL_ATTR.OBJECT_ID\n" +
-//                "AND EMP.OBJECT_ID = PHONE_ATTR.OBJECT_ID\n" +
-//                "AND FNAME_ATTR.ATTR_ID = 1 /* FULL_NAME */\n" +
-//                "AND EMAIL_ATTR.ATTR_ID = 2 /* EMAIL */\n" +
-//                "AND PHONE_ATTR.ATTR_ID = 3 /* PHONE_NUMBER */\n" +
-//                "AND EMP.OBJECT_ID = ?;";
-//
-//        Connection conn = null;
-//
-//        try {
-//            conn = dataSource.getConnection();
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setInt(1, employeeId);
-//            Employee employee = null;
-//            ResultSet rs = ps.executeQuery();
-//            if (rs.next()) {
-//                employee = new Employee(
-//                        rs.getInt("employee_ID"),
-//                        rs.getInt("phone_number"),
-//                        rs.getString("fullname"),
-//                        rs.getString("email")
-//                );
-//            }
-//            rs.close();
-//            ps.close();
-//            return employee;
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            if (conn != null) {
-//                try {
-//                    conn.close();
-//                } catch (SQLException e) {
-//                }
-//            }
-//        }
-//    }
+
 
     @Override
     public Employee findByEmployeeId(int employeeId) {
@@ -147,49 +104,6 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
 
 
-//    @Override
-//    public List<Employee> findAllEmployee() {
-//        //String sql = "SELECT * FROM employees WHERE employee_ID = ?";
-//        String sql = "SELECT EMP.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL\n" +
-//                "FROM OBJECTS EMP, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR\n" +
-//                "WHERE EMP.OBJECT_TYPE_ID = 1 /* EMPLOYEE */\n" +
-//                "AND EMP.OBJECT_ID = FNAME_ATTR.OBJECT_ID\n" +
-//                "AND EMP.OBJECT_ID = EMAIL_ATTR.OBJECT_ID\n" +
-//                "AND EMP.OBJECT_ID = PHONE_ATTR.OBJECT_ID\n" +
-//                "AND FNAME_ATTR.ATTR_ID = 1 /* FULL_NAME */\n" +
-//                "AND EMAIL_ATTR.ATTR_ID = 2 /* EMAIL */\n" +
-//                "AND PHONE_ATTR.ATTR_ID = 3; /* PHONE_NUMBER */";
-//
-//        Connection conn = null;
-//
-//        try {
-//            conn = dataSource.getConnection();
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//            List<Employee> list=new ArrayList();
-//            if (rs.next()) {
-//                Employee employee = new Employee(
-//                        rs.getInt("employee_ID"),
-//                        rs.getInt("phone_number"),
-//                        rs.getString("fullname"),
-//                        rs.getString("email")
-//                );
-//                list.add(employee);
-//            }
-//            rs.close();
-//            ps.close();
-//            return list;
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            if (conn != null) {
-//                try {
-//                    conn.close();
-//                } catch (SQLException e) {
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public List<Employee> findAllEmployee() {
@@ -197,15 +111,21 @@ public class JdbcEmployeeDao implements EmployeeDao {
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);
 
-        String sql="SELECT EMP.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL\n" +
-                "FROM OBJECTS EMP, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR\n" +
-                "WHERE EMP.OBJECT_TYPE_ID = 1 /* EMPLOYEE */\n" +
-                "AND EMP.OBJECT_ID = FNAME_ATTR.OBJECT_ID\n" +
-                "AND EMP.OBJECT_ID = EMAIL_ATTR.OBJECT_ID\n" +
-                "AND EMP.OBJECT_ID = PHONE_ATTR.OBJECT_ID\n" +
-                "AND FNAME_ATTR.ATTR_ID = 1 /* FULL_NAME */\n" +
-                "AND EMAIL_ATTR.ATTR_ID = 2 /* EMAIL */\n" +
-                "AND PHONE_ATTR.ATTR_ID = 3 ";
+        String sql=
+                "SELECT /*+ first_rows(30) */ " +
+                "EMP.OBJECT_ID AS EMPLOYEE_ID, " +
+                "PHONE_ATTR.VALUE AS PHONE_NUMBER, " +
+                "FNAME_ATTR.VALUE AS FULL_NAME, " +
+                "EMAIL_ATTR.VALUE AS EMAIL " +
+                "FROM OBJECTS EMP, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR " +
+                "WHERE EMP.OBJECT_TYPE_ID = 1 /* EMPLOYEE */ " +
+                "AND EMP.OBJECT_ID = FNAME_ATTR.OBJECT_ID " +
+                "AND EMP.OBJECT_ID = EMAIL_ATTR.OBJECT_ID " +
+                "AND EMP.OBJECT_ID = PHONE_ATTR.OBJECT_ID " +
+                "AND FNAME_ATTR.ATTR_ID = 1 /* FULL_NAME */ " +
+                "AND EMAIL_ATTR.ATTR_ID = 2 /* EMAIL */ " +
+                "AND PHONE_ATTR.ATTR_ID = 3 /* PHONE_NUMBER */ " ;
+
         List <Employee> employees=null;
         try {
             employees = jdbcTemplateObject.query(sql,

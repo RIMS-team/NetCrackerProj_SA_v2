@@ -5,13 +5,13 @@ package com.xvitcoder.springmvcangularjs.model;
  */
 public class Employee extends Entity {
     //int employeeID;
-    int phoneNumber;
+    String phoneNumber;
     String fullName;
     String eMail;
 
     public Employee(){}
 
-    public Employee(int id, int phoneNumber, String fullName, String eMail) {
+    public Employee(int id, String phoneNumber, String fullName, String eMail) {
         this.id = id;
         //this.employeeID = employeeID;
         this.phoneNumber = phoneNumber;
@@ -24,7 +24,7 @@ public class Employee extends Entity {
 
     public String toString(){
         return super.toString() + " phoneNumber = " + phoneNumber + " fullName = " + fullName + " eMail = " + eMail;
-     }
+    }
 
 //    public int getEmployeeID() {
 //        return employeeID;
@@ -34,11 +34,11 @@ public class Employee extends Entity {
 //        this.employeeID = employeeID;
 //    }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

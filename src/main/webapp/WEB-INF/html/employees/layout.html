@@ -1,18 +1,31 @@
 
-<h3 style="margin-left:100px;">Emps List</h3>
+<div class="input-append">
+    <input style="width:358px; margin-left: 100px;" class="span2" type="text" ng-model="employeeName" required="required" min="1" />
+    <button class="btn btn-primary" ng-disabled="!employeeName" ng-click="addNewYmployee(empName)">Add employee</button>
+</div>
+
+<h3 style="margin-left:100px;">Employees List</h3>
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="emps.length == 0">
-    No emps found
+    No employees found
 </div>
 <table class="table table-bordered table-striped" style="width:450px; margin-left: 100px;" ng-show="emps.length > 0">
     <thead>
     <tr>
         <th style="text-align: center; width: 25px;">Action</th>
-        <th style="text-align: center;">Emp Name</th>
+        <th style="text-align: center;">ID</th>
+        <th style="text-align: center;">Employee Name</th>
+        <th style="text-align: center;">Phone Number</th>
+        <th style="text-align: center;">EMail</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="emp in emps">
-        <td>{{emp}}</td>
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeEmp(emp)">Remove</button></td>
+        <td>{{emp.id}}</td>
+        <td>{{emp.fullName}}</td>
+        <td>{{emp.phoneNumber}}</td>
+        <td>{{emp.eMail}}</td>
     </tr>
     </tbody>
 </table>
+<button style="margin-left:100px;" class="btn btn-danger"  ng-show="emps.length > 1" ng-click="removeAllEmployees()">Remove All employees</button>

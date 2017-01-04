@@ -5,11 +5,11 @@
 
     <import resource="Spring-Datasource.xml" />
     <import resource="Spring-Employee.xml" />
-    <!--<import resource="Spring-User.xml" />-->
-    <!--<import resource="Spring-AccessCard.xml" />-->
-    <!--<import resource="Spring-Mailer.xml" />-->
-    <!--<import resource="Spring-Notebook.xml" />-->
-    <!--<import resource="Spring-OrderStatus.xml" />-->
-    <!--<import resource="Spring-InventStatus.xml" />-->
+    <import resource="Spring-User.xml" />
+    <import resource="Spring-AccessCard.xml" />
+    <import resource="Spring-Mailer.xml" />
+    <import resource="Spring-Notebook.xml" />
+    <import resource="Spring-OrderStatus.xml" />
+    <import resource="Spring-InventStatus.xml" />
 
 </beans>

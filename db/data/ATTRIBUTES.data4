@@ -1,0 +1,108 @@
+﻿insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+1, 1, 'Evgeniy', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 1, "OBJECT_ID" = 1, "VALUE" = 'Evgeniy', "DATE_VALUE" = NULL
+where ATTR_ID = 1 and OBJECT_ID = 1;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+2, 1, 'evgeniy@gmail.com', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 2, "OBJECT_ID" = 1, "VALUE" = 'evgeniy@gmail.com', "DATE_VALUE" = NULL
+where ATTR_ID = 2 and OBJECT_ID = 1;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+3, 1, '0945678936', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 3, "OBJECT_ID" = 1, "VALUE" = '0945678936', "DATE_VALUE" = NULL
+where ATTR_ID = 3 and OBJECT_ID = 1;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+4, 1, 'Hferfccrf', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 4, "OBJECT_ID" = 1, "VALUE" = 'Hferfccrf', "DATE_VALUE" = NULL
+where ATTR_ID = 4 and OBJECT_ID = 1;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+1, 13, 'Natasha', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 1, "OBJECT_ID" = 13, "VALUE" = 'Natasha', "DATE_VALUE" = NULL
+where ATTR_ID = 1 and OBJECT_ID = 13;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+2, 13, 'natasha@gmail.com', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 2, "OBJECT_ID" = 13, "VALUE" = 'natasha@gmail.com', "DATE_VALUE" = NULL
+where ATTR_ID = 2 and OBJECT_ID = 13;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+3, 13, '0945678936', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 3, "OBJECT_ID" = 13, "VALUE" = '0945678936', "DATE_VALUE" = NULL
+where ATTR_ID = 3 and OBJECT_ID = 13;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+4, 13, 'qwerty', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 4, "OBJECT_ID" = 13, "VALUE" = 'qwerty', "DATE_VALUE" = NULL
+where ATTR_ID = 4 and OBJECT_ID = 13;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+1, 14, 'Gosha', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 1, "OBJECT_ID" = 14, "VALUE" = 'Gosha', "DATE_VALUE" = NULL
+where ATTR_ID = 1 and OBJECT_ID = 14;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+2, 14, 'goha@gmail.com', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 2, "OBJECT_ID" = 14, "VALUE" = 'goha@gmail.com', "DATE_VALUE" = NULL
+where ATTR_ID = 2 and OBJECT_ID = 14;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+3, 14, '0945678936', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 3, "OBJECT_ID" = 14, "VALUE" = '0945678936', "DATE_VALUE" = NULL
+where ATTR_ID = 3 and OBJECT_ID = 14;
+
+insert into ATTRIBUTES (
+"ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
+values (
+4, 14, 'uryth5r', NULL );
+
+update ATTRIBUTES set
+"ATTR_ID" = 4, "OBJECT_ID" = 14, "VALUE" = 'uryth5r', "DATE_VALUE" = NULL
+where ATTR_ID = 4 and OBJECT_ID = 14;
+

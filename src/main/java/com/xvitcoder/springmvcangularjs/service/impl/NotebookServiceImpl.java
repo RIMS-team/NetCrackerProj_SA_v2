@@ -1,6 +1,5 @@
 package com.xvitcoder.springmvcangularjs.service.impl;
 
-
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcNotebook;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.service.NotebookService;

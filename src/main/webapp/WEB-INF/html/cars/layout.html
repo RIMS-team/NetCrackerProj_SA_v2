@@ -16,10 +16,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="car in cars">
-            <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCar(car)">Remove</button></td>
-            <td>{{car}}</td>
-        </tr>
-    </tbody>
+e="margin-left:100px;" class="btn btn-danger"  ng-show="cars.length > 1" ng-click="removeAllCars()">Remove All Cars</button>        <tr ng-repeat="car in cars">
+    <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCar(car)">Remove</button></td>
+    <td>{{car}}</td>
+</tr>
+</tbody>
 </table>
-<button style="margin-left:100px;" class="btn btn-danger"  ng-show="cars.length > 1" ng-click="removeAllCars()">Remove All Cars</button>
+<button styl

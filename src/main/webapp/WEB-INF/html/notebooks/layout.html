@@ -3,15 +3,29 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notebook.length == 0">
     No notebooks found
 </div>
-<table class="table table-bordered table-striped" style="width:450px; margin-left: 100px;" ng-show="notebook.length > 0">
+<table class="table table-bordered table-striped" style="width:1000px; margin-left: -200px;" ng-show="notebook.length > 0">
     <thead>
     <tr>
-        <th style="text-align: center;">Note Name</th>
+        <th style="text-align: center;">ID</th>
+        <th style="text-align: center;">Name</th>
+        <th style="text-align: center;">Model</th>
+        <th style="text-align: center;">Memory Type</th>
+        <th style="text-align: center;">Serial Number</th>
+        <th style="text-align: center;">Inventory Num</th>
+        <th style="text-align: center;">Location</th>
+        <th style="text-align: center;">Status</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="elem in notebook">
-        <td>{{elem}}</td>
+        <td>{{elem.id}}</td>
+        <td>{{elem.name}}</td>
+        <td>{{elem.model}}</td>
+        <td>{{elem.memoryType}}</td>
+        <td>{{elem.serialNumber}}</td>
+        <td>{{elem.inventoryNum}}</td>
+        <td>{{elem.location}}</td>
+        <td>{{elem.statusName}}</td>
     </tr>
     </tbody>
 </table>

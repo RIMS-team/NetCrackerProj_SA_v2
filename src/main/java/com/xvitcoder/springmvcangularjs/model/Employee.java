@@ -4,7 +4,6 @@ package com.xvitcoder.springmvcangularjs.model;
  * Created by barmin on 23.11.2016.
  */
 public class Employee extends Entity {
-    //int employeeID;
     String phoneNumber;
     String fullName;
     String eMail;
@@ -13,7 +12,6 @@ public class Employee extends Entity {
 
     public Employee(int id, String phoneNumber, String fullName, String eMail) {
         this.id = id;
-        //this.employeeID = employeeID;
         this.phoneNumber = phoneNumber;
         this.fullName = fullName;
         this.eMail = eMail;
@@ -26,13 +24,6 @@ public class Employee extends Entity {
         return super.toString() + " phoneNumber = " + phoneNumber + " fullName = " + fullName + " eMail = " + eMail;
     }
 
-//    public int getEmployeeID() {
-//        return employeeID;
-//    }
-
-//    public void setEmployeeID(int employeeID) {
-//        this.employeeID = employeeID;
-//    }
 
     public String getPhoneNumber() {
         return phoneNumber;

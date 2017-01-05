@@ -1,16 +1,24 @@
 <h3 style="margin-left:100px;">User List</h3>
-<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="user.length == 0">
+<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="users.length == 0">
     No users found
 </div>
-<table class="table table-bordered table-striped" style="width:450px; margin-left: 100px;" ng-show="user.length > 0">
+<table class="table table-bordered table-striped" style="width:100%;" ng-show="users.length > 0">
     <thead>
     <tr>
-        <th style="text-align: center;">User Email</th>
+        <th style="text-align: center; width: 25px;">Action</th>
+        <th style="text-align: center;">ID</th>
+        <th style="text-align: center;">Employee Name</th>
+        <th style="text-align: center;">Phone Number</th>
+        <th style="text-align: center;">EMail</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="elem in user">
-        <td>{{user}}</td>
+    <tr ng-repeat="user in users">
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeUser(user)">Remove</button></td>
+        <td>{{user.id}}</td>
+        <td>{{user.fullName}}</td>
+        <td>{{user.phoneNumber}}</td>
+        <td>{{user.eMail}}</td>
     </tr>
     </tbody>
 </table>

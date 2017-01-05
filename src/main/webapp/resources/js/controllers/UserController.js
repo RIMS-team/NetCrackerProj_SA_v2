@@ -7,7 +7,7 @@ var UserController = function($scope, $http) {
 
     $scope.fetchUserList = function() {
         $http.get('user/all').success(function(userList){
-            $scope.user = userList;
+            $scope.users = userList;
         });
     };
 

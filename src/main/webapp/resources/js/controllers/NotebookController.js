@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * CarController
+ * NotebookController
  * @constructor
  */
 var NotebookController = function($scope, $http) {

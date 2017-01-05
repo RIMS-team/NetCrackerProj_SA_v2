@@ -11,10 +11,10 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: CarController
     });
 
-    // $routeProvider.when('/employees', {
-    //     templateUrl: 'employees/layout',
-    //     controller: EmpController
-    // });
+    $routeProvider.when('/employees', {
+        templateUrl: 'employees/layout',
+        controller: EmpController
+    });
 
     $routeProvider.when('/trains', {
         templateUrl: 'trains/layout',
@@ -36,5 +36,5 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: UserController
     });
 
-    $routeProvider.otherwise({redirectTo: '/cars'});
+    $routeProvider.otherwise({redirectTo: '/employees'});
 }]);

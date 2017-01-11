@@ -30,6 +30,6 @@ public class AccessCardController {
 
     @RequestMapping("/layout")
     public String getCardPartialPage() {
-        return "cards/layout";
+        return "accesscards/layout";
     }
 }

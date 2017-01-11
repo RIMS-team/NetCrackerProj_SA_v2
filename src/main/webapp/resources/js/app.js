@@ -31,6 +31,11 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: NotebookController
     });
 
+    $routeProvider.when('/accesscards', {
+        templateUrl: 'accesscards/layout',
+        controller: AccessCardController
+    });
+
     $routeProvider.when('/users', {
         templateUrl: 'user/layout',
         controller: UserController

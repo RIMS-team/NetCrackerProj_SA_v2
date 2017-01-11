@@ -10,6 +10,6 @@ import java.util.List;
 public interface AccessCardDao {
 
     public void insert(AccessCard accessCard);
-    public AccessCard findByCardId(int cardId);
-    public List<AccessCard> findAllCards();
+    public AccessCard findByInventoryNum(int cardId);
+    public List<AccessCard> findAll();
 }

@@ -1,0 +1,29 @@
+
+<div class="input-append">
+    <input style="width:358px; margin-left: 100px;" class="span2" type="text" ng-model="employeeName" required="required" min="1" />
+    <button class="btn btn-primary" ng-disabled="!employeeName" ng-click="addNewYmployee(empName)">Add employee</button>
+</div>
+
+<h3 style="margin-left:100px;">Access Cards List</h3>
+<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="cards.length == 0">
+    No cards found
+</div>
+<table class="table table-bordered table-striped" style="width:100%;" ng-show="cards.length > 0">
+    <thead>
+    <tr>
+        <th style="text-align: center; width: 25px;">Action</th>
+        <th style="text-align: center;">ID</th>
+        <th style="text-align: center;">Status</th>
+        <th style="text-align: center;">Inventory number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="card in cards">
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(cardId)">Remove</button></td>
+        <td>{{card.id}}</td>
+        <td>{{card.statusName}}</td>
+        <td>{{card.inventoryNum}}</td>
+    </tr>
+    </tbody>
+</table>
+<button style="margin-left:100px;" class="btn btn-danger"  ng-show="cards.length > 1" ng-click="removeAllCards()">Remove All Access Cards</button>

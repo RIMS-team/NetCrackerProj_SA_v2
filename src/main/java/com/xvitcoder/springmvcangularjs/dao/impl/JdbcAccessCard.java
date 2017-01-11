@@ -1,6 +1,7 @@
-package com.xvitcoder.springmvcangularjs.dao;
+package com.xvitcoder.springmvcangularjs.dao.impl;
 
 
+import com.xvitcoder.springmvcangularjs.dao.AccessCardDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.AccessCardMapper;
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
 import org.springframework.dao.DataAccessException;
@@ -17,7 +18,7 @@ import java.util.Locale;
 /**
  * Created by Kristina on 05.12.2016.
  */
-public class JdbcAccessCardTemplate implements AccessCardDao {
+public class JdbcAccessCard implements AccessCardDao {
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
@@ -43,7 +44,7 @@ public class JdbcAccessCardTemplate implements AccessCardDao {
     }
 
     @Override
-    public AccessCard findByCardId(int cardId) {
+    public AccessCard findByInventoryNum(int cardId) {
         Locale.setDefault(Locale.ENGLISH);
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);
@@ -61,7 +62,7 @@ public class JdbcAccessCardTemplate implements AccessCardDao {
                             "AND ATTR_INVENTORY_NUM.ATTR_ID = 13 /* INVENTORY_NUM */ " +
                             "AND ATTR_STATUS.ATTR_ID = 16 /* STATUS */ " +
                             "AND ATTR_STATUS.VALUE = LIST_STATUS.ID " +
-                            "AND CARD.OBJECT_ID = ?";
+                            "AND ATTR_INVENTORY_NUM.VALUE = ?";
             accessCard = jdbcTemplateObject.queryForObject(sql,
                     new Object[]{cardId}, new AccessCardMapper());
         } catch (DataAccessException e) {
@@ -73,7 +74,7 @@ public class JdbcAccessCardTemplate implements AccessCardDao {
     }
 
     @Override
-    public List<AccessCard> findAllCards() {
+    public List<AccessCard> findAll() {
         Locale.setDefault(Locale.ENGLISH);
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);

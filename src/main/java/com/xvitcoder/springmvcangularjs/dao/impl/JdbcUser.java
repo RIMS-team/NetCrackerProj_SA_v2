@@ -4,13 +4,21 @@ import com.xvitcoder.springmvcangularjs.dao.Mappers.UserMapper;
 import com.xvitcoder.springmvcangularjs.dao.UserDAO;
 import com.xvitcoder.springmvcangularjs.model.User;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.CallableStatementCallback;
+import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,6 +29,7 @@ public class JdbcUser implements UserDAO {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private SimpleJdbcCall simpleJdbcCall;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
@@ -49,13 +58,14 @@ public class JdbcUser implements UserDAO {
                     "AND PHONE_ATTR.ATTR_ID = 3 " +
                     "AND PASS_ATTR.ATTR_ID = 4";
             users = jdbcTemplateObject.query(sql, new UserMapper());
-        }catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             System.out.println("Error in select record, rolling back");
             transactionManager.rollback(status);
             throw e;
         }
         return users;
     }
+
 
     @Override
     public User findByEmail(String email) {
@@ -77,11 +87,33 @@ public class JdbcUser implements UserDAO {
                     "                    AND PASS_ATTR.ATTR_ID = 4/* PASSWORD*/\n" +
                     "                    AND EMAIL_ATTR.VALUE = ?";
             user = jdbcTemplateObject.queryForObject(sql, new Object[]{email}, new UserMapper());
-        }catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             System.out.println("Error in select record, rolling back");
             transactionManager.rollback(status);
             throw e;
         }
         return user;
+    }
+
+    @Override
+    public void addUser(User user) {
+        System.out.println(user.toString());
+        Locale.setDefault(Locale.ENGLISH);
+        TransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+        try {
+            jdbcTemplateObject.setResultsMapCaseInsensitive(true);
+            simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withProcedureName("dm_user.user_insert");
+            SqlParameterSource in = new MapSqlParameterSource().addValue("p_full_name",user.getFullName())
+                    .addValue("p_phone_number",user.getPhoneNumber())
+                    .addValue("p_email",user.geteMail())
+                    .addValue("p_password",user.getPassword());
+            simpleJdbcCall.execute(in);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            System.out.println("Error inserting user, rolling back");
+            transactionManager.rollback(status);
+            throw e;
+        }
     }
 }

@@ -11,5 +11,20 @@ var UserController = function($scope, $http) {
         });
     };
 
+    $scope.addNewUser = function(user) {
+        console.log(user);
+        $http.post('user/add', user).success(function() {
+            $scope.fetchUserList();
+        }).error(function() {
+            console.log("error!");
+        });
+    };
+
+    $scope.removeUser = function(id) {
+        $http.delete('user/remove/' + id).success(function() {
+            $scope.fetchUserList();
+        });
+    };
+
     $scope.fetchUserList();
 };

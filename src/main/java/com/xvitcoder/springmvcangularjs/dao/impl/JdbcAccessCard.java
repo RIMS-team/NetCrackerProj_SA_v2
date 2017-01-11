@@ -127,4 +127,24 @@ public class JdbcAccessCard implements AccessCardDao {
         }
         return accessCards;
     }
+
+    @Override
+    public void deleteCard(int id) {
+        Locale.setDefault(Locale.ENGLISH);
+        TransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+        SimpleJdbcCall simpleJdbcCall=null;
+        try {
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_delete");
+            Map<String ,Object> map=new HashMap<String ,Object>();
+            map.put("p_object_id",id);
+            simpleJdbcCall.execute(map);
+            System.out.println("2ebhovbhwe bv");
+            transactionManager.commit(status);
+        } catch (DataAccessException e) {
+            System.out.println(e);
+            transactionManager.rollback(status);
+            throw e;
+        }
+    }
 }

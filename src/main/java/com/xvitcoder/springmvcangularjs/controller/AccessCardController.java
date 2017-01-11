@@ -10,10 +10,7 @@ import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.smartcardio.Card;
 import java.util.List;
@@ -38,6 +35,11 @@ public class AccessCardController {
     public @ResponseBody void addUser(@RequestBody AccessCard card) {
         System.out.println(card.toString());
         accessCardService.addUser(card);
+    }
+
+    @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody void removeCar(@PathVariable int id) {
+        accessCardService.deleteCard(id);
     }
 
 

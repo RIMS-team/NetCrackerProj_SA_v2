@@ -31,10 +31,12 @@ public class JdbcUser implements UserDAO {
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
     private SimpleJdbcCall insertUser;
+    private SimpleJdbcCall deleteUser;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
-        insertUser = new SimpleJdbcCall(dataSource).withCatalogName("dm_user").withProcedureName("user_insert");
+        insertUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_insert");
+        deleteUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_delete");
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -103,27 +105,35 @@ public class JdbcUser implements UserDAO {
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);
         try {
-            insertUser.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
-            insertUser.addDeclaredParameter(new SqlParameter("p_full_name",OracleTypes.VARCHAR));
-            insertUser.addDeclaredParameter(new SqlParameter("p_phone_number",OracleTypes.VARCHAR));
-            insertUser.addDeclaredParameter(new SqlParameter("p_email",OracleTypes.VARCHAR));
-            insertUser.addDeclaredParameter(new SqlParameter("p_password",OracleTypes.VARCHAR));
-            insertUser.compile();
-
             Map<String, Object> args = new HashMap<>();
-
             args.put("p_object_id",null);
             args.put("p_full_name",user.getFullName());
             args.put("p_phone_number",user.getPhoneNumber());
             args.put("p_email",user.geteMail());
             args.put("p_password",user.getPassword());
-
             insertUser.execute(args);
-
             transactionManager.commit(status);
         } catch (DataAccessException e) {
             e.printStackTrace();
             System.out.println("Error inserting user, rolling back");
+            transactionManager.rollback(status);
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        Locale.setDefault(Locale.ENGLISH);
+        TransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+        try {
+            Map<String, Object> args = new HashMap<>();
+            args.put("p_object_id",id);
+            deleteUser.execute(args);
+            transactionManager.commit(status);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            System.out.println("Error deleting user, rolling back");
             transactionManager.rollback(status);
             throw e;
         }

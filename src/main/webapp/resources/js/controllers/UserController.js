@@ -12,7 +12,7 @@ var UserController = function($scope, $http) {
     };
 
     $scope.addNewUser = function(user) {
-        console.log(user);
+        $('.user-add-form').find('input').val('');
         $http.post('user/add', user).success(function() {
             $scope.fetchUserList();
             $scope.user.fullName = '';

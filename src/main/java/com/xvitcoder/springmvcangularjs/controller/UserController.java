@@ -36,7 +36,7 @@ public class UserController {
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
     public @ResponseBody void removeUser(@PathVariable("id") int id) {
-        // TODO: user removal;
+        userService.deleteUser(id);
     }
 
     @RequestMapping("/layout")

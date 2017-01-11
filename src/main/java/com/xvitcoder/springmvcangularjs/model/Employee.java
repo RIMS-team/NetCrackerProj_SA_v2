@@ -4,6 +4,7 @@ package com.xvitcoder.springmvcangularjs.model;
  * Created by barmin on 23.11.2016.
  */
 public class Employee extends Entity {
+
     String phoneNumber;
     String fullName;
     String eMail;

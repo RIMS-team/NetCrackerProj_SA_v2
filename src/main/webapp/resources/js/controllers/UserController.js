@@ -15,6 +15,10 @@ var UserController = function($scope, $http) {
         console.log(user);
         $http.post('user/add', user).success(function() {
             $scope.fetchUserList();
+            $scope.user.fullName = '';
+            $scope.user.eMail = '';
+            $scope.user.phoneNumber = '';
+            $scope.user.password = '';
         }).error(function() {
             console.log("error!");
         });

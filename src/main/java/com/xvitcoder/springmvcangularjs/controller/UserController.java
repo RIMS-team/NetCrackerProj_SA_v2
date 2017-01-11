@@ -26,15 +26,11 @@ public class UserController {
     @RequestMapping("/all")
     @ResponseBody
     public List<User> getUsers(){
-        for (User user : userService.findAll()) {
-            System.out.println(user.toString());
-        }
         return userService.findAll();
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody void addUser(@RequestBody User user) {
-        System.out.println(user.toString());
         userService.addUser(user);
     }
 

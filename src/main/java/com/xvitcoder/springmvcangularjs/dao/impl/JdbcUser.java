@@ -3,10 +3,9 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.UserMapper;
 import com.xvitcoder.springmvcangularjs.dao.UserDAO;
 import com.xvitcoder.springmvcangularjs.model.User;
+import oracle.jdbc.OracleTypes;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.CallableStatementCallback;
-import org.springframework.jdbc.core.CallableStatementCreator;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -19,8 +18,10 @@ import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by trvler135 on 06.12.2016.
@@ -29,10 +30,11 @@ public class JdbcUser implements UserDAO {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private SimpleJdbcCall simpleJdbcCall;
+    private SimpleJdbcCall insertUser;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+        insertUser = new SimpleJdbcCall(dataSource).withCatalogName("dm_user").withProcedureName("user_insert");
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -97,18 +99,28 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public void addUser(User user) {
-        System.out.println(user.toString());
         Locale.setDefault(Locale.ENGLISH);
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);
         try {
-            jdbcTemplateObject.setResultsMapCaseInsensitive(true);
-            simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withProcedureName("dm_user.user_insert");
-            SqlParameterSource in = new MapSqlParameterSource().addValue("p_full_name",user.getFullName())
-                    .addValue("p_phone_number",user.getPhoneNumber())
-                    .addValue("p_email",user.geteMail())
-                    .addValue("p_password",user.getPassword());
-            simpleJdbcCall.execute(in);
+            insertUser.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
+            insertUser.addDeclaredParameter(new SqlParameter("p_full_name",OracleTypes.VARCHAR));
+            insertUser.addDeclaredParameter(new SqlParameter("p_phone_number",OracleTypes.VARCHAR));
+            insertUser.addDeclaredParameter(new SqlParameter("p_email",OracleTypes.VARCHAR));
+            insertUser.addDeclaredParameter(new SqlParameter("p_password",OracleTypes.VARCHAR));
+            insertUser.compile();
+
+            Map<String, Object> args = new HashMap<>();
+
+            args.put("p_object_id",null);
+            args.put("p_full_name",user.getFullName());
+            args.put("p_phone_number",user.getPhoneNumber());
+            args.put("p_email",user.geteMail());
+            args.put("p_password",user.getPassword());
+
+            insertUser.execute(args);
+
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             e.printStackTrace();
             System.out.println("Error inserting user, rolling back");

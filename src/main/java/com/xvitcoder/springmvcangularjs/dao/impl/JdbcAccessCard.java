@@ -4,16 +4,22 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 import com.xvitcoder.springmvcangularjs.dao.AccessCardDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.AccessCardMapper;
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
+import oracle.jdbc.OracleTypes;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlInOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Kristina on 05.12.2016.
@@ -36,11 +42,30 @@ public class JdbcAccessCard implements AccessCardDao {
 
     @Override
     public void insert(AccessCard accessCard) {
-//        INSERT ALL
-//        INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) VALUES (29,NULL,6,'CARD_1',NULL)
-//        INTO ATTRIBUTES (ATTR_ID,OBJECT_ID,VALUE,DATE_VALUE,VALUE_ID)VALUES (16,29,NULL,null,2)
-//        INTO ATTRIBUTES (ATTR_ID,OBJECT_ID,VALUE,DATE_VALUE,VALUE_ID)VALUES (17,29,'T22G362I',null,null)
-//        SELECT * FROM dual;
+        Locale.setDefault(Locale.ENGLISH);
+        TransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+        SimpleJdbcCall simpleJdbcCall=null;
+        try {
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_insert");
+            simpleJdbcCall.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
+            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inventory_num", OracleTypes.VARCHAR));
+            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inv_status_id", OracleTypes.VARCHAR));
+            simpleJdbcCall.compile();
+
+            Map<String ,Object> map=new HashMap<String ,Object>();
+            map.put("p_object_id",null);
+            map.put("p_inventory_num",accessCard.getInventoryNum());
+            map.put("p_inv_status_id",3);
+            simpleJdbcCall.execute(map);
+
+            System.out.println("2ebhovbhwe bv");
+            transactionManager.commit(status);
+        } catch (DataAccessException e) {
+            System.out.println(e);
+            transactionManager.rollback(status);
+            throw e;
+        }
     }
 
     @Override
@@ -66,7 +91,7 @@ public class JdbcAccessCard implements AccessCardDao {
             accessCard = jdbcTemplateObject.queryForObject(sql,
                     new Object[]{cardId}, new AccessCardMapper());
         } catch (DataAccessException e) {
-            System.out.println("Error in select record, rolling back");
+            System.out.println(e);
             transactionManager.rollback(status);
             throw e;
         }
@@ -96,7 +121,7 @@ public class JdbcAccessCard implements AccessCardDao {
             accessCards = jdbcTemplateObject.query(sql,
                     new AccessCardMapper());
         }catch (DataAccessException e) {
-            System.out.println("Error in select record, rolling back");
+            System.out.println(e);
             transactionManager.rollback(status);
             throw e;
         }

@@ -28,4 +28,9 @@ public class AccessCardServiceImpl implements AccessCardService {
     public AccessCard findByInventoryNum(int inventoryNum) {
         return accessCardDao.findByInventoryNum(inventoryNum);
     }
+
+    @Override
+    public void addUser(AccessCard card) {
+        accessCardDao.insert(card);
+    }
 }

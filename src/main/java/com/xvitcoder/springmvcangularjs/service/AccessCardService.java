@@ -3,6 +3,7 @@ package com.xvitcoder.springmvcangularjs.service;
 
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
+import com.xvitcoder.springmvcangularjs.model.User;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ import java.util.List;
 public interface AccessCardService {
     List<AccessCard> findAll();
     AccessCard findByInventoryNum(int inventoryNum);
+    void addUser(AccessCard card);
 }

@@ -11,5 +11,23 @@ var AccessCardController = function($scope, $http) {
         });
     };
 
+    $scope.addNewCard = function(card) {
+        console.log(card);
+        $http.post('accesscards/add', card).success(function() {
+            $scope.fetchCardsList();
+            $scope.card.id = '';
+            $scope.card.statusName = '';
+            $scope.card.inventoryNum = '';
+        }).error(function() {
+            console.log("error!");
+        });
+    };
+
+    $scope.removeCard = function(id) {
+        $http.delete('accesscards/remove/' + id).success(function() {
+            $scope.fetchCardsList();
+        });
+    };
+
     $scope.fetchCardsList();
 };

@@ -1,6 +1,6 @@
 package com.xvitcoder.springmvcangularjs.dao.impl;
 
-
+import org.apache.log4j.Logger;
 import com.xvitcoder.springmvcangularjs.dao.AccessCardDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.AccessCardMapper;
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
@@ -26,6 +26,8 @@ import java.util.Map;
  */
 public class JdbcAccessCard implements AccessCardDao {
 
+    private Logger logger = Logger.getLogger(JdbcAccessCard.class);
+
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
@@ -45,6 +47,7 @@ public class JdbcAccessCard implements AccessCardDao {
 
     @Override
     public void insert(AccessCard accessCard) {
+        logger.debug("Entering insert(accessCard=" + accessCard + ")");
         SimpleJdbcCall simpleJdbcCall;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_insert");
@@ -59,10 +62,9 @@ public class JdbcAccessCard implements AccessCardDao {
             map.put("p_inv_status_id",3);
             simpleJdbcCall.execute(map);
 
-            System.out.println("2ebhovbhwe bv");
             transactionManager.commit(status);
         } catch (DataAccessException e) {
-            System.out.println(e);
+            logger.error("Error inserting access card", e);
             transactionManager.rollback(status);
             throw e;
         }
@@ -70,6 +72,7 @@ public class JdbcAccessCard implements AccessCardDao {
 
     @Override
     public AccessCard findByInventoryNum(int cardId) {
+        logger.debug("Entering findByInventoryNum(cardId=" + cardId + ")");
         AccessCard accessCard;
         try {
             String sql =
@@ -88,15 +91,17 @@ public class JdbcAccessCard implements AccessCardDao {
             accessCard = jdbcTemplateObject.queryForObject(sql,
                     new Object[]{cardId}, new AccessCardMapper());
         } catch (DataAccessException e) {
-            System.out.println(e);
+            logger.error("Error finding access card", e);
             transactionManager.rollback(status);
             throw e;
         }
+        logger.debug("Leaving findByInventoryNum():" + accessCard);
         return accessCard;
     }
 
     @Override
     public List<AccessCard> findAll() {
+        logger.debug("Entering findAll()");
         String sql =
                 "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
                         ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
@@ -113,16 +118,18 @@ public class JdbcAccessCard implements AccessCardDao {
         try {
             accessCards = jdbcTemplateObject.query(sql,
                     new AccessCardMapper());
-        }catch (DataAccessException e) {
-            System.out.println(e);
+        } catch (DataAccessException e) {
+            logger.error("Error finding all access cards", e);
             transactionManager.rollback(status);
             throw e;
         }
+        logger.debug("Leaving findAll():" + accessCards);
         return accessCards;
     }
 
     @Override
     public void deleteCard(int id) {
+        logger.debug("Entering deleteCard(id="+ id + ")");
         SimpleJdbcCall simpleJdbcCall=null;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_delete");
@@ -132,7 +139,7 @@ public class JdbcAccessCard implements AccessCardDao {
             System.out.println("2ebhovbhwe bv");
             transactionManager.commit(status);
         } catch (DataAccessException e) {
-            System.out.println(e);
+            logger.error("Error deleting card", e);
             transactionManager.rollback(status);
             throw e;
         }

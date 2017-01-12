@@ -13,6 +13,6 @@ import java.util.List;
 public interface AccessCardService {
     List<AccessCard> findAll();
     AccessCard findByInventoryNum(int inventoryNum);
-    void addUser(AccessCard card);
+    void addAccessCard(AccessCard card);
     void deleteCard(int id);
 }

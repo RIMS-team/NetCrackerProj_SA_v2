@@ -30,7 +30,7 @@ public class AccessCardServiceImpl implements AccessCardService {
     }
 
     @Override
-    public void addUser(AccessCard card) {
+    public void addAccessCard(AccessCard card) {
         accessCardDao.insert(card);
     }
 

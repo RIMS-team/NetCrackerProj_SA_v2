@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="card in cards">
-        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(cardId)">Remove</button></td>
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(card.id)">Remove</button></td>
         <td>{{card.id}}</td>
         <td>{{card.statusName}}</td>
         <td>{{card.inventoryNum}}</td>

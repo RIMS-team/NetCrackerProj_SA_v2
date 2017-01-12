@@ -41,5 +41,10 @@ App.config(['$routeProvider', function ($routeProvider) {
         controller: UserController
     });
 
+    $routeProvider.when('/orders', {
+        templateUrl: 'order/layout',
+        controller: OrderController
+    });
+
     $routeProvider.otherwise({redirectTo: '/employees'});
 }]);

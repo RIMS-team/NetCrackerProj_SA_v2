@@ -26,6 +26,9 @@ var AccessCardController = function($scope, $http) {
     $scope.removeCard = function(id) {
         $http.delete('accesscards/remove/' + id).success(function() {
             $scope.fetchCardsList();
+            $scope.card.id = '';
+            $scope.card.statusName = '';
+            $scope.card.inventoryNum = '';
         });
     };
 

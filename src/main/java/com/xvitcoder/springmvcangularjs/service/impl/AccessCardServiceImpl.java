@@ -33,4 +33,9 @@ public class AccessCardServiceImpl implements AccessCardService {
     public void addUser(AccessCard card) {
         accessCardDao.insert(card);
     }
+
+    @Override
+    public void deleteCard(int id) {
+        accessCardDao.deleteCard(id);
+    }
 }

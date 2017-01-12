@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface AccessCardDao {
 
+    public void deleteCard(int id);
     public void insert(AccessCard accessCard);
     public AccessCard findByInventoryNum(int cardId);
     public List<AccessCard> findAll();

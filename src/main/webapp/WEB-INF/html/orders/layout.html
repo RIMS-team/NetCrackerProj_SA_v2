@@ -1,0 +1,43 @@
+
+<h3 style="margin-left:100px;">Orders List</h3>
+<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="order.length == 0">
+    No orders found
+</div>
+<table class="table table-bordered table-striped" style="width:1000px; margin-left: -200px;" ng-show="order.length > 0">
+    <thead>
+    <tr>
+        <th style="text-align: center;">ID</th>
+        <th style="text-align: center;">Date</th>
+        <th style="text-align: center;">Status</th>
+        <th style="text-align: center;">Inventory ID</th>
+        <th style="text-align: center;">Inventory type</th>
+        <th style="text-align: center;">Inventory num</th>
+        <th style="text-align: center;">Note name</th>
+        <th style="text-align: center;">Note model</th>
+        <th style="text-align: center;">Note memory</th>
+        <th style="text-align: center;">Note serail</th>
+        <th style="text-align: center;">Employee ID</th>
+        <th style="text-align: center;">Employee name</th>
+        <th style="text-align: center;">User ID</th>
+        <th style="text-align: center;">User name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="elem in order">
+        <td>{{elem.id}}</td>
+        <td>{{elem.date}}</td>
+        <td>{{elem.statusName}}</td>
+        <td>{{elem.inventoryId}}</td>
+        <td>{{elem.inventoryType}}</td>
+        <td>{{elem.inventoryNum}}</td>
+        <td>{{elem.noteName}}</td>
+        <td>{{elem.noteModel}}</td>
+        <td>{{elem.noteMemory}}</td>
+        <td>{{elem.noteSerial}}</td>
+        <td>{{elem.employeeId}}</td>
+        <td>{{elem.employeeFullName}}</td>
+        <td>{{elem.userId}}</td>
+        <td>{{elem.userFullName}}</td>
+    </tr>
+    </tbody>
+</table>

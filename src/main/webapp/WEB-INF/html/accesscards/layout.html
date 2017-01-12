@@ -4,23 +4,26 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="cards.length == 0">
     No cards found
 </div>
-
+<input type="text" ng-model="test"/>
 <button type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addCard" style="margin-bottom: 10px">Add New Card</button>
-<table class="table table-bordered table-striped" style="width:100%;" ng-show="cards.length > 0">
+<table class="table table-bordered table-striped" style="width:100%;" ng-show="cards.length > 0" show-filter="true">
     <thead>
     <tr>
-        <th style="text-align: center; width: 25px;">Action</th>
         <th style="text-align: center;">ID</th>
         <th style="text-align: center;">Status</th>
         <th style="text-align: center;">Inventory number</th>
+        <th style="text-align: center; width: 25px;">Remove</th>
+        <th style="text-align: center; width: 25px;">Update</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="card in cards">
-        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(card.id)">Remove</button></td>
+    <tr ng-repeat="card in cards | filter: test">
         <td>{{card.id}}</td>
         <td>{{card.statusName}}</td>
         <td>{{card.inventoryNum}}</td>
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger updateCardButton" data-toggle="modal" data-target="#updateCard">Update</button></td>
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(card.id)">Remove</button></td>
+
     </tr>
     </tbody>
 </table>
@@ -50,6 +53,38 @@
                             <input type="text" class="form-control" id="card-inventory-number" placeholder="Inventory number" ng-model="card.inventoryNum"/>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-click="addNewCard(card)" data-dismiss="modal">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="updateCard" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Card</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="update-card-id">ID:</label>
+                            <input type="text" class="form-control" id="update-card-id" placeholder="ID" ng-model="card.id"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-card-statusName">Status:</label>
+                            <input type="text" class="form-control" id="update-card-statusName" placeholder="Status" ng-model="card.statusName"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-card-inventoryNum">Inventory number:</label>
+                            <input type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="card.inventoryNum"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-click="updateCard(card)" data-dismiss="modal">Update</button>
                     </form>
                 </div>
             </div>

@@ -32,9 +32,15 @@ public class AccessCardController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addUser(@RequestBody AccessCard card) {
+    public @ResponseBody void addCard(@RequestBody AccessCard card) {
         System.out.println(card.toString());
         accessCardService.addUser(card);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public @ResponseBody void updateCard(@RequestBody AccessCard card) {
+        System.out.println(card.toString());
+        accessCardService.updateUser(card);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)

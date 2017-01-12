@@ -122,6 +122,34 @@ public class JdbcAccessCard implements AccessCardDao {
     }
 
     @Override
+    public void update(AccessCard card) {
+        Locale.setDefault(Locale.ENGLISH);
+        TransactionDefinition def = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(def);
+        SimpleJdbcCall simpleJdbcCall=null;
+        try {
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_update");
+            simpleJdbcCall.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
+            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inventory_num", OracleTypes.VARCHAR));
+            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inv_status_id", OracleTypes.VARCHAR));
+            simpleJdbcCall.compile();
+
+            Map<String ,Object> map=new HashMap<String ,Object>();
+            map.put("p_object_id",card.getId());
+            map.put("p_inventory_num",card.getInventoryNum());
+            map.put("p_inv_status_id",3);
+            simpleJdbcCall.execute(map);
+
+            System.out.println("2ebhovbhwe bv");
+            transactionManager.commit(status);
+        } catch (DataAccessException e) {
+            System.out.println(e);
+            transactionManager.rollback(status);
+            throw e;
+        }
+    }
+
+    @Override
     public void deleteCard(int id) {
         SimpleJdbcCall simpleJdbcCall=null;
         try {

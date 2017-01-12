@@ -13,4 +13,5 @@ public interface AccessCardDao {
     public void insert(AccessCard accessCard);
     public AccessCard findByInventoryNum(int cardId);
     public List<AccessCard> findAll();
+    public void update(AccessCard card);
 }

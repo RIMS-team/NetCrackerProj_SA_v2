@@ -18,8 +18,10 @@ import java.util.*;
  * Created by Elina on 11.01.2017.
  */
 public class JdbcOrder implements OrderDAO {
+
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private TransactionStatus status;
 
     private SimpleJdbcCall orderSelectSP;
 
@@ -33,15 +35,13 @@ public class JdbcOrder implements OrderDAO {
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
+        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<OrderCursor> findAll() {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
-
         Map<String, Object> args = new HashMap<>(2);
         Map<String, Object> result = new HashMap<>(1);
         List<OrderCursor> orders;

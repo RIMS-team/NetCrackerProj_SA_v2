@@ -13,6 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.sql.DataSource;
 import java.sql.CallableStatement;
@@ -33,10 +34,12 @@ public class JdbcUser implements UserDAO {
     private TransactionStatus status;
     private SimpleJdbcCall insertUser;
     private SimpleJdbcCall deleteUser;
+    private SimpleJdbcCall updateUser;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
         insertUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_insert");
+        updateUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_update");
         deleteUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_delete");
     }
 
@@ -125,6 +128,24 @@ public class JdbcUser implements UserDAO {
             System.out.println("Error deleting user, rolling back");
             transactionManager.rollback(status);
             throw e;
+        }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        try {
+            System.out.println(user.getId());
+            Map<String, Object> args = new HashMap<>();
+            args.put("p_object_id",user.getId());
+            args.put("p_full_name",user.getFullName());
+            args.put("p_phone_number",user.getPhoneNumber());
+            args.put("p_email",user.geteMail());
+            args.put("p_password",user.getPassword());
+            updateUser.execute(args);
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            System.out.println("Error updating user, rolling back");
+            transactionManager.rollback(status);
         }
     }
 }

@@ -20,7 +20,20 @@ var UserController = function($scope, $http) {
             $scope.user.phoneNumber = '';
             $scope.user.password = '';
         }).error(function() {
-            console.log("error!");
+            console.log("Error sending insert request");
+        });
+    };
+
+    $scope.updateUser = function(user) {
+        console.log(user);
+        $http.put('user/update', user).success(function() {
+            $scope.fetchUserList();
+            $scope.user.fullName = '';
+            $scope.user.eMail = '';
+            $scope.user.phoneNumber = '';
+            $scope.user.password = '';
+        }).error(function() {
+            console.log("Error sending update request");
         });
     };
 

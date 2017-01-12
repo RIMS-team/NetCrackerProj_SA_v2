@@ -34,6 +34,13 @@ public class UserController {
         userService.addUser(user);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public @ResponseBody void updateUser(@RequestBody User user) {
+        System.out.println(user.getId());
+        System.out.println(user.toString());
+        userService.updateUser(user);
+    }
+
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
     public @ResponseBody void removeUser(@PathVariable("id") int id) {
         userService.deleteUser(id);

@@ -21,20 +21,26 @@ import java.util.List;
 @Controller
 @RequestMapping("/accesscards")
 public class AccessCardController {
+
+    private Logger logger = Logger.getLogger(AccessCardController.class);
+
     ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private AccessCardService accessCardService = (AccessCardService) context.getBean("accessCardServiceImpl");
 
     @RequestMapping("/accesscardlist.json")
     public @ResponseBody List<AccessCard> getAccessCardList() {
+        logger.debug("Request URL: /accesscardlist.json; Entering getAccessCardList()");
         JdbcAccessCard jdbcAccessCard=(JdbcAccessCard) context.getBean("accessCardDAO");
         List<AccessCard> cards=jdbcAccessCard.findAll();
+        logger.debug("Response: " + cards);
         return cards;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addCard(@RequestBody AccessCard card) {
+    public @ResponseBody void addAccessCard(@RequestBody AccessCard card) {
+        logger.debug("Request URL: /add; Entering addAccessCard(" + card + ")");
         System.out.println(card.toString());
-        accessCardService.addUser(card);
+        accessCardService.addAccessCard(card);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -44,13 +50,15 @@ public class AccessCardController {
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody void removeCar(@PathVariable int id) {
+    public @ResponseBody void removeCard(@PathVariable int id) {
+        logger.debug("Request URL: /remove/" + id + "; Entering removeCard(" + id + ")");
         accessCardService.deleteCard(id);
     }
 
-
     @RequestMapping("/layout")
     public String getCardPartialPage() {
+        logger.debug("Request URL: /layout; Entering getCardPartialPage()");
         return "accesscards/layout";
     }
+
 }

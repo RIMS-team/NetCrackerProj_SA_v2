@@ -21,20 +21,20 @@ public class JdbcOrderStatus implements OrderStatusDao {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
+        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<OrderStatus> findAll() {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         List<OrderStatus> orderStatusList;
         try {
             String sql =
@@ -57,9 +57,6 @@ public class JdbcOrderStatus implements OrderStatusDao {
 
     @Override
     public OrderStatus findById(int id) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         OrderStatus orderStatus;
         try {
             String sql =

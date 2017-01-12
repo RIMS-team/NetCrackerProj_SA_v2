@@ -18,22 +18,23 @@ import java.util.Locale;
  * Created by dell on 08-Dec-16.
  */
 public class JdbcInventStatus implements InventStatusDao {
+
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
+        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<InventStatus> findAll() {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         List<InventStatus> inventStatusList;
         try {
             String sql =
@@ -56,9 +57,6 @@ public class JdbcInventStatus implements InventStatusDao {
 
     @Override
     public InventStatus findById(int id) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         InventStatus inventStatus;
         try {
             String sql =

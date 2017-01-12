@@ -30,6 +30,7 @@ public class JdbcUser implements UserDAO {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private TransactionStatus status;
     private SimpleJdbcCall insertUser;
     private SimpleJdbcCall deleteUser;
 
@@ -40,14 +41,13 @@ public class JdbcUser implements UserDAO {
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
+        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<User> findAll() {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         List<User> users;
         try {
             String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD " +
@@ -73,9 +73,6 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public User findByEmail(String email) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         User user;
         try {
             String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD\n" +
@@ -101,9 +98,6 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public void addUser(User user) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",null);
@@ -112,7 +106,6 @@ public class JdbcUser implements UserDAO {
             args.put("p_email",user.geteMail());
             args.put("p_password",user.getPassword());
             insertUser.execute(args);
-            transactionManager.commit(status);
         } catch (DataAccessException e) {
             e.printStackTrace();
             System.out.println("Error inserting user, rolling back");
@@ -123,14 +116,10 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public void deleteUser(int id) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",id);
             deleteUser.execute(args);
-            transactionManager.commit(status);
         } catch (DataAccessException e) {
             e.printStackTrace();
             System.out.println("Error deleting user, rolling back");

@@ -29,6 +29,7 @@ public class JdbcAccessCard implements AccessCardDao {
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private TransactionStatus status;
 
 
     public void setDataSource(DataSource dataSource) {
@@ -37,15 +38,14 @@ public class JdbcAccessCard implements AccessCardDao {
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
+        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public void insert(AccessCard accessCard) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
-        SimpleJdbcCall simpleJdbcCall=null;
+        SimpleJdbcCall simpleJdbcCall;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_insert");
             simpleJdbcCall.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
@@ -70,10 +70,7 @@ public class JdbcAccessCard implements AccessCardDao {
 
     @Override
     public AccessCard findByInventoryNum(int cardId) {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
-        AccessCard accessCard = null;
+        AccessCard accessCard;
         try {
             String sql =
                     "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
@@ -100,10 +97,6 @@ public class JdbcAccessCard implements AccessCardDao {
 
     @Override
     public List<AccessCard> findAll() {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
-
         String sql =
                 "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
                         ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
@@ -116,7 +109,7 @@ public class JdbcAccessCard implements AccessCardDao {
                         "AND ATTR_INVENTORY_NUM.ATTR_ID = 13 /* INVENTORY_NUM */ " +
                         "AND ATTR_STATUS.ATTR_ID = 16 /* STATUS */ " +
                         "AND ATTR_STATUS.VALUE = LIST_STATUS.ID ";
-        List <AccessCard> accessCards = null;
+        List <AccessCard> accessCards;
         try {
             accessCards = jdbcTemplateObject.query(sql,
                     new AccessCardMapper());

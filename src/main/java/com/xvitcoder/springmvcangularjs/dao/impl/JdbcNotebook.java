@@ -21,20 +21,20 @@ public class JdbcNotebook implements NotebookDAO {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
+    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
+        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<Notebook> findAll() {
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         List<Notebook> notebooks;
         try {
             String sql =
@@ -72,11 +72,6 @@ public class JdbcNotebook implements NotebookDAO {
             System.out.println("Error in select record, rolling back");
             transactionManager.rollback(status);
             throw e;
-        }
-
-        System.out.println("DAO");
-        for (Notebook x : notebooks){
-            System.out.println(x.getName());
         }
         return notebooks;
     }

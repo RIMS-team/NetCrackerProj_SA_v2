@@ -1,74 +1,244 @@
-<!doctype html>
-<html lang="en" ng-app="AngularSpringApp" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en" ng-app="AngularSpringApp">
 <head>
-    <meta charset="utf-8"/>
-    <title>Service App</title>
-    <link rel="stylesheet" href="resources/css/app.css"/>
-    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" />
-</head>
-<body>
+    <!--<meta charset="UTF-8"/>-->
+    <!--<meta pageEncoding="UTF-8" />-->
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+    <title>Example App</title>
+
+
+    <link rel="stylesheet" type="text/css" href="resources/css2/bootstrap.min.ex.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css2/ui-grid-unstable.min.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css2/select.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css2/selectize.default.css"/>
+
+
+    <script type="text/javascript" src="resources/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="resources/js/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="resources/js/lib/angular/angular-sanitize.min.js"></script>
+
+    <script type="text/javascript" src="resources/js2/ui-bootstrap-tpls-0.13.0.min.js"></script>
+    <script type="text/javascript" src="resources/js2/ui-grid-unstable.min.js"></script>
+    <script type="text/javascript" src="resources/js2/select.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="resources/css/app.css"/>
+
+    <script type="text/javascript" src="resources/js/filters.js"></script>
+    <script type="text/javascript" src="resources/js/directives.js"></script>
+    <script type="text/javascript" src="resources/js/services.js"></script>
+    <script type="text/javascript" src="resources/js/userUpdateOldData.js"></script>
+    <script type="text/javascript" src="resources/js/cardUpdateOldData.js"></script>
+
+    <script type="text/javascript" src="resources/js/app.js"></script>
+    <script type="text/javascript" src="resources/js/controllers/EmpController.js"></script>
+    <script type="text/javascript" src="resources/js/controllers/UserController.js"></script>
+    <script type="text/javascript" src="resources/js/controllers/NotebookController.js"></script>
+    <script type="text/javascript" src="resources/js/controllers/AccessCardController.js"></script>
+    <script type="text/javascript" src="resources/js/controllers/OrderController.js"></script>
+
+
+
+</head>
+<body ng-controller="MainController as mainCtrl">
+<nav class="navbar navbar-default navbar-fixed">
+
+    <div class="container-fluid">
+
+        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
+        <div class="navbar-header" >
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="/" style="background-color: #9acfea;"><img style="height: 50px; margin-top: -18px; " src="resources/img2/logo.png"/></a>
         </div>
-        <div class="collapse navbar-collapse">
+
+
+
+
+       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a onclick="document.getElementById('logout-form').submit(); return false;">Logout</a></li>
-                <form id="logout-form" th:action="@{/logout}" method="post">
-                    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-                </form>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                    <ul class="dropdown-menu ">
+                        <li><a href="#" ng-click="toggleModal()"><b>currentUserName</b></a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="help.html" target="_blank">Help</a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" ng-click="toggleModalFeedback()">Personal Settings</a></li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
-        </div><!--/.nav-collapse -->
+
+
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">People <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" ng-click="mainCtrl.addTab('employees', 'Employees', 'employees-list')">Employees</a> </li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" ng-click="mainCtrl.addTab('users', 'Users', 'users-list')">Users</a> </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Inventory <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" ng-click="mainCtrl.addTab('cards', 'Cards', 'accesscards-list')">Cards</a> </li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" ng-click="mainCtrl.addTab('notebooks', 'Notebooks', 'notebooks-list')">Notebooks</a> </li>
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Inventory control <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" ng-click="mainCtrl.addTab('orders', 'Orders', 'orders-list')">Orders</a> </li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" ng-click="mainCtrl.addTab('notifications', 'Notifications', 'notifications-list')">Notifications</a> </li>
+                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" ng-click="">Import CSV</a> </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+
+        </div>
     </div>
-</div>
+</nav>
 
-<div class="col-sm-3 col-md-2 sidebar">
-    <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">Overview</a></li>
-        <li><a href="#/cars">Cars</a></li>
-        <li><a href="#/trains">Trains</a></li>
-        <li><a href="#/railwaystations">Railway Station</a></li>
-        <li><a href="#/employees">Employees</a></li>
-        <li><a href="#/notebooks">Notebooks</a></li>
-        <li><a href="#/accesscards">Access Cards</a></li>
-        <li><a href="#/users">Users</a></li>
-        <li><a href="#/orders">Orders</a></li>
-    </ul>
-</div>
+<div style="top: 65px; left: 0; right: 0; bottom: 0; position: absolute; width: auto; height: auto;">
+    <!--<current-user-profile></current-user-profile>-->
 
-<div id="wrapper">
-    <hr class="" />
-    <div ng-view=""></div>
-</div>
 
-<script src="resources/js/jquery-2.2.4.min.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="resources/js/lib/angular/angular.js"></script>
-<script src="resources/js/app.js"></script>
-<script src="resources/js/services.js"></script>
-<script src="resources/js/controllers/RailwayStationController.js"></script>
-<script src="resources/js/controllers/CarController.js"></script>
-<script src="resources/js/controllers/TrainController.js"></script>
-<script src="resources/js/controllers/EmpController.js"></script>
-<script src="resources/js/controllers/NotebookController.js"></script>
-<script src="resources/js/controllers/UserController.js"></script>
-<script src="resources/js/controllers/EmpController.js"></script>
-<script src="resources/js/controllers/AccessCardController.js"></script>
-<script src="resources/js/controllers/OrderController.js"></script>
-<script src="resources/js/filters.js"></script>
-<script src="resources/js/directives.js"></script>
-<script src="resources/js/userUpdateOldData.js"></script>
-<script src="resources/js/cardUpdateOldData.js"></script>
+    <div style="height: calc(100% - 40px);  min-height: 660px;">
+        <ul id="pageTab" class="nav nav-tabs ">
+            <li ng-hide="isHidden('page-tab')" id="mainTabHeader3" class="active"><a href="#mainTabBody3" data-toggle="tab"><b>Main</b></a></li>
+        </ul>
+        <div id="pageTabContent" class="tab-content" style="height: calc(100% - 43px);">
+
+            <div ng-hide="isHidden('page-tab')" id="mainTabBody3" class="tab-pane active fill-height">
+                <div class="container-fluid fill-height" style="padding: 20px;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-3">
+                                    <div class="thumbnail">
+                                        <img style="height: 120px;" src="resources/img2/Laptop-01_c.png" alt="..."/>
+                                        <div class="caption" style="text-align: center">
+                                            <a href="#" ng-click="mainCtrl.addTab('notebooks', 'Notebooks', 'notebooks-list')"><h3>Notebooks</h3></a>
+                                            <p>Notebooks States</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-3">
+                                    <div class="thumbnail">
+                                        <img style="height: 120px;" src="resources/img2/card-01_c.png" alt="..."/>
+                                        <div class="caption" style="text-align: center">
+                                            <a href="#" ng-click="mainCtrl.addTab('cards', 'Cards', 'accesscards-list')"><h3>Cards</h3></a>
+                                            <p>Cards Statuses</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-3">
+                                    <div class="thumbnail">
+                                        <img style="height: 120px;" src="resources/img2/order-01_c.png" alt="..."/>
+                                        <div class="caption" style="text-align: center">
+                                            <a href="#" ng-click="mainCtrl.addTab('orders', 'Orders', 'orders-list')"><h3>Orders</h3></a>
+                                            <p>Orders</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-3">
+                                    <div class="thumbnail">
+                                        <img style="height: 120px;" src="resources/img2/notifcation-01_c.png" alt="..."/>
+                                        <div class="caption" style="text-align: center">
+                                            <a href="#" ng-click="mainCtrl.addTab('notifications', 'Notifications', 'notifications-list')"><h3>Notifications</h3></a>
+                                            <p>Notifications</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xs-3">
+                                            <div class="thumbnail">
+                                                <img style="height: 120px;" src="resources/img2/import_csv-01_c.png" alt="..."/>
+                                                <div class="caption" style="text-align: center">
+                                                    <a href="#" ng-click=""><h3>Import CSV</h3></a>
+                                                    <p>Import CSV</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3">
+                                            <div class="thumbnail">
+                                                <img style="height: 120px;" src="resources/img2/employee-02_c.png" alt="..."/>
+                                                <div class="caption" style="text-align: center">
+                                                    <a href="#" ng-click="mainCtrl.addTab('employees', 'Employees', 'employees-list')"><h3>Employees</h3></a>
+                                                    <p>Employees</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3">
+                                            <div class="thumbnail">
+                                                <img style="height: 120px;" src="resources/img2/user-02_c.png" alt="..."/>
+                                                <div class="caption" style="text-align: center">
+                                                    <a href="#" ng-click="mainCtrl.addTab('users', 'Users', 'users-list')"><h3>Users</h3></a>
+                                                    <p>Users</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3">
+                                            <div class="thumbnail">
+                                                <img style="height: 120px;" src="resources/img2/settigs-02_c.png" alt="..."/>
+                                                <div class="caption" style="text-align: center">
+                                                    <a href="#" ng-click=""><h3>User's Settings</h3></a>
+                                                    <p>User Settings</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="puller"></div>
+        <div class="footer"  style="height: 40px; background-color: #2c3e50;   clear: both;">
+            <div style="text-align: right; height: 100%">
+                <a href="http://odessa.edu-netcracker.com/" target="_blank">
+                    <img style="height: 100%; background-color: rgb(149, 165, 166);" src="resources/img2/logo.png"/>
+                </a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
+

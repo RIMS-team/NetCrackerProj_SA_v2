@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE package dm_inv_status is
+CREATE OR REPLACE package dm_inv_status is
 
   --======================================
   

@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE package dm_notification is
+CREATE OR REPLACE package dm_notification is
 
 
 

@@ -1,4 +1,4 @@
-﻿
+
   CREATE OR REPLACE TRIGGER "TRG_OBJECTS_BI" 
   before insert
   on OBJECTS

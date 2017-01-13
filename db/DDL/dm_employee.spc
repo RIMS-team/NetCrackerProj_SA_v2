@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE package dm_employee is
+CREATE OR REPLACE package dm_employee is
 
   --==========================================
   

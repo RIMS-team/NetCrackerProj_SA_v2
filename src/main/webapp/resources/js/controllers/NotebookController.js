@@ -4,33 +4,30 @@
  * NotebookController
  * @constructor
  */
-var NotebookController = function($scope, $http) {
 
-    $scope.fetchNotebookList = function() {
-        $http.get('notebook/all').success(function(notebookList){
-            $scope.notebook = notebookList;
-        });
-    };
 
-    $scope.addNewCar = function(newCar) {
-        $http.post('cars/addCar/' + newCar).success(function() {
-            $scope.fetchCarsList();
-        });
-        $scope.carName = '';
-    };
+(function () {
+    var app = angular.module("notebooks", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 
-    $scope.removeCar = function(car) {
-        $http.delete('cars/removeCar/' + car).success(function() {
-            $scope.fetchCarsList();
-        });
-    };
+    app.controller("NotebookController", function ($scope, $http, $modal) {
+        var _this = this;
 
-    $scope.removeAllCars = function() {
-        $http.delete('cars/removeAllCars').success(function() {
-            $scope.fetchCarsList();
-        });
+        $scope.fetchNotebookList = function() {
+            $http.get('notebook/all').success(function(notebookList){
+                $scope.notebook = notebookList;
+            });
+        };
 
-    };
+        $scope.fetchNotebookList();
 
-    $scope.fetchNotebookList();
-};
+    });
+
+
+    app.directive("notebooksList", function () {
+        return {
+            templateUrl: "notebook/layout.html"
+        }
+    });
+
+})();
+

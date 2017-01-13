@@ -1,4 +1,4 @@
-п»їCREATE OR REPLACE package body dm_inv_status is
+CREATE OR REPLACE package body dm_inv_status is
 
   --======================================
   
@@ -34,7 +34,7 @@
         p_comments       in out varchar2) as
   begin
     if p_id is null then
-      raise_application_error(-20001, 'РќРµ СѓРєР°Р·Р°РЅ id Р·Р°РїРёСЃРё РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.');
+      raise_application_error(-20001, 'Не указан id записи для редактирования.');
     end if;
     
     update listtype
@@ -47,7 +47,7 @@
       into p_code, p_name, p_comments;
       
     if SQL%ROWCOUNT = 0 then
-      raise_application_error(-20001, 'РќРµ РЅР°Р№РґРµРЅР° Р·Р°РїРёСЃСЊ РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.');
+      raise_application_error(-20001, 'Не найдена запись для редактирования.');
     end if;
   end;
   ----
@@ -58,7 +58,7 @@
        and attrtype_code = 'INV_STATUS';
      
     if SQL%ROWCOUNT = 0 then
-      raise_application_error(-20001, 'РќРµ РЅР°Р№РґРµРЅР° Р·Р°РїРёСЃСЊ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.');
+      raise_application_error(-20001, 'Не найдена запись для удаления.');
     end if;
   end;
   

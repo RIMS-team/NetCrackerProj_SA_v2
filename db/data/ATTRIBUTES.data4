@@ -1,4 +1,4 @@
-﻿insert into ATTRIBUTES (
+insert into ATTRIBUTES (
 "ATTR_ID", "OBJECT_ID", "VALUE", "DATE_VALUE" )
 values (
 1, 1, 'Evgeniy', NULL );

@@ -1,4 +1,4 @@
-п»ї
+
   CREATE TABLE "LISTTYPE" 
    (	"ID" NUMBER NOT NULL ENABLE, 
 	"ATTRTYPE_CODE" VARCHAR2(20) NOT NULL ENABLE, 
@@ -23,19 +23,19 @@
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM"  ENABLE;
 
-  comment on column LISTTYPE.ID is 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЌР»РµРјРµРЅС‚Р° СЃРїРёСЃРєР°. РќР° РЅРµРіРѕ РёРґРµС‚ СЃСЃС‹Р»РєР° РёР· ATTRIBUTES.VALUE РґР»СЏ СЃРїРёСЃРѕС‡РЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ';
+  comment on column LISTTYPE.ID is 'Идентификатор элемента списка. На него идет ссылка из ATTRIBUTES.VALUE для списочных элементов';
 
 
-  comment on column LISTTYPE.COMMENTS is 'РљРѕРјРјРµРЅС‚Р°СЂРёР№';
+  comment on column LISTTYPE.COMMENTS is 'Комментарий';
 
 
-  comment on column LISTTYPE.NAME is 'РРјСЏ Р·РЅР°С‡РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РґР»СЏ UI';
+  comment on column LISTTYPE.NAME is 'Имя значения элемента для UI';
 
 
-  comment on column LISTTYPE.CODE is 'РљРѕРґ-Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° СЃРїРёСЃРєР° РґР»СЏ РїСЂРѕРіСЂР°РјРјРЅРѕРіРѕ РєРѕРґР°';
+  comment on column LISTTYPE.CODE is 'Код-значение элемента списка для программного кода';
 
 
-  comment on column LISTTYPE.ATTRTYPE_CODE is 'РџСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ СЌР»РµРјРµРЅС‚Р° СЃРїРёСЃРєР° Рє РіСЂСѓРїРїРµ РїРѕ РєРѕРґСѓ С‚РёРїР° Р°С‚СЂРёР±СѓС‚Р°';
+  comment on column LISTTYPE.ATTRTYPE_CODE is 'Принадлежность элемента списка к группе по коду типа атрибута';
 
 
 

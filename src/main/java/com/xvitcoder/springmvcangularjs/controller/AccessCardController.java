@@ -7,6 +7,7 @@ import com.xvitcoder.springmvcangularjs.model.Employee;
 import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.AccessCardService;
 import com.xvitcoder.springmvcangularjs.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;

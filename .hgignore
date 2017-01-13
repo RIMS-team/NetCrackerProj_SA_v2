@@ -1,0 +1,6 @@
+syntax: glob
+.git/*
+.gitignore
+target/*
+ttt/*
+src/main/webapp/WEB-INF/html/index._html

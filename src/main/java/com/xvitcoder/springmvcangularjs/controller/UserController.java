@@ -1,11 +1,7 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
-import com.xvitcoder.springmvcangularjs.beans.RailwayStation;
-import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.model.User;
-import com.xvitcoder.springmvcangularjs.service.NotebookService;
 import com.xvitcoder.springmvcangularjs.service.UserService;
-import com.xvitcoder.springmvcangularjs.service.impl.NotebookServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;

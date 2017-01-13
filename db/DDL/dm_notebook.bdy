@@ -1,4 +1,4 @@
-п»їCREATE OR REPLACE package body dm_notebook is
+CREATE OR REPLACE package body dm_notebook is
 
 --==========================================================
 
@@ -93,7 +93,7 @@
         p_inv_status_id in varchar2) as
   begin
     if p_object_id is null then
-      raise_application_error(-20001, 'РќРµ СѓРєР°Р·Р°РЅ id Р·Р°РїРёСЃРё РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.');
+      raise_application_error(-20001, 'Не указан id записи для редактирования.');
     end if;
     
     merge into attributes a
@@ -109,7 +109,7 @@
     when matched then update set a.value = t.value;
       
     if SQL%ROWCOUNT = 0 then
-      raise_application_error(-20001, 'РќРµ РЅР°Р№РґРµРЅР° Р·Р°РїРёСЃСЊ РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.');
+      raise_application_error(-20001, 'Не найдена запись для редактирования.');
     end if;
   end;
   ----
@@ -122,7 +122,7 @@
      where o.object_id = p_object_id;
      
     if l_OBJECT_TYPE_ID <> 7 then
-      raise_application_error(-20001, 'Р—Р°РїРёСЃСЊ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРІРµС‚ С‚РёРїСѓ NOTEBOOK.');
+      raise_application_error(-20001, 'Запись не соответствувет типу NOTEBOOK.');
     end if;
   
     delete from attributes
@@ -132,7 +132,7 @@
      where object_id = p_object_id;
      
     if SQL%ROWCOUNT = 0 then
-      raise_application_error(-20001, 'РќРµ РЅР°Р№РґРµРЅР° Р·Р°РїРёСЃСЊ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.');
+      raise_application_error(-20001, 'Не найдена запись для удаления.');
     end if;
   end;
   

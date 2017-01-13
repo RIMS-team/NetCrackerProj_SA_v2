@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE package dm_access_card is
+CREATE OR REPLACE package dm_access_card is
 
   --===========================================
   

@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE package body dm_notification is
+CREATE OR REPLACE package body dm_notification is
 
 
 

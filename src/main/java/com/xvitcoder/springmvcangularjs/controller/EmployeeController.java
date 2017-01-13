@@ -2,7 +2,6 @@ package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.dao.JdbcEmployeeDao;
 import com.xvitcoder.springmvcangularjs.model.Employee;
-import com.xvitcoder.springmvcangularjs.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE package dm_ord_status is
+CREATE OR REPLACE package dm_ord_status is
 
   --=====================================
   procedure ord_status_select(

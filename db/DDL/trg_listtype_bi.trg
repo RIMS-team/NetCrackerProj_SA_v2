@@ -1,4 +1,4 @@
-﻿
+
   CREATE OR REPLACE TRIGGER "TRG_LISTTYPE_BI" 
   before insert
   on listtype 

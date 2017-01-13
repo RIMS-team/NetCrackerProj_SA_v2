@@ -1,4 +1,4 @@
-﻿
+
   CREATE OR REPLACE TRIGGER "TRG_ATTRTYPE_BI" 
   before insert
   on ATTRTYPE

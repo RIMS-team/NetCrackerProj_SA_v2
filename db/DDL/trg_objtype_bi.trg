@@ -1,4 +1,4 @@
-﻿
+
   CREATE OR REPLACE TRIGGER "TRG_OBJTYPE_BI" 
   before insert
   on OBJTYPE

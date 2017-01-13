@@ -3,7 +3,7 @@ package com.xvitcoder.springmvcangularjs.model;
 /**
  * Created by Kristina on 23.11.2016.
  */
-abstract class Inventory extends Entity {
+class Inventory extends Entity {
 
     protected int statusId;
     protected String statusName;

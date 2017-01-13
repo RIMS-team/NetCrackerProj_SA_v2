@@ -1,9 +1,9 @@
-
+<div ng-controller="NotebookController as formController">
 <h3 style="margin-left:100px;">Notebook List</h3>
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notebook.length == 0">
     No notebooks found
 </div>
-<table class="table table-bordered table-striped" style="width:1000px; margin-left: -200px;" ng-show="notebook.length > 0">
+<table class="table table-bordered table-striped" style="width:70%; margin-left:auto; margin-right:auto;" ng-show="notebook.length > 0">
     <thead>
     <tr>
         <th style="text-align: center;">ID</th>
@@ -29,3 +29,4 @@
     </tr>
     </tbody>
 </table>
+</div>

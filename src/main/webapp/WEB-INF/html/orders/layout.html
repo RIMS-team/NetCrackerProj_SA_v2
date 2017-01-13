@@ -1,9 +1,10 @@
+<div ng-controller="OrderController as formController">
 
 <h3 style="margin-left:100px;">Orders List</h3>
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="order.length == 0">
     No orders found
 </div>
-<table class="table table-bordered table-striped" style="width:1000px; margin-left: -200px;" ng-show="order.length > 0">
+<table class="table table-bordered table-striped" style="width:100%;" ng-show="order.length > 0">
     <thead>
     <tr>
         <th style="text-align: center;">ID</th>
@@ -41,3 +42,5 @@
     </tr>
     </tbody>
 </table>
+
+</div>

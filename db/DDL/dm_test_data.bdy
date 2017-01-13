@@ -1,4 +1,4 @@
-п»їCREATE OR REPLACE package body dm_test_data is
+CREATE OR REPLACE package body dm_test_data is
 
   
   procedure drop_all_objects_by_type(p_obj_type_id in number) as
@@ -50,7 +50,7 @@
     l_cur_id  number;
   begin
     if p_count is null or p_count < 1 then
-      raise_application_error(-20001, 'РћС€РёР±РєР° РІ РєРѕР»С‡РµСЃС‚РІРµ СЃРѕР·РґР°РІР°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ.');
+      raise_application_error(-20001, 'Ошибка в количестве создаваемых объектов.');
     end if;
     
     for i in 1..p_count loop
@@ -78,7 +78,7 @@
     l_cur_id  number;
   begin
     if p_count is null or p_count < 1 then
-      raise_application_error(-20001, 'РћС€РёР±РєР° РІ РєРѕР»С‡РµСЃС‚РІРµ СЃРѕР·РґР°РІР°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ.');
+      raise_application_error(-20001, 'Ошибка в количестве создаваемых объектов.');
     end if;
     
     for i in 1..p_count loop
@@ -115,7 +115,7 @@
     l_cur_rec_data_num  number;
   begin
     if p_count is null or p_count < 1 then
-      raise_application_error(-20001, 'РћС€РёР±РєР° РІ РєРѕР»С‡РµСЃС‚РІРµ СЃРѕР·РґР°РІР°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ.');
+      raise_application_error(-20001, 'Ошибка в количестве создаваемых объектов.');
     end if;
     
     select * bulk collect into l_tab_data from (
@@ -191,7 +191,7 @@
     l_cur_order_status number;
   begin
     if p_count is null or p_count < 1 then
-      raise_application_error(-20001, 'РћС€РёР±РєР° РІ РєРѕР»С‡РµСЃС‚РІРµ СЃРѕР·РґР°РІР°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ.');
+      raise_application_error(-20001, 'Ошибка в количестве создаваемых объектов.');
     end if;
   
     if l_date_from is null then
@@ -223,9 +223,9 @@
       if l_cur_date < sysdate - 10 then
         l_cur_order_status := 8;  -- CLOSED
       elsif l_cur_date > sysdate then
-        l_cur_order_status := round(dbms_random.value(5, 6));  -- РћС‚РєСЂС‹С‚ \ РџСЂРѕРґР»РµРЅ 
+        l_cur_order_status := round(dbms_random.value(5, 6));  -- Открыт \ Продлен 
       else
-        l_cur_order_status := round(dbms_random.value(6, 7));  -- РџСЂРѕРґР»РµРЅ \ РџСЂРѕСЃСЂРѕС‡РµРЅ
+        l_cur_order_status := round(dbms_random.value(6, 7));  -- Продлен \ Просрочен
       end if;
       dm_order.order_insert(
         l_cur_id,  -- p_object_id
@@ -242,6 +242,37 @@
   end;
   
   ----
+  
+  procedure add_objects(
+        p_count_employees    in number default 100,
+        p_count_access_cards in number default 200,
+        p_count_notebooks    in number default 55,
+        p_count_orders       in number default 500
+        ) 
+  as
+    l_count_employees number := p_count_employees;  
+    l_count_access_cards number := p_count_access_cards;
+    l_count_notebooks number := p_count_notebooks;
+    l_count_orders number := p_count_orders;
+  begin
+    if l_count_employees is null then
+      l_count_employees := 100;
+    end if;
+    if l_count_access_cards is null then
+      l_count_access_cards := 200;
+    end if;
+    if l_count_notebooks is null then
+      l_count_notebooks := 55;
+    end if;
+    if l_count_orders is null then
+      l_count_orders := 500;
+    end if;
+  
+    add_employees(l_count_employees);
+    add_access_cards(l_count_access_cards);
+    add_notebooks(l_count_notebooks);
+    add_orders(l_count_orders, null, null);
+  end;
 
 begin
   -- Initialization

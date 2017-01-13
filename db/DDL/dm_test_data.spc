@@ -1,10 +1,17 @@
-﻿CREATE OR REPLACE package dm_test_data is
+CREATE OR REPLACE package dm_test_data is
 
   procedure drop_all_objects_by_type(p_obj_type_id in number);
   
   procedure drop_all_objects;
   
   ----
+  
+  procedure add_objects(
+        p_count_employees    in number default 100,
+        p_count_access_cards in number default 200,
+        p_count_notebooks    in number default 55,
+        p_count_orders       in number default 500
+        );
   
   procedure add_employees(
         p_count in number

@@ -1,4 +1,4 @@
-п»їCREATE OR REPLACE package body dm_order is
+CREATE OR REPLACE package body dm_order is
 
 --==========================================================
   function is_new_ord_status_available(p_new_ord_status_id number, p_old_ord_status_id number) return boolean as
@@ -6,7 +6,7 @@
   begin
     if p_new_ord_status_id >= p_old_ord_status_id then
       l_res := true;
-    elsif p_new_ord_status_id = 6 /*EXTENDED РџСЂРѕРґР»РµРЅ*/ and p_old_ord_status_id = 7 /*OVERDUE РџСЂРѕСЃСЂРѕС‡РµРЅ*/ then 
+    elsif p_new_ord_status_id = 6 /*EXTENDED Продлен*/ and p_old_ord_status_id = 7 /*OVERDUE Просрочен*/ then 
       l_res := true;
     end if;
     return l_res;
@@ -96,13 +96,13 @@
     l_ord_status_id number := p_ord_status_id;
   begin
     if p_inventory_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ РР” РёРЅРІРµРЅС‚Р°СЂСЏ РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан ИД инвентаря для ордера.');
     end if;
     if p_employee_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ РР” СЃРѕС‚СЂСѓРґРЅРёРєР° РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан ИД сотрудника для ордера.');
     end if;
     if p_user_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ РР” РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан ИД пользователя для ордера.');
     end if;
   
     if p_object_id is null then
@@ -114,7 +114,7 @@
     end if;
     
     if l_ord_status_id is null then
-      l_ord_status_id := 5;  /*РћС‚РєСЂС‹С‚*/
+      l_ord_status_id := 5;  /*Открыт*/
     end if;
   
     INSERT ALL
@@ -141,23 +141,23 @@
     
   begin
     if p_object_id is null then
-      raise_application_error(-20001, 'РќРµ СѓРєР°Р·Р°РЅ id Р·Р°РїРёСЃРё РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.');
+      raise_application_error(-20001, 'Не указан id записи для редактирования.');
     end if;
     
     if p_inventory_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ РР” РёРЅРІРµРЅС‚Р°СЂСЏ РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан ИД инвентаря для ордера.');
     end if;
     if p_employee_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ РР” СЃРѕС‚СЂСѓРґРЅРёРєР° РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан ИД сотрудника для ордера.');
     end if;
     if p_user_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ РР” РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан ИД пользователя для ордера.');
     end if;
     if p_ord_status_id is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅ СЃС‚Р°С‚СѓСЃ РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задан статус для ордера.');
     end if;
     if p_date is null then
-      raise_application_error(-20001, 'РќРµ Р·Р°РґР°РЅР° РґР°С‚Р° РґР»СЏ РѕСЂРґРµСЂР°.');
+      raise_application_error(-20001, 'Не задана дата для ордера.');
     end if;
     
     --validation of p_ord_status_id new value 
@@ -170,14 +170,14 @@
        where o.object_id = p_object_id;
     exception
       when no_data_found then
-        raise_application_error(-20001, 'РћСЂРґРµСЂ РЅРµ РЅР°Р№РґРµРЅ.');
+        raise_application_error(-20001, 'Ордер не найден.');
     end;
     if not is_new_ord_status_available(p_ord_status_id, l_old_ord_status_id) then
       select l.name
         into l_new_ord_status_name
         from listtype l
        where l.id = p_ord_status_id;
-      raise_application_error(-20001, 'РќРµР»СЊР·СЏ Р·РјРµРЅРёС‚СЊ СЃС‚Р°С‚СѓСЃ РѕСЂРґРµСЂР° СЃ "' || l_old_ord_status_name || '" РЅР° "' || l_new_ord_status_name || '".');
+      raise_application_error(-20001, 'Нельзя зменить статус ордера с "' || l_old_ord_status_name || '" на "' || l_new_ord_status_name || '".');
     end if;
     
     merge into attributes a
@@ -196,7 +196,7 @@
     when matched then update set a.reference = t.reference;
       
     if SQL%ROWCOUNT = 0 then
-      raise_application_error(-20001, 'РќРµ РЅР°Р№РґРµРЅР° Р·Р°РїРёСЃСЊ РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ.');
+      raise_application_error(-20001, 'Не найдена запись для редактирования.');
     end if;
   end;
   ----
@@ -209,7 +209,7 @@
      where o.object_id = p_object_id;
      
     if l_OBJECT_TYPE_ID <> 5 then  /* ORDER */
-      raise_application_error(-20001, 'Р—Р°РїРёСЃСЊ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРІРµС‚ С‚РёРїСѓ ORDER.');
+      raise_application_error(-20001, 'Запись не соответствувет типу ORDER.');
     end if;
   
     delete from attributes
@@ -222,7 +222,7 @@
      where object_id = p_object_id;
      
     if SQL%ROWCOUNT = 0 then
-      raise_application_error(-20001, 'РќРµ РЅР°Р№РґРµРЅР° Р·Р°РїРёСЃСЊ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.');
+      raise_application_error(-20001, 'Не найдена запись для удаления.');
     end if;
   end;
   ----

@@ -1,90 +1,90 @@
-п»їinsert into OBJTYPE (
+insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-1, NULL, 'EMPLOYEE', 'Р Р°Р±РѕС‚РЅРёРє', NULL );
+1, NULL, 'EMPLOYEE', 'Работник', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 1, "PARENT_ID" = NULL, "CODE" = 'EMPLOYEE', "NAME" = 'Р Р°Р±РѕС‚РЅРёРє', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 1, "PARENT_ID" = NULL, "CODE" = 'EMPLOYEE', "NAME" = 'Работник', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 1;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-2, 1, 'User', 'РЎРѕС‚СЂСѓРґРЅРёРє', NULL );
+2, 1, 'User', 'Сотрудник', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 2, "PARENT_ID" = 1, "CODE" = 'User', "NAME" = 'РЎРѕС‚СЂСѓРґРЅРёРє', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 2, "PARENT_ID" = 1, "CODE" = 'User', "NAME" = 'Сотрудник', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 2;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-3, 2, 'ADMIN', 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ', NULL );
+3, 2, 'ADMIN', 'Администратор', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 3, "PARENT_ID" = 2, "CODE" = 'ADMIN', "NAME" = 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 3, "PARENT_ID" = 2, "CODE" = 'ADMIN', "NAME" = 'Администратор', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 3;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-4, NULL, 'INVENTORY', 'РЈСЃС‚СЂРѕР№СЃС‚РІРѕ', NULL );
+4, NULL, 'INVENTORY', 'Устройство', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 4, "PARENT_ID" = NULL, "CODE" = 'INVENTORY', "NAME" = 'РЈСЃС‚СЂРѕР№СЃС‚РІРѕ', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 4, "PARENT_ID" = NULL, "CODE" = 'INVENTORY', "NAME" = 'Устройство', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 4;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-5, NULL, 'ORDER', 'Р—Р°РїСЂРѕСЃ', NULL );
+5, NULL, 'ORDER', 'Запрос', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 5, "PARENT_ID" = NULL, "CODE" = 'ORDER', "NAME" = 'Р—Р°РїСЂРѕСЃ', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 5, "PARENT_ID" = NULL, "CODE" = 'ORDER', "NAME" = 'Запрос', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 5;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-6, 4, 'CARD', 'РљР°СЂС‚Р°', NULL );
+6, 4, 'CARD', 'Карта', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 6, "PARENT_ID" = 4, "CODE" = 'CARD', "NAME" = 'РљР°СЂС‚Р°', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 6, "PARENT_ID" = 4, "CODE" = 'CARD', "NAME" = 'Карта', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 6;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-7, 4, 'NOTEPAD', 'РќРѕСѓС‚Р±СѓРє', NULL );
+7, 4, 'NOTEPAD', 'Ноутбук', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 7, "PARENT_ID" = 4, "CODE" = 'NOTEPAD', "NAME" = 'РќРѕСѓС‚Р±СѓРє', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 7, "PARENT_ID" = 4, "CODE" = 'NOTEPAD', "NAME" = 'Ноутбук', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 7;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-8, 5, 'NOTIFICATION', 'РЈРІРµРґРѕРјР»РµРЅРёРµ', NULL );
+8, 5, 'NOTIFICATION', 'Уведомление', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 8, "PARENT_ID" = 5, "CODE" = 'NOTIFICATION', "NAME" = 'РЈРІРµРґРѕРјР»РµРЅРёРµ', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 8, "PARENT_ID" = 5, "CODE" = 'NOTIFICATION', "NAME" = 'Уведомление', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 8;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-9, NULL, 'INV_STATUS', 'РЎС‚Р°С‚СѓСЃ СѓСЃС‚СЂРѕР№СЃС‚РІР°', NULL );
+9, NULL, 'INV_STATUS', 'Статус устройства', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 9, "PARENT_ID" = NULL, "CODE" = 'INV_STATUS', "NAME" = 'РЎС‚Р°С‚СѓСЃ СѓСЃС‚СЂРѕР№СЃС‚РІР°', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 9, "PARENT_ID" = NULL, "CODE" = 'INV_STATUS', "NAME" = 'Статус устройства', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 9;
 
 insert into OBJTYPE (
 "OBJECT_TYPE_ID", "PARENT_ID", "CODE", "NAME", "DESCRIPTION" )
 values (
-10, NULL, 'ORD_STATUS', 'РЎС‚Р°С‚СѓСЃ Р·Р°СЏРІРєРё', NULL );
+10, NULL, 'ORD_STATUS', 'Статус заявки', NULL );
 
 update OBJTYPE set
-"OBJECT_TYPE_ID" = 10, "PARENT_ID" = NULL, "CODE" = 'ORD_STATUS', "NAME" = 'РЎС‚Р°С‚СѓСЃ Р·Р°СЏРІРєРё', "DESCRIPTION" = NULL
+"OBJECT_TYPE_ID" = 10, "PARENT_ID" = NULL, "CODE" = 'ORD_STATUS', "NAME" = 'Статус заявки', "DESCRIPTION" = NULL
 where OBJECT_TYPE_ID = 10;
 

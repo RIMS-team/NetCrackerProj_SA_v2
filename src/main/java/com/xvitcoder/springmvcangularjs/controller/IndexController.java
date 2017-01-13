@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class IndexController {
 
+    private Logger logger = Logger.getLogger(IndexController.class);
+
     @RequestMapping
     public String getIndexPage() {
         return "index";
@@ -20,6 +23,8 @@ public class IndexController {
 
     @RequestMapping("/login")
     public String getLogin() {
+        logger.debug("Request URL: /login; Entering getLogin()");
         return "login";
     }
+
 }

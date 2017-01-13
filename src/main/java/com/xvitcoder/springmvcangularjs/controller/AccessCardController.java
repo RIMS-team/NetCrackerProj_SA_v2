@@ -30,7 +30,7 @@ public class AccessCardController {
 
     @RequestMapping("/accesscardlist.json")
     public @ResponseBody List<AccessCard> getAccessCardList() {
-        logger.debug("Request URL: /accesscardlist.json; Entering getAccessCardList()");
+        logger.debug("Request URL: /accesscards/accesscardlist.json; Entering getAccessCardList()");
         JdbcAccessCard jdbcAccessCard=(JdbcAccessCard) context.getBean("accessCardDAO");
         List<AccessCard> cards=jdbcAccessCard.findAll();
         logger.debug("Response: " + cards);
@@ -39,26 +39,26 @@ public class AccessCardController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody void addAccessCard(@RequestBody AccessCard card) {
-        logger.debug("Request URL: /add; Entering addAccessCard(" + card + ")");
+        logger.debug("Request URL: /accesscards/add; Entering addAccessCard(card=" + card + ")");
         System.out.println(card.toString());
         accessCardService.addAccessCard(card);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody void updateCard(@RequestBody AccessCard card) {
-        System.out.println(card.toString());
+        logger.debug("Request URL: /accesscards/update; Entering updateCard(card=" + card + ")");
         accessCardService.updateUser(card);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
     public @ResponseBody void removeCard(@PathVariable int id) {
-        logger.debug("Request URL: /remove/" + id + "; Entering removeCard(" + id + ")");
+        logger.debug("Request URL: /accesscards/remove/" + id + "; Entering removeCard(id=" + id + ")");
         accessCardService.deleteCard(id);
     }
 
     @RequestMapping("/layout")
     public String getCardPartialPage() {
-        logger.debug("Request URL: /layout; Entering getCardPartialPage()");
+        logger.debug("Request URL: /accesscards/layout; Entering getCardPartialPage()");
         return "accesscards/layout";
     }
 

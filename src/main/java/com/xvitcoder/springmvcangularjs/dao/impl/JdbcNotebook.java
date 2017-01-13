@@ -3,6 +3,7 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.NotebookMapper;
 import com.xvitcoder.springmvcangularjs.dao.NotebookDAO;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -18,6 +19,9 @@ import java.util.Locale;
  * Created by Elina on 08.12.2016.
  */
 public class JdbcNotebook implements NotebookDAO {
+
+    private Logger logger = Logger.getLogger(JdbcNotebook.class);
+
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
@@ -35,6 +39,7 @@ public class JdbcNotebook implements NotebookDAO {
 
     @Override
     public List<Notebook> findAll() {
+        logger.debug("Entering findAll()");
         List<Notebook> notebooks;
         try {
             String sql =
@@ -69,10 +74,12 @@ public class JdbcNotebook implements NotebookDAO {
             notebooks = jdbcTemplateObject.query(sql, new NotebookMapper());
         }
         catch (DataAccessException e) {
-            System.out.println("Error in select record, rolling back");
+            logger.error("Error in select record, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        logger.debug("Leaving findAll():" + notebooks);
         return notebooks;
     }
+
 }

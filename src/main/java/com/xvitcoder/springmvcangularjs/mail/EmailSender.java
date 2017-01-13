@@ -1,5 +1,7 @@
 package com.xvitcoder.springmvcangularjs.mail;
 
+import org.apache.log4j.Logger;
+
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -12,10 +14,12 @@ import javax.mail.internet.MimeMessage;
  * @author Javin Paul
  */
 
-public class EmailSender{
+public class EmailSender {
+
+    private Logger logger = Logger.getLogger(EmailSender.class);
 
     public void sendMessage(final String whoSend, final String password, String whoCheck){
-
+        logger.debug("Entering sendMessage(whoSend=" + whoSend + ", password=" + password + ", whoCheck=" + whoCheck + ")");
         Properties properties=new Properties();
         properties.put("mail.smtp.host","smtp.yandex.ru");
         properties.put("mail.smtp.socketFactory.port","465");
@@ -40,7 +44,7 @@ public class EmailSender{
             Transport.send(message);
 
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.error("Error sending message", e);
         }
 
     }

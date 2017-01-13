@@ -3,6 +3,7 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderMapper;
 import com.xvitcoder.springmvcangularjs.dao.OrderDAO;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -18,6 +19,8 @@ import java.util.*;
  * Created by Elina on 11.01.2017.
  */
 public class JdbcOrder implements OrderDAO {
+
+    private Logger logger = Logger.getLogger(JdbcOrder.class);
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
@@ -42,6 +45,7 @@ public class JdbcOrder implements OrderDAO {
 
     @Override
     public List<OrderCursor> findAll() {
+        logger.debug("Entering findAll()");
         Map<String, Object> args = new HashMap<>(2);
         Map<String, Object> result = new HashMap<>(1);
         List<OrderCursor> orders;
@@ -55,17 +59,19 @@ public class JdbcOrder implements OrderDAO {
             orders = (List<OrderCursor>) result.get("P_OUT_CURSOR");
         }
         catch (DataAccessException e) {
-            e.printStackTrace();
-            System.out.println("Error inserting user, rolling back");
+            logger.error("Error inserting user, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
-
+        logger.debug("Leaving findAll():" + orders);
         return orders;
     }
 
     @Override
     public OrderCursor findById(int id) {
+        logger.debug("Entering findById(id=" + id + ")");
+        logger.warn("Method JdbcOrder.findById() not yet implemented");
         return null;
     }
+
 }

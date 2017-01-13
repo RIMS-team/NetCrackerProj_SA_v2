@@ -4,6 +4,7 @@ import com.xvitcoder.springmvcangularjs.dao.Mappers.UserMapper;
 import com.xvitcoder.springmvcangularjs.dao.UserDAO;
 import com.xvitcoder.springmvcangularjs.model.User;
 import oracle.jdbc.OracleTypes;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -29,6 +30,8 @@ import java.util.Map;
  */
 public class JdbcUser implements UserDAO {
 
+    private Logger logger = Logger.getLogger(JdbcUser.class);
+
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
     private TransactionStatus status;
@@ -51,6 +54,7 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public List<User> findAll() {
+        logger.debug("Entering findAll()");
         List<User> users;
         try {
             String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD " +
@@ -66,16 +70,18 @@ public class JdbcUser implements UserDAO {
                     "AND PASS_ATTR.ATTR_ID = 4";
             users = jdbcTemplateObject.query(sql, new UserMapper());
         } catch (DataAccessException e) {
-            System.out.println("Error in select record, rolling back");
+            logger.error("Error in select user records, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        logger.debug("Leaving findAll():" + users);
         return users;
     }
 
 
     @Override
     public User findByEmail(String email) {
+        logger.debug("Entering findByEmail(email=" + email + ")");
         User user;
         try {
             String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD\n" +
@@ -92,15 +98,17 @@ public class JdbcUser implements UserDAO {
                     "                    AND EMAIL_ATTR.VALUE = ?";
             user = jdbcTemplateObject.queryForObject(sql, new Object[]{email}, new UserMapper());
         } catch (DataAccessException e) {
-            System.out.println("Error in select record, rolling back");
+            logger.error("Error in select user record, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        logger.debug("Leaving findByEmail():" + user);
         return user;
     }
 
     @Override
     public void addUser(User user) {
+        logger.debug("Entering addUser(user=" + user + ")");
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",null);
@@ -110,8 +118,7 @@ public class JdbcUser implements UserDAO {
             args.put("p_password",user.getPassword());
             insertUser.execute(args);
         } catch (DataAccessException e) {
-            e.printStackTrace();
-            System.out.println("Error inserting user, rolling back");
+            logger.error("Error inserting user, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
@@ -119,13 +126,13 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public void deleteUser(int id) {
+        logger.debug("Entering deleteUser(id=" + id + ")");
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",id);
             deleteUser.execute(args);
         } catch (DataAccessException e) {
-            e.printStackTrace();
-            System.out.println("Error deleting user, rolling back");
+            logger.error("Error deleting user, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
@@ -133,8 +140,9 @@ public class JdbcUser implements UserDAO {
 
     @Override
     public void updateUser(User user) {
+        logger.debug("Entering updateUser(user=" + user + ")");
         try {
-            System.out.println(user.getId());
+//            System.out.println(user.getId());
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",user.getId());
             args.put("p_full_name",user.getFullName());
@@ -143,9 +151,9 @@ public class JdbcUser implements UserDAO {
             args.put("p_password",user.getPassword());
             updateUser.execute(args);
         } catch (DataAccessException ex) {
-            ex.printStackTrace();
-            System.out.println("Error updating user, rolling back");
+            logger.error("Error updating user, rolling back", ex);
             transactionManager.rollback(status);
         }
     }
+
 }

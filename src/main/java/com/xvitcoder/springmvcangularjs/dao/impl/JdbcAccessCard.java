@@ -119,7 +119,7 @@ public class JdbcAccessCard implements AccessCardDao {
             accessCards = jdbcTemplateObject.query(sql,
                     new AccessCardMapper());
         } catch (DataAccessException e) {
-            logger.error("Error finding all access cards", e);
+            logger.error("Error finding all access cards, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
@@ -129,6 +129,7 @@ public class JdbcAccessCard implements AccessCardDao {
 
     @Override
     public void update(AccessCard card) {
+        logger.debug("Entering update(card=" + card + ")");
         Locale.setDefault(Locale.ENGLISH);
         TransactionDefinition def = new DefaultTransactionDefinition();
         TransactionStatus status = transactionManager.getTransaction(def);
@@ -149,7 +150,7 @@ public class JdbcAccessCard implements AccessCardDao {
             System.out.println("2ebhovbhwe bv");
             transactionManager.commit(status);
         } catch (DataAccessException e) {
-            System.out.println(e);
+            logger.error("Error updating card, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
@@ -167,9 +168,10 @@ public class JdbcAccessCard implements AccessCardDao {
             System.out.println("2ebhovbhwe bv");
             transactionManager.commit(status);
         } catch (DataAccessException e) {
-            logger.error("Error deleting card", e);
+            logger.error("Error deleting card, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
     }
+
 }

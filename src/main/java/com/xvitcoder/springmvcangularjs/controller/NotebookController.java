@@ -3,6 +3,7 @@ package com.xvitcoder.springmvcangularjs.controller;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.service.NotebookService;
 import com.xvitcoder.springmvcangularjs.service.impl.NotebookServiceImpl;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -18,17 +19,22 @@ import java.util.List;
 @RequestMapping("/notebook")
 public class NotebookController {
 
+    private Logger logger = Logger.getLogger(NotebookController.class);
+
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private NotebookService notebookService = (NotebookServiceImpl) context.getBean("notebookServiceImpl");
 
     @RequestMapping("/all")
     @ResponseBody
     public List<Notebook> getNotebooks(){
+        logger.debug("Request URL: /notebook/all; Entering getNotebooks()");
+        logger.debug("Response: " + notebookService.findAll());
         return notebookService.findAll();
     }
 
     @RequestMapping("/layout")
     public String getNotebooksPartialPage() {
+        logger.debug("Request URL: /notebook/layout; Entering getNotebooksPartialPage()");
         return "notebooks/layout";
     }
 

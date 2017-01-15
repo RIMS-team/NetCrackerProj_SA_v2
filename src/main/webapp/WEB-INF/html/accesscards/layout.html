@@ -23,7 +23,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="card in cards | itemsPerPage:5 | filter: test | orderBy:sortKey:reverse">
+    <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: test | itemsPerPage:5 ">
         <td>{{card.id}}</td>
         <td>{{card.statusName}}</td>
         <td>{{card.inventoryNum}}</td>

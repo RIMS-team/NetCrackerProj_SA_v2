@@ -9,24 +9,34 @@
 <table class="table table-bordered table-striped" style="width:100%;" ng-show="cards.length > 0" show-filter="true">
     <thead>
     <tr>
-        <th style="text-align: center;">ID</th>
-        <th style="text-align: center;">Status</th>
-        <th style="text-align: center;">Inventory number</th>
+        <th ng-click="sort('id')" style="text-align: center;">ID
+            <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('statusName')" style="text-align: center;">Status
+            <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory number
+            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
         <th style="text-align: center; width: 25px;">Remove</th>
         <th style="text-align: center; width: 25px;">Update</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="card in cards | filter: test">
+    <tr dir-paginate="card in cards | itemsPerPage:5 | filter: test | orderBy:sortKey:reverse">
         <td>{{card.id}}</td>
         <td>{{card.statusName}}</td>
         <td>{{card.inventoryNum}}</td>
         <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger updateCardButton" data-toggle="modal" data-target="#updateCard">Update</button></td>
         <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(card.id)">Remove</button></td>
-
     </tr>
     </tbody>
 </table>
+    <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"  >
+    </dir-pagination-controls>
 <button style="margin-left:100px;" class="btn btn-danger"  ng-show="cards.length > 1" ng-click="removeAllCards()">Remove All Access Cards</button>
 
 <div class="modal fade" id="addCard" role="dialog">

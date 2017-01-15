@@ -6,7 +6,7 @@
  */
 
 (function () {
-    var app = angular.module("accesscards", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("accesscards", ["ngSanitize","angularUtils.directives.dirPagination","ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 
     app.controller("AccessCardController", function ($scope, $http, $modal) {
         var _this = this;
@@ -48,6 +48,11 @@
                 $scope.card.statusName = '';
                 $scope.card.inventoryNum = '';
             });
+        };
+
+        $scope.sort = function (keyname) {
+            $scope.sortKey=keyname;
+            $scope.reverse=!$scope.reverse;
         };
 
         $scope.fetchCardsList();

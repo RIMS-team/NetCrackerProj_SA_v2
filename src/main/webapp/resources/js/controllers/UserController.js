@@ -7,8 +7,7 @@
 (function () {
     var app = angular.module("users", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 
-    app.controller("UserController", function ($scope, $http, $modal) {
-        var _this = this;
+    app.controller("UserController", function ($scope, $http) {
 
         $scope.fetchUserList = function() {
             $http.get('user/all').success(function(userList){
@@ -17,7 +16,7 @@
         };
 
         $scope.addNewUser = function(user) {
-            $('.user-add-form').find('input').val('');
+            $('#addUser').find('input').val('');
             $http.post('user/add', user).success(function() {
                 $scope.fetchUserList();
                 $scope.user.fullName = '';

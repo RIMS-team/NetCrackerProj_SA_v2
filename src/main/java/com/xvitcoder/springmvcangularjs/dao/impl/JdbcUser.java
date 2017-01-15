@@ -1,7 +1,9 @@
 package com.xvitcoder.springmvcangularjs.dao.impl;
 
+import com.xvitcoder.springmvcangularjs.dao.Mappers.AdminMapper;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.UserMapper;
 import com.xvitcoder.springmvcangularjs.dao.UserDAO;
+import com.xvitcoder.springmvcangularjs.model.Admin;
 import com.xvitcoder.springmvcangularjs.model.User;
 import oracle.jdbc.OracleTypes;
 import org.apache.log4j.Logger;
@@ -71,7 +73,7 @@ public class JdbcUser implements UserDAO {
             users = jdbcTemplateObject.query(sql, new UserMapper());
         } catch (DataAccessException e) {
             logger.error("Error in select user records, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + users);
@@ -80,13 +82,13 @@ public class JdbcUser implements UserDAO {
 
 
     @Override
-    public User findByEmail(String email) {
+    public Admin findByEmail(String email) {
         logger.debug("Entering findByEmail(email=" + email + ")");
-        User user;
+        Admin user;
         try {
-            String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD\n" +
+            String sql = "SELECT USR.OBJECT_ID AS EMPLOYEE_ID, PHONE_ATTR.VALUE AS PHONE_NUMBER, FNAME_ATTR.VALUE AS FULL_NAME, EMAIL_ATTR.VALUE AS EMAIL, PASS_ATTR.VALUE as PASSWORD, USR.OBJECT_TYPE_ID as ROLE\n" +
                     "                    FROM OBJECTS USR, ATTRIBUTES FNAME_ATTR, ATTRIBUTES EMAIL_ATTR, ATTRIBUTES PHONE_ATTR, ATTRIBUTES PASS_ATTR\n" +
-                    "                    WHERE (USR.OBJECT_TYPE_ID = 2 OR USR.OBJECT_TYPE_ID = 3)/* USER */\n" +
+                    "                    WHERE (USR.OBJECT_TYPE_ID = 2 OR USR.OBJECT_TYPE_ID = 3)/* USER OR ADMIN */\n" +
                     "                    AND USR.OBJECT_ID = FNAME_ATTR.OBJECT_ID\n" +
                     "                    AND USR.OBJECT_ID = EMAIL_ATTR.OBJECT_ID\n" +
                     "                    AND USR.OBJECT_ID = PHONE_ATTR.OBJECT_ID\n" +
@@ -96,10 +98,10 @@ public class JdbcUser implements UserDAO {
                     "                    AND PHONE_ATTR.ATTR_ID = 3 /* PHONE_NUMBER */\n" +
                     "                    AND PASS_ATTR.ATTR_ID = 4/* PASSWORD*/\n" +
                     "                    AND EMAIL_ATTR.VALUE = ?";
-            user = jdbcTemplateObject.queryForObject(sql, new Object[]{email}, new UserMapper());
+            user = jdbcTemplateObject.queryForObject(sql, new Object[]{email}, new AdminMapper());
         } catch (DataAccessException e) {
             logger.error("Error in select user record, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findByEmail():" + user);
@@ -119,7 +121,7 @@ public class JdbcUser implements UserDAO {
             insertUser.execute(args);
         } catch (DataAccessException e) {
             logger.error("Error inserting user, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -133,7 +135,7 @@ public class JdbcUser implements UserDAO {
             deleteUser.execute(args);
         } catch (DataAccessException e) {
             logger.error("Error deleting user, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -152,7 +154,7 @@ public class JdbcUser implements UserDAO {
             updateUser.execute(args);
         } catch (DataAccessException ex) {
             logger.error("Error updating user, rolling back", ex);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
         }
     }
 

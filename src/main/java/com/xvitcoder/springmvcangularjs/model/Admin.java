@@ -5,10 +5,21 @@ package com.xvitcoder.springmvcangularjs.model;
  */
 public class Admin extends User {
 
+    protected String role;
+
     public Admin(){}
 
-    public Admin(int id, String phoneNumber, String fullName, String eMail, String password){
+    public Admin(int id, String phoneNumber, String fullName, String eMail, String password, String role){
         super(id, phoneNumber, fullName, eMail, password);
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String toString() {

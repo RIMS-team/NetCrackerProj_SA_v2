@@ -1,7 +1,9 @@
 package com.xvitcoder.springmvcangularjs.security;
 
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcUser;
+import com.xvitcoder.springmvcangularjs.model.Admin;
 import com.xvitcoder.springmvcangularjs.model.User;
+import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -24,12 +26,11 @@ public class AuthService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
         logger.debug("Entering loadUserByUsername(email=" + email + ")");
-        JdbcUser jdbcUser = (JdbcUser) context.getBean("userDAO");
-        User user = jdbcUser.findByEmail(email);
+        UserService userService = (UserService) context.getBean("userServiceImpl");
+        Admin user = userService.findByEmail(email);
         return new org.springframework.security.core.userdetails.User(
                 user.geteMail(),
                 user.getPassword(),
-                AuthorityUtils.createAuthorityList("ROLE_USER"));
+                AuthorityUtils.createAuthorityList(user.getRole()));
     }
-
 }

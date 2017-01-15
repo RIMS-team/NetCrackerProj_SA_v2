@@ -2,6 +2,7 @@ package com.xvitcoder.springmvcangularjs.service.impl;
 
 
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcUser;
+import com.xvitcoder.springmvcangularjs.model.Admin;
 import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 
@@ -24,8 +25,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userDao.findByEmail(email);
+    public Admin findByEmail(String email) {
+        Admin user = userDao.findByEmail(email);
+        if (user.getRole().equals("2")) user.setRole("ROLE_USER");
+        if (user.getRole().equals("3")) user.setRole("ROLE_ADMIN");
+        return user;
     }
 
     @Override

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="AngularSpringApp">
+<html lang="en" ng-app="AngularSpringApp" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <!--<meta charset="UTF-8"/>-->
     <!--<meta pageEncoding="UTF-8" />-->
@@ -89,7 +89,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#" ng-click="mainCtrl.addTab('employees', 'Employees', 'employees-list')">Employees</a> </li>
                         <!--<li role="separator" class="divider"></li>-->
-                        <li><a href="#" ng-click="mainCtrl.addTab('users', 'Users', 'users-list')">Users</a> </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" ng-click="mainCtrl.addTab('users', 'Users', 'users-list')">Users</a> </li>
                     </ul>
                 </li>
 
@@ -198,7 +198,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-xs-3">
+                                        <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-3 col-xs-3">
                                             <div class="thumbnail">
                                                 <img style="height: 120px;" src="resources/img2/user-02_c.png" alt="..."/>
                                                 <div class="caption" style="text-align: center">

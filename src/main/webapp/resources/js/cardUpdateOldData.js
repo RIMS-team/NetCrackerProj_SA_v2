@@ -13,5 +13,10 @@ $(document).ready(function () {
         $('#update-card-statusName').val(statusName).trigger('input');
         $('#update-card-inventoryNum').val(inventoryNum).trigger('input');;
 
+
+        $(document).on('click', '#add-card-button', function() {
+            $('#addCard').find('input').val('');
+        });
+
     });
 });

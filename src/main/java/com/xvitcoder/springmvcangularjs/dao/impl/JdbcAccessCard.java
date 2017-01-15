@@ -51,18 +51,11 @@ public class JdbcAccessCard implements AccessCardDao {
         SimpleJdbcCall simpleJdbcCall;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_insert");
-            simpleJdbcCall.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
-            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inventory_num", OracleTypes.VARCHAR));
-            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inv_status_id", OracleTypes.VARCHAR));
-            simpleJdbcCall.compile();
-
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",null);
             map.put("p_inventory_num",accessCard.getInventoryNum());
             map.put("p_inv_status_id",3);
             simpleJdbcCall.execute(map);
-
-            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error inserting access card", e);
             transactionManager.rollback(status);
@@ -136,11 +129,6 @@ public class JdbcAccessCard implements AccessCardDao {
         SimpleJdbcCall simpleJdbcCall=null;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_update");
-            simpleJdbcCall.addDeclaredParameter(new SqlInOutParameter("p_object_id", OracleTypes.NUMBER));
-            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inventory_num", OracleTypes.VARCHAR));
-            simpleJdbcCall.addDeclaredParameter(new SqlParameter("p_inv_status_id", OracleTypes.VARCHAR));
-            simpleJdbcCall.compile();
-
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",card.getId());
             map.put("p_inventory_num",card.getInventoryNum());
@@ -148,7 +136,6 @@ public class JdbcAccessCard implements AccessCardDao {
             simpleJdbcCall.execute(map);
 
             System.out.println("2ebhovbhwe bv");
-            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error updating card, rolling back", e);
             transactionManager.rollback(status);
@@ -161,12 +148,11 @@ public class JdbcAccessCard implements AccessCardDao {
         logger.debug("Entering deleteCard(id="+ id + ")");
         SimpleJdbcCall simpleJdbcCall=null;
         try {
-            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_delete");
+            simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_delete");
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",id);
             simpleJdbcCall.execute(map);
             System.out.println("2ebhovbhwe bv");
-            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error deleting card, rolling back", e);
             transactionManager.rollback(status);

@@ -54,7 +54,7 @@ public class JdbcAccessCard implements AccessCardDao {
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",null);
             map.put("p_inventory_num",accessCard.getInventoryNum());
-            map.put("p_inv_status_id",3);
+            map.put("p_inv_status_id", accessCard.getStatusId());
             simpleJdbcCall.execute(map);
         } catch (DataAccessException e) {
             logger.error("Error inserting access card", e);
@@ -132,10 +132,10 @@ public class JdbcAccessCard implements AccessCardDao {
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",card.getId());
             map.put("p_inventory_num",card.getInventoryNum());
-            map.put("p_inv_status_id",3);
+            map.put("p_inv_status_id",card.getStatusId());
             simpleJdbcCall.execute(map);
 
-            System.out.println("2ebhovbhwe bv");
+            //System.out.println("2ebhovbhwe bv");
         } catch (DataAccessException e) {
             logger.error("Error updating card, rolling back", e);
             transactionManager.rollback(status);

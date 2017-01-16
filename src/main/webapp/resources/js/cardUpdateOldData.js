@@ -6,12 +6,12 @@ $(document).ready(function () {
         var data = $(this).parent().siblings();
 
         var id = data.eq(0).html();
-        var statusName = data.eq(1).html();
+        var statusId = data.eq(1).html();
         var inventoryNum = data.eq(2).html();
 
         $('#update-card-id').val(id).trigger('input');
-        $('#update-card-statusName').val(statusName).trigger('input');
-        $('#update-card-inventoryNum').val(inventoryNum).trigger('input');;
+        $('#update-card-statusId').val(statusId).trigger('input');
+        $('#update-card-inventoryNum').val(inventoryNum).trigger('input');
 
 
         $(document).on('click', '#add-card-button', function() {

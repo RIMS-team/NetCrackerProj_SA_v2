@@ -6,9 +6,10 @@
  */
 
 (function () {
-    var app = angular.module("accesscards", ["ngSanitize","angularUtils.directives.dirPagination","ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var modul = angular.module("accesscards", ["ngSanitize","angularUtils.directives.dirPagination","ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize",
+        "invstatuses"]);
 
-    app.controller("AccessCardController", function ($scope, $http, $modal) {
+    modul.controller("AccessCardController", function ($scope, $http, $modal, invStatusService) {
         var _this = this;
 
         $scope.fetchCardsList = function () {
@@ -18,10 +19,12 @@
         };
 
         $scope.addNewCard = function (card) {
+            card.statusId = $scope.selectedStatus.id;
             console.log(card);
             $http.post('accesscards/add', card).success(function () {
                 $scope.fetchCardsList();
                 $scope.card.id = '';
+                $scope.card.statusId = '';
                 $scope.card.statusName = '';
                 $scope.card.inventoryNum = '';
             }).error(function () {
@@ -30,10 +33,12 @@
         };
 
         $scope.updateCard = function (card) {
+            card.statusId = card.selectedStatus.id;
             console.log(card);
             $http.post('accesscards/update', card).success(function () {
                 $scope.fetchCardsList();
                 $scope.card.id = '';
+                $scope.card.statusId = '';
                 $scope.card.statusName = '';
                 $scope.card.inventoryNum = '';
             }).error(function () {
@@ -45,6 +50,7 @@
             $http.delete('accesscards/remove/' + id).success(function () {
                 $scope.fetchCardsList();
                 $scope.card.id = '';
+                $scope.card.statusId = '';
                 $scope.card.statusName = '';
                 $scope.card.inventoryNum = '';
             });
@@ -56,10 +62,26 @@
         };
 
         $scope.fetchCardsList();
+
+
+        // editor
+
+        $scope.selectedStatus = {};
+        $scope.invStatuses = [];
+
+        invStatusService.loadList()
+            .success(function(InvStatusList){
+                $scope.invStatuses = invStatusService.getList();
+            }).error(function () {
+            $scope.invStatuses = invStatusService.getList();
+        });
+
+
     })
 
-    app.directive("accesscardsList", function () {
+    modul.directive("accesscardsList", function () {
         return {
+            //restrict: "E",
             templateUrl: "accesscards/layout.html"
         }
     });

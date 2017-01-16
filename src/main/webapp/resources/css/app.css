@@ -123,3 +123,7 @@ textarea {
     float: none;
     width: 100%;
 }
+
+.navbar-nav>li>a {
+    padding-bottom: 0px;
+}

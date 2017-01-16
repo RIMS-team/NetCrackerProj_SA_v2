@@ -47,7 +47,7 @@ public class AccessCardController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody void updateCard(@RequestBody AccessCard card) {
         logger.debug("Request URL: /accesscards/update; Entering updateCard(card=" + card + ")");
-        accessCardService.updateUser(card);
+        accessCardService.updateCard(card);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)

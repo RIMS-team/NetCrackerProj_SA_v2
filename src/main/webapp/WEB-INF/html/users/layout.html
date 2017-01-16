@@ -1,6 +1,5 @@
-<div ng-controller="UserController as formController">
+<div ng-controller="UserController as formController" style="width:70%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
 
-<h3 style="margin-left:100px;">User List</h3>
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="users.length == 0">
     No users found
 </div>
@@ -10,7 +9,7 @@
 <button id="add-user-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 </button>
-<table class="table table-bordered table-striped" style="width:100%;" ng-show="users.length > 0">
+<table class="table table-bordered table-striped"  ng-show="users.length > 0">
     <thead>
     <tr>
         <th style="text-align: center;">User Name</th>

@@ -1,14 +1,14 @@
-<div ng-controller="AccessCardController as formController">
+<div ng-controller="AccessCardController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
 
-<h3 style="margin-left:100px;">Access Cards List</h3>
-<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="cards.length == 0">
+<div class="alert alert-info" style="width:400px;" ng-show="cards.length == 0">
     No cards found
 </div>
-<input type="text" ng-model="test"/>
+
 <button id="add-card-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addCard" style="margin-bottom: 10px">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 </button>
-<table class="table table-bordered table-striped" style="width:100%;" ng-show="cards.length > 0" show-filter="true">
+
+<table class="table table-bordered table-striped"  ng-show="cards.length > 0" show-filter="true">
     <thead>
     <tr>
         <th ng-click="sort('id')" style="text-align: center;">ID
@@ -20,8 +20,8 @@
         <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory number
             <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th style="text-align: center; width: 25px;">Remove</th>
         <th style="text-align: center; width: 25px;">Update</th>
+        <th style="text-align: center; width: 25px;">Remove</th>
     </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
             direction-links="true"
             boundary-links="true"  >
     </dir-pagination-controls>
-<button style="margin-left:100px;" class="btn btn-danger"  ng-show="cards.length > 1" ng-click="removeAllCards()">Remove All Access Cards</button>
+
 
 <div class="modal fade" id="addCard" role="dialog">
     <div class="modal-dialog">
@@ -54,16 +54,16 @@
             <div class="modal-body">
                 <div style="padding: 5px">
                     <form class="form-horizontal">
+
                         <div class="form-group">
-                            <label for="card-id">ID:</label>
-                            <input type="text" class="form-control" id="card-id" placeholder="ID" ng-model="card.id"/>
+                            <label for="Status"> Status* </label>
+                            <!--<p>selected id = {{selectedStatus}}</p>-->
+                            <select name="Status" class="form-control" ng-model="selectedStatus" ng-options="status.name for status in invStatuses track by status.id">
+                            </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="card-status">Status:</label>
-                            <input type="text" class="form-control" id="card-status" placeholder="Status" ng-model="card.statusName"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="card-inventory-number">Inventory number:</label>
+                            <label for="card-inventory-number">Inventory number* </label>
                             <input type="text" class="form-control" id="card-inventory-number" placeholder="Inventory number" ng-model="card.inventoryNum"/>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-click="addNewCard(card)" data-dismiss="modal">Add</button>
@@ -84,16 +84,21 @@
                 <h4 class="modal-title">Update Card</h4>
             </div>
             <div class="modal-body">
+
+                <div ng-init="selectedStatus.id = card.statusId"></div>
+
                 <div style="padding: 5px">
                     <form class="form-horizontal">
+
+                        <input type="text" id="update-card-id" style="display:none" ng-model="card.id"/>
+
                         <div class="form-group">
-                            <label for="update-card-id">ID:</label>
-                            <input type="text" class="form-control" id="update-card-id" placeholder="ID" ng-model="card.id"/>
+                            <label for="Status"> Status* </label>
+                            <!--<p>selected id = {{card.selectedStatus}}</p>-->
+                            <select name="Status" class="form-control" ng-model="selectedStatus" ng-options="status.name for status in invStatuses track by status.id">
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label for="update-card-statusName">Status:</label>
-                            <input type="text" class="form-control" id="update-card-statusName" placeholder="Status" ng-model="card.statusName"/>
-                        </div>
+
                         <div class="form-group">
                             <label for="update-card-inventoryNum">Inventory number:</label>
                             <input type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="card.inventoryNum"/>

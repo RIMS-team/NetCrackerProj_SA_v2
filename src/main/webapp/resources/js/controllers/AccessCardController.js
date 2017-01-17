@@ -12,35 +12,39 @@
     modul.controller("AccessCardController", function ($scope, $http, $modal, invStatusService) {
         var _this = this;
 
+        $scope.editRecord = {};
+        //$scope.selectedStatus = {};
+        $scope.invStatuses = [];
+
         $scope.fetchCardsList = function () {
             $http.get('accesscards/accesscardlist.json').success(function (cardList) {
                 $scope.cards = cardList;
             });
         };
 
-        $scope.addNewCard = function (card) {
-            card.statusId = $scope.selectedStatus.id;
-            console.log(card);
-            $http.post('accesscards/add', card).success(function () {
+        $scope.addNewCard = function (editRecord) {
+            editRecord.statusId = editRecord.selectedStatus.id;
+            console.log(editRecord);
+            $http.post('accesscards/add', editRecord).success(function () {
                 $scope.fetchCardsList();
-                $scope.card.id = '';
-                $scope.card.statusId = '';
-                $scope.card.statusName = '';
-                $scope.card.inventoryNum = '';
+                $scope.editRecord.id = '';
+                $scope.editRecord.statusId = '';
+                $scope.editRecord.statusName = '';
+                $scope.editRecord.inventoryNum = '';
             }).error(function () {
                 console.log("Error sending insert request!");
             });
         };
 
-        $scope.updateCard = function (card) {
-            card.statusId = card.selectedStatus.id;
-            console.log(card);
-            $http.post('accesscards/update', card).success(function () {
+        $scope.updateCard = function (editRecord) {
+            editRecord.statusId = editRecord.selectedStatus.id;
+            console.log(editRecord);
+            $http.post('accesscards/update', editRecord).success(function () {
                 $scope.fetchCardsList();
-                $scope.card.id = '';
-                $scope.card.statusId = '';
-                $scope.card.statusName = '';
-                $scope.card.inventoryNum = '';
+                $scope.editRecord.id = '';
+                $scope.editRecord.statusId = '';
+                $scope.editRecord.statusName = '';
+                $scope.editRecord.inventoryNum = '';
             }).error(function () {
                 console.log("Error sending update request!");
             });
@@ -49,10 +53,10 @@
         $scope.removeCard = function (id) {
             $http.delete('accesscards/remove/' + id).success(function () {
                 $scope.fetchCardsList();
-                $scope.card.id = '';
-                $scope.card.statusId = '';
-                $scope.card.statusName = '';
-                $scope.card.inventoryNum = '';
+                $scope.editRecord.id = '';
+                $scope.editRecord.statusId = '';
+                $scope.editRecord.statusName = '';
+                $scope.editRecord.inventoryNum = '';
             });
         };
 
@@ -66,8 +70,23 @@
 
         // editor
 
-        $scope.selectedStatus = {};
-        $scope.invStatuses = [];
+        $scope.openUpdateEditor = function (editRecord) {
+            // $modal.open({
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'accesscards/layout.html',
+                controller: 'AccessCardController',
+                resolve: {
+                    // recordId: function () {
+                    //     return recordId;
+                    // },
+                    sender: function () {
+                        return _this;
+                    }
+                }
+            });
+        }
+
 
         invStatusService.loadList()
             .success(function(InvStatusList){

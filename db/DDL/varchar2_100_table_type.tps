@@ -1,0 +1,6 @@
+CREATE OR REPLACE TYPE "VARCHAR2_100_TABLE_TYPE" as table of varchar2(2000)
+
+
+
+
+/

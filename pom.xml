@@ -116,6 +116,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
             <version>8.0.24</version>

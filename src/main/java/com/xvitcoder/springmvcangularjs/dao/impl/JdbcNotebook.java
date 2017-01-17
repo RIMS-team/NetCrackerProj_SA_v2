@@ -75,7 +75,7 @@ public class JdbcNotebook implements NotebookDAO {
         }
         catch (DataAccessException e) {
             logger.error("Error in select record, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + notebooks);

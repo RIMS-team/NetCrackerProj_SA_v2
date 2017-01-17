@@ -49,7 +49,7 @@ public class JdbcInventStatus implements InventStatusDao {
             inventStatusList = jdbcTemplateObject.query(sql, new InventStatusMapper());
         }catch (DataAccessException e) {
             logger.error("Error in select status records, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
 //        System.out.println("DAO - Inventory Status");
@@ -73,7 +73,7 @@ public class JdbcInventStatus implements InventStatusDao {
             inventStatus = jdbcTemplateObject.queryForObject(sql, new Object[]{id}, new InventStatusMapper());
         }catch (DataAccessException e) {
             logger.error("Error in select status record, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findById():" + inventStatus);

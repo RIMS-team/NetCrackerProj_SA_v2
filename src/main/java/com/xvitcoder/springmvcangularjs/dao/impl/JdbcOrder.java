@@ -60,7 +60,7 @@ public class JdbcOrder implements OrderDAO {
         }
         catch (DataAccessException e) {
             logger.error("Error inserting user, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + orders);

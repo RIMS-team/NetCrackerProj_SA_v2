@@ -5,9 +5,6 @@
         'AngularSpringApp.filters', 'AngularSpringApp.services', 'AngularSpringApp.directives',
         "employees", "notebooks", "users", "accesscards", "orders", "invstatuses", "ordstatuses"
 
-        ,"buildings"
-
-
     ]);
 
 

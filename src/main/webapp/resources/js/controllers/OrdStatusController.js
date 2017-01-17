@@ -4,28 +4,27 @@
 'use strict';
 
 /**
- * InvStatusController
+ * OrdStatusController
  * @constructor
  */
 
 (function () {
-    var app = angular.module("ordstatuses", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var modul = angular.module("ordstatuses", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
     //////    var app = angular.module("ordstatuses", []);
 
     //   var OrdStatusController = function($scope, $http) {
-    app.controller("OrdStatusController", function ($scope, $http, $modal) {
+    modul.controller("OrdStatusController", function ($scope, $http, $modal, ordStatusService) {
         var _this = this;
 
-        $scope.fetchOrdStatusList = function() {
-            $http.get('ordstats/ordstatlist.json').success(function(OrdStatusList){
-                $scope.ordStats = OrdStatusList;
-            });
-        };
-
-        $scope.fetchOrdStatusList();
+        ordStatusService.loadList()
+            .success(function(OrdStatusList){
+                $scope.ordStats = ordStatusService.getList();
+            }).error(function () {
+             $scope.ordStats = ordStatusService.getList();
+        });
     });
 
-    app.directive("ordstatusesList", function () {
+    modul.directive("ordstatusesList", function () {
         return {
             templateUrl: "ordstats/layout.html"
         }

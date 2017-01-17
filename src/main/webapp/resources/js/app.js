@@ -3,7 +3,8 @@
 (function () {
     var app = angular.module("AngularSpringApp", ["ui.bootstrap",
         'AngularSpringApp.filters', 'AngularSpringApp.services', 'AngularSpringApp.directives',
-        "employees", "notebooks", "users", "accesscards", "orders"
+        "employees", "notebooks", "users", "accesscards", "orders", "invstatuses", "ordstatuses"
+
     ]);
 
 
@@ -111,6 +112,17 @@
 //         templateUrl: 'order/layout',
 //         controller: OrderController
 //     });
+
+    // $routeProvider.when('/invstats', {
+    //     templateUrl: 'invstats/layout',
+    //     controller: InvStatusController
+    // });
+    //
+    // $routeProvider.when('/ordstats', {
+    //     templateUrl: 'ordstats/layout',
+    //     controller: OrdStatusController
+    // });
+
 //
 //     $routeProvider.otherwise({redirectTo: '/employees'});
 // }]);

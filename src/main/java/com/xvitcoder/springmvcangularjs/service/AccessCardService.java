@@ -15,5 +15,5 @@ public interface AccessCardService {
     AccessCard findByInventoryNum(int inventoryNum);
     void addAccessCard(AccessCard card);
     void deleteCard(int id);
-    void updateUser(AccessCard card);
+    void updateCard(AccessCard card);
 }

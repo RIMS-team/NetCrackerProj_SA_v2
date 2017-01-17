@@ -1,0 +1,23 @@
+<div ng-controller="InvStatusController as formController" style="width:70%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
+
+<div class="alert alert-info" style="width:70%;" ng-show="invStats.length == 0">
+    No statuses found
+</div>
+<table class="table table-bordered table-striped"  ng-show="invStats.length > 0">
+    <thead>
+    <tr>
+        <th style="text-align: center;">ID</th>
+        <th style="text-align: center;">Name</th>
+        <th style="text-align: center;">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in invStats">
+        <td>{{item.id}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.name}}</td>
+    </tr>
+    </tbody>
+</table>
+
+</div>

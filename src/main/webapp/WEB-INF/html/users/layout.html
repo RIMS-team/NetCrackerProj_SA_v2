@@ -6,7 +6,7 @@
 
 <!-- Modal -->
 
-<button id="add-user-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
+<button id="addUserForm-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 </button>
 <table class="table table-bordered table-striped"  ng-show="users.length > 0">
@@ -43,28 +43,36 @@
             </div>
             <div class="modal-body">
                 <div style="padding: 5px">
-                    <form class="form-horizontal user-add-form">
-                        <div class="form-group">
+                    <form name="addUserForm" class="form-horizontal user-add-form" ng-submit="submitAddUserForm(user)" novalidate="novalidate">
+                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.fullname.$invalid &amp;&amp; !addUserForm.fullname.$pristine }">
                             <label for="user-full-name">Full Name:</label>
-                            <input type="text" class="form-control" id="user-full-name" placeholder="Full Name" ng-model="user.fullName"/>
+                            <input name="fullname" type="text" class="form-control" id="user-full-name" placeholder="Full Name" ng-model="user.fullName" ng-minlength="6" required="required"/>
+                            <p ng-show="addUserForm.fullname.$error.minlength" class="help-block">Full Name is too short.</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.email.$invalid &amp;&amp; !addUserForm.email.$pristine }">
                             <label for="user-email">Email address:</label>
-                            <input type="email" class="form-control" id="user-email" placeholder="Email" ng-model="user.eMail"/>
+                            <input name="email" type="email" class="form-control" id="user-email" placeholder="Email" ng-model="user.eMail"/>
+                            <p ng-show="addUserForm.email.$invalid &amp;&amp; !addUserForm.email.$pristine" class="help-block">Enter a valid email.</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.phoneNumber.$invalid &amp;&amp; !addUserForm.phoneNumber.$pristine }">
                             <label for="user-telephone">Telephone:</label>
-                            <input type="text" class="form-control" id="user-telephone" placeholder="Telephone Number" ng-model="user.phoneNumber"/>
+                            <input name="phoneNumber" type="text" class="form-control" id="user-telephone" placeholder="Telephone Number" ng-pattern="/^[0-9]{1,12}$/" ng-model="user.phoneNumber" required="required"/>
+                            <p ng-show="addUserForm.phoneNumber.$error.pattern" class="help-block">Phone Number is not valid.</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.password.$invalid &amp;&amp; !addUserForm.password.$pristine }">
                             <label for="user-password">Password:</label>
-                            <input type="password" class="form-control" id="user-password" placeholder="Password" ng-model="user.password"/>
+                            <input name="password" type="password" class="form-control" id="user-password" placeholder="Password" ng-model="user.password" ng-minlength="6" required="required"/>
+                            <p ng-show="addUserForm.password.$error.minlength" class="help-block">Password is too short.</p>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.cpassword.$invalid &amp;&amp; !addUserForm.cpassword.$pristine }">
+                            <label for="user-repeat-password">Repeat Password:</label>
+                            <input name="cpassword" type="password" class="form-control" id="user-repeat-password" placeholder="Repeat Password" ng-model="user.confirmPassword" required="required" match-password="user.password"/>
+                            <p ng-show="addUserForm.cpassword.$error.matchPassword &amp;&amp; !addUserForm.cpassword.$error.required" class="help-block">Passwords don't match.</p>
                         </div>
                         <div class="form-group">
-                            <label for="user-repeat-password">Repeat Password:</label>
-                            <input type="password" class="form-control" id="user-repeat-password" placeholder="Repeat Password"/>
+                            <button type="submit" class="btn btn-primary" ng-disabled="addUserForm.$invalid">Add</button>
+                            <!--<button type="submit" class="btn btn-primary" ng-click="addNewUser(user)" data-dismiss="modal" ng-disabled="addUserForm.$invalid">Add</button>-->
                         </div>
-                        <button type="submit" class="btn btn-primary" ng-click="addNewUser(user)" data-dismiss="modal">Add</button>
                     </form>
                 </div>
             </div>

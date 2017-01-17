@@ -9,6 +9,11 @@
 
     app.controller("UserController", function ($scope, $http) {
 
+        $scope.submitAddUserForm = function(user) {
+            console.log(user);
+            alert("submit function");
+        };
+
         $scope.fetchUserList = function() {
             $http.get('user/all').success(function(userList){
                 $scope.users = userList;

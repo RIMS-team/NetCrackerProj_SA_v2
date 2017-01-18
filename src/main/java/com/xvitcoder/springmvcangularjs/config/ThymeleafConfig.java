@@ -2,6 +2,7 @@ package com.xvitcoder.springmvcangularjs.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
@@ -50,4 +51,5 @@ public class ThymeleafConfig {
         resolver.setOrder(2);
         return resolver;
     }
+
 }

@@ -51,25 +51,26 @@
             <h3 class="modal-title" ng-if="!editRecord.id">New Card</h3>
         </div>
         <div class="modal-body">
-            <div style="padding: 5px">
+            <div style="padding: 5px" ng-form="" name="addCardForm">
                 <!--<p>editRecord = {{editRecord}}</p>-->
                 <input type="text" id="update-card-id" style="display:none" ng-model="editRecord.id"/>
 
-                <div class="form-group">
-                    <label for="Status"> Status* </label>
+                <div class="form-group" ng-class="{ 'has-error' : addCardForm.status.$invalid &amp;&amp; !addCardForm.status.$pristine }">
+                    <label for="status"> Status* </label>
                     <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
-                    <select name="Status" class="form-control" ng-model="editRecord.selectedStatus" ng-options="status.name for status in invStatuses track by status.id">
+                    <select id="status" name="status" class="form-control" ng-model="editRecord.selectedStatus" ng-options="status.name for status in invStatuses track by status.id" required="required">
                     </select>
+                    <p ng-show="addCardForm.status.$error.required &amp;&amp; !addCardForm.status.$pristine" class="help-block">Status is required.</p>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{ 'has-error' : addCardForm.inventorynum.$invalid &amp;&amp; !addCardForm.inventorynum.$pristine }">
                     <label for="update-card-inventoryNum">Inventory number*:</label>
-                    <input type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum"/>
+                    <input name="inventorynum" type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum" ng-pattern="/^[0-9]+$/"/>
+                    <p ng-show="addCardForm.inventorynum.$error.pattern" class="help-block">Inventory Number is not valid.</p>
                 </div>
-
                 <div class="modal-footer">
                     <!--<button type="submit" class="btn btn-default btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>-->
-                    <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>
+                    <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()" ng-disabled="addCardForm.$invalid" style="width: 80px; ">Ok</button>
                 </div>
             </div>
         </div>

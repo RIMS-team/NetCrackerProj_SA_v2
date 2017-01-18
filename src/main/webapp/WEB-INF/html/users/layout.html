@@ -31,7 +31,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter: test | itemsPerPage:5 ">
+    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter: test | itemsPerPage: 15 ">
         <td style="display:none">{{user.id}}</td>
         <td>{{user.fullName}}</td>
         <td>{{user.phoneNumber}}</td>
@@ -44,7 +44,7 @@
     </tbody>
 </table>
     <dir-pagination-controls style="float: right;"
-            max-size="5"
+            max-size="15"
             direction-links="true"
             boundary-links="true"  >
     </dir-pagination-controls>

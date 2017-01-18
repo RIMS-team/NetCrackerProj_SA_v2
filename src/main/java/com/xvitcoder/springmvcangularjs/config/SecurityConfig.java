@@ -25,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
         auth.userDetailsService(authService);
     }
 
@@ -35,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login*").permitAll()
                 .antMatchers("/*").authenticated()
                 .antMatchers("/user/getAuthorizedUser").permitAll()
+                .antMatchers("/user/checkEmail").permitAll()
+                .antMatchers("/user/update").permitAll()
                 .antMatchers("/user/*").access("hasRole('ROLE_ADMIN')")
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout=true")
                 .and().rememberMe().key("uniqueAndSecret")

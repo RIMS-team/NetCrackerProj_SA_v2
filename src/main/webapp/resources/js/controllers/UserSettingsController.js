@@ -16,17 +16,16 @@
 
         $scope.getUser = function() {
             $http.get('userSetting/getAuthorizedUser').success(function(user) {
+                user.password = undefined;
+                user.oldEmail = user.eMail;
                 $scope.user = user;
             });
         };
         $scope.updateUser = function(user) {
-            console.log(user);
-            $http.put('user/update', user).success(function() {
+            var updateUser = {id : user.id, fullName : user.fullName, eMail : user.eMail, phoneNumber : user.phoneNumber, password : user.password};
+            $http.put('user/update', updateUser).success(function() {
                 $scope.getUser();
-                $scope.user.fullName = '';
-                $scope.user.eMail = '';
-                $scope.user.phoneNumber = '';
-                $scope.user.password = '';
+                $scope.settingsUpdate.$setPristine();
             }).error(function() {
                 console.log("Error sending update request");
             });

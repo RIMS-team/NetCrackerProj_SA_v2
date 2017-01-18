@@ -5,6 +5,7 @@ import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,19 @@ public class UserController {
     public String getUsersPartialPage() {
         logger.debug("Request URL: /user/layout; Entering getUsersPartialPage()");
         return "users/layout";
+    }
+
+    @RequestMapping("/checkEmail/{email}")
+    public @ResponseBody boolean checkEmail(@PathVariable("email") String email) {
+        System.err.println("EMAIL CHECK");
+        User user = userService.findByEmail(email);
+        return user != null;
+    }
+
+    @RequestMapping("/getAuthorizedUser")
+    public @ResponseBody User getAuthorizedEmail() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.findByEmail(email);
     }
 
 }

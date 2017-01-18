@@ -102,7 +102,7 @@ public class JdbcUser implements UserDAO {
         } catch (DataAccessException e) {
             logger.error("Error in select user record, rolling back", e);
 //            transactionManager.rollback(status);
-            throw e;
+            return null;
         }
         logger.debug("Leaving findByEmail():" + user);
         return user;

@@ -28,3 +28,19 @@ AppDirectives.directive("matchPassword", function () {
         }
     };
 });
+
+AppDirectives.directive('uniqueEmail', function($http) {
+    return {
+        restrict: 'A',
+        require: 'ngModel,^form',
+        link: function (scope, element, attrs, ngModel) {
+            element.bind('blur', function (e) {
+                ngModel.$loading = true;
+                $http.get("/user/checkEmail/" + element.val()).success(function(data) {
+                    ngModel.$loading = false;
+                    ngModel.$setValidity('unique', !data);
+                });
+            });
+        }
+    };
+})

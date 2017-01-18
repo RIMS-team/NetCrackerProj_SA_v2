@@ -3,10 +3,14 @@
     <div class="alert alert-info" style="width:400px;" ng-show="cards.length == 0">
         No cards found
     </div>
+        <div class="form-group">
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
+            <button id="add-card-button" type="button" class="btn btn-default btn-mini" ng-click="openInsertEditor()" style="margin-bottom: 10px">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
 
-    <button id="add-card-button" type="button" class="btn btn-default btn-mini" ng-click="openInsertEditor()" style="margin-bottom: 10px">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
 
     <table class="table table-bordered table-striped"  ng-show="cards.length > 0" show-filter="true">
         <thead>
@@ -25,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: test | itemsPerPage:5 ">
+            <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: search | itemsPerPage: 15 ">
                 <td>{{card.id}}</td>
                 <td>{{card.statusName}}</td>
                 <td>{{card.inventoryNum}}</td>
@@ -37,7 +41,7 @@
         </tbody>
     </table>
     <dir-pagination-controls
-            max-size="5"
+            max-size="15"
             direction-links="true"
             boundary-links="true"  >
     </dir-pagination-controls>

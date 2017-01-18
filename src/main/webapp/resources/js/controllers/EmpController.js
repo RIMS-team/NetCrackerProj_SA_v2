@@ -21,7 +21,7 @@
 
 
 (function () {
-    var app = angular.module("employees", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("employees", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 //////    var app = angular.module("employees", []);
 
     app.controller("EmpController", function ($scope, $http, $uibModal) {
@@ -34,7 +34,6 @@
             });
         };
 
-        $scope.fetchEmpsList();
 
 
         $scope.removeEmp = function (id) {
@@ -47,7 +46,13 @@
             });
         };
 
+        $scope.sort = function (keyname) {
+            $scope.sortKey=keyname;
+            $scope.reverse=!$scope.reverse;
+        };
 
+
+        $scope.fetchEmpsList();
     });
 
 

@@ -3,22 +3,43 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notebook.length == 0">
     No notebooks found
 </div>
+    <div class="form-group">
+        <label >Search</label>
+        <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
+    </div>
+
     <a class="btn btn-default" href="notebook/DownloadPDF" target="_blank" style="float: right; margin-bottom: 5px;"><span class="glyphicon glyphicon-floppy-disk"></span></a>
     <table class="table table-bordered table-striped"  ng-show="notebook.length > 0">
     <thead>
     <tr>
-        <th style="text-align: center;">ID</th>
-        <th style="text-align: center;">Name</th>
-        <th style="text-align: center;">Model</th>
-        <th style="text-align: center;">Memory Type</th>
-        <th style="text-align: center;">Serial Number</th>
-        <th style="text-align: center;">Inventory Num</th>
-        <th style="text-align: center;">Location</th>
-        <th style="text-align: center;">Status</th>
+        <th ng-click="sort('id')" style="text-align: center;">ID
+            <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('name')" style="text-align: center;">Name
+            <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('model')" style="text-align: center;">Model
+            <span class="glyphicon sort-icon" ng-show="sortKey=='model'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('memoryType')" style="text-align: center;">Memory Type
+            <span class="glyphicon sort-icon" ng-show="sortKey=='memoryType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('serialNumber')" style="text-align: center;">Serial Number
+            <span class="glyphicon sort-icon" ng-show="sortKey=='serialNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory Num
+            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('location')" style="text-align: center;">Location
+            <span class="glyphicon sort-icon" ng-show="sortKey=='location'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('statusName')" style="text-align: center;">Status
+            <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="elem in notebook">
+    <tr dir-paginate="elem in notebook | orderBy:sortKey:reverse | filter: search | itemsPerPage:5 ">
         <td>{{elem.id}}</td>
         <td>{{elem.name}}</td>
         <td>{{elem.model}}</td>
@@ -30,4 +51,9 @@
     </tr>
     </tbody>
 </table>
+    <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"  >
+    </dir-pagination-controls>
 </div>

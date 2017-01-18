@@ -21,7 +21,7 @@
 
 
 (function () {
-    var app = angular.module("orders", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("orders", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
     //////    var app = angular.module("orders", []);
 
     app.controller("OrderController", function ($scope, $http, $uibModal) {
@@ -43,6 +43,11 @@
             $http.get('order/all').success(function(orderList){
                 $scope.order = orderList;
             });
+        };
+
+        $scope.sort = function (keyname) {
+            $scope.sortKey=keyname;
+            $scope.reverse=!$scope.reverse;
         };
 
         $scope.fetchOrderList();

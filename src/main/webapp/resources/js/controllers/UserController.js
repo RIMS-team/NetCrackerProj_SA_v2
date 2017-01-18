@@ -10,8 +10,11 @@
     app.controller("UserController", function ($scope, $http) {
 
         $scope.submitAddUserForm = function(user) {
-            console.log(user);
-            alert("submit function");
+            user.confirmPassword = undefined;
+            var sendUser = {fullName : user.fullName, eMail : user.eMail, phoneNumber : user.phoneNumber, password : user.password};
+            $scope.addNewUser(sendUser);
+            $('#addUser').modal('hide');
+            $scope.addUserForm.$setPristine();
         };
 
         $scope.fetchUserList = function() {

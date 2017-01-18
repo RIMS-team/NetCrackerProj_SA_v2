@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Admin findByEmail(String email) {
         Admin user = userDao.findByEmail(email);
+        if (user == null) return null;
         if (user.getRole().equals("2")) user.setRole("ROLE_USER");
         if (user.getRole().equals("3")) user.setRole("ROLE_ADMIN");
         return user;

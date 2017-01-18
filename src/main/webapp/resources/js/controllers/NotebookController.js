@@ -7,7 +7,7 @@
 
 
 (function () {
-    var app = angular.module("notebooks", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("notebooks", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 
     app.controller("NotebookController", function ($scope, $http, $uibModal) {
         var _this = this;
@@ -75,6 +75,10 @@
         //     $scope.fetchEmpsList();
         // };
 
+        $scope.sort = function (keyname) {
+            $scope.sortKey=keyname;
+            $scope.reverse=!$scope.reverse;
+        };
 
     });
 

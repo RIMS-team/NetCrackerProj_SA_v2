@@ -1,0 +1,21 @@
+<div ng-controller="UserSettingController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
+    <h1>Settings</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="update-user-password">Change password:</label>
+            <input type="text" class="form-control col-xs-4" id="update-user-password" placeholder="Password" />
+            <input type="text" class="form-control col-xs-4" id="update-password" placeholder=" Repeat Password" />
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="updateUser(user)" data-dismiss="modal">Change</button>
+        <div class="form-group">
+            <label for="update-user-email">Change Email:</label>
+            <input type="text" class="form-control" id="update-user-email" placeholder="Email" ng-model="user.eMail"/>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="updateUser(user)" data-dismiss="modal">Change</button>
+        <div class="form-group">
+            <label for="update-user-phone">Change Phone Number:</label>
+            <input type="text" class="form-control" id="update-user-phone" placeholder="Phone" ng-model="user.phoneNumber"/>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="updateUser(user)" data-dismiss="modal">Change</button>
+    </form>
+</div>

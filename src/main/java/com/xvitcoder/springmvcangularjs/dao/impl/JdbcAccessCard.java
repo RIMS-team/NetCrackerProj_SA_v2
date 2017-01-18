@@ -58,7 +58,7 @@ public class JdbcAccessCard implements AccessCardDao {
             simpleJdbcCall.execute(map);
         } catch (DataAccessException e) {
             logger.error("Error inserting access card", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -85,7 +85,7 @@ public class JdbcAccessCard implements AccessCardDao {
                     new Object[]{cardId}, new AccessCardMapper());
         } catch (DataAccessException e) {
             logger.error("Error finding access card", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findByInventoryNum():" + accessCard);
@@ -113,7 +113,7 @@ public class JdbcAccessCard implements AccessCardDao {
                     new AccessCardMapper());
         } catch (DataAccessException e) {
             logger.error("Error finding all access cards, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + accessCards);
@@ -135,7 +135,7 @@ public class JdbcAccessCard implements AccessCardDao {
             //System.out.println("2ebhovbhwe bv");
         } catch (DataAccessException e) {
             logger.error("Error updating card, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -152,7 +152,7 @@ public class JdbcAccessCard implements AccessCardDao {
             System.out.println("2ebhovbhwe bv");
         } catch (DataAccessException e) {
             logger.error("Error deleting card, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
     }

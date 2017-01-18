@@ -1,9 +1,10 @@
-<div ng-controller="NotebookController " style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
+<div ng-controller="NotebookController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
 
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notebook.length == 0">
     No notebooks found
 </div>
-<table class="table table-bordered table-striped"  ng-show="notebook.length > 0">
+    <a class="btn btn-default" href="notebook/DownloadPDF" target="_blank" style="float: right; margin-bottom: 5px;"><span class="glyphicon glyphicon-floppy-disk"></span></a>
+    <table class="table table-bordered table-striped"  ng-show="notebook.length > 0">
     <thead>
     <tr>
         <th style="text-align: center;">ID</th>

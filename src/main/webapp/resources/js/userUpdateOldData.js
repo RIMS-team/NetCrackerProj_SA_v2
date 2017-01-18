@@ -18,7 +18,7 @@ $(document).ready(function () {
         $('#update-user-repeat-password').val('');
     });
 
-    $(document).on('click', '#add-user-button', function() {
+    $(document).on('click', '#addUserForm-button', function() {
         $('#addUser').find('input').val('');
     });
 });

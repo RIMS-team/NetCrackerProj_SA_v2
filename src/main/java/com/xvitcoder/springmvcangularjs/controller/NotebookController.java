@@ -8,7 +8,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -36,6 +38,11 @@ public class NotebookController {
     public String getNotebooksPartialPage() {
         logger.debug("Request URL: /notebook/layout; Entering getNotebooksPartialPage()");
         return "notebooks/layout";
+    }
+
+    @RequestMapping(value = "/DownloadPDF", method = RequestMethod.GET)
+    public ModelAndView downloadPDF() {
+        return new ModelAndView("pdfView", "listNotebook", notebookService.findAll());
     }
 
 }

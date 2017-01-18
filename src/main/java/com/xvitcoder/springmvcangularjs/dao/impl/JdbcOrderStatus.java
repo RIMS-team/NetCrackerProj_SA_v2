@@ -49,7 +49,7 @@ public class JdbcOrderStatus implements OrderStatusDao {
             orderStatusList = jdbcTemplateObject.query(sql, new OrderStatusMapper());
         } catch (DataAccessException e) {
             logger.error("Error in select record, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
 //        System.out.println("DAO - Order Status");
@@ -73,7 +73,7 @@ public class JdbcOrderStatus implements OrderStatusDao {
             orderStatus = jdbcTemplateObject.queryForObject(sql, new Object[]{id}, new OrderStatusMapper());
         } catch (DataAccessException e) {
             logger.error("Error in select record, rolling back", e);
-            transactionManager.rollback(status);
+//            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findById():" + orderStatus);

@@ -123,9 +123,6 @@ public class JdbcAccessCard implements AccessCardDao {
     @Override
     public void update(AccessCard card) {
         logger.debug("Entering update(card=" + card + ")");
-        Locale.setDefault(Locale.ENGLISH);
-        TransactionDefinition def = new DefaultTransactionDefinition();
-        TransactionStatus status = transactionManager.getTransaction(def);
         SimpleJdbcCall simpleJdbcCall=null;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_update");

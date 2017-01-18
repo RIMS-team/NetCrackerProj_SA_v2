@@ -1,42 +1,41 @@
 <div ng-controller="AccessCardController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
 
-<div class="alert alert-info" style="width:400px;" ng-show="cards.length == 0">
-    No cards found
-</div>
+    <div class="alert alert-info" style="width:400px;" ng-show="cards.length == 0">
+        No cards found
+    </div>
 
-<button id="add-card-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addCard" style="margin-bottom: 10px">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-</button>
+    <button id="add-card-button" type="button" class="btn btn-default btn-mini" ng-click="openInsertEditor()" style="margin-bottom: 10px">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
 
-<table class="table table-bordered table-striped"  ng-show="cards.length > 0" show-filter="true">
-    <thead>
-    <tr>
-        <th ng-click="sort('id')" style="text-align: center;">ID
-            <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('statusName')" style="text-align: center;">Status
-            <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory number
-            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th style="text-align: center; width: 25px;">Update</th>
-        <th style="text-align: center; width: 25px;">Remove</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: test | itemsPerPage:5 ">
-        <td>{{card.id}}</td>
-        <td>{{card.statusName}}</td>
-        <td>{{card.inventoryNum}}</td>
-        <!--<td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning updateCardButton" data-toggle="modal" data-target="#updateCard">-->
-        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning" ng-click="openUpdateEditor(card)">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
-        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(card.id)">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered table-striped"  ng-show="cards.length > 0" show-filter="true">
+        <thead>
+            <tr>
+                <th ng-click="sort('id')" style="text-align: center;">ID
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('statusName')" style="text-align: center;">Status
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory number
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="text-align: center; width: 25px;">Update</th>
+                <th style="text-align: center; width: 25px;">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: test | itemsPerPage:5 ">
+                <td>{{card.id}}</td>
+                <td>{{card.statusName}}</td>
+                <td>{{card.inventoryNum}}</td>
+                <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning" ng-click="openUpdateEditor(card)">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeCard(card.id)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+            </tr>
+        </tbody>
+    </table>
     <dir-pagination-controls
             max-size="5"
             direction-links="true"
@@ -44,73 +43,36 @@
     </dir-pagination-controls>
 
 
-<div class="modal fade" id="addCard" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add New Card</h4>
-            </div>
-            <div class="modal-body">
-                <div style="padding: 5px">
-                    <form class="form-horizontal">
 
-                        <div class="form-group">
-                            <label for="Status"> Status* </label>
-                            <p>selected id = {{editRecord.selectedStatus}}</p>
-                            <select name="Status" class="form-control" ng-model="editRecord.selectedStatus" ng-options="status.name for status in invStatuses track by status.id" >
-                            </select>
-                        </div>
+    <script type="text/ng-template" id="updateCard.html">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="close()">&times;</button>
+            <h3 class="modal-title" ng-if="editRecord.id">Update Card</h3>
+            <h3 class="modal-title" ng-if="!editRecord.id">New Card</h3>
+        </div>
+        <div class="modal-body">
+            <div style="padding: 5px">
+                <!--<p>editRecord = {{editRecord}}</p>-->
+                <input type="text" id="update-card-id" style="display:none" ng-model="editRecord.id"/>
 
-                        <div class="form-group">
-                            <label for="card-inventory-number">Inventory number* </label>
-                            <input type="text" class="form-control" id="card-inventory-number" placeholder="Inventory number" ng-model="editRecord.inventoryNum"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary" ng-click="addNewCard(editRecord)" data-dismiss="modal">Add</button>
-                    </form>
+                <div class="form-group">
+                    <label for="Status"> Status* </label>
+                    <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
+                    <select name="Status" class="form-control" ng-model="editRecord.selectedStatus" ng-options="status.name for status in invStatuses track by status.id">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="update-card-inventoryNum">Inventory number*:</label>
+                    <input type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum"/>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>
                 </div>
             </div>
         </div>
+    </script>
 
-    </div>
-</div>
-
-<div class="modal fade" id="updateCard" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Update Card</h4>
-            </div>
-            <div class="modal-body">
-
-                <div ng-init="editRecord.selectedStatus.id = editRecord.statusId"></div>
-
-                <div style="padding: 5px">
-                    <form class="form-horizontal">
-
-                        <input type="text" id="update-card-id" style="display:none" ng-model="editRecord.id"/>
-
-                        <div class="form-group">
-                            <label for="Status"> Status* </label>
-                            <!--<p>selected id = {{card.selectedStatus}}</p>-->
-                            <select name="Status" class="form-control" ng-model="editRecord.selectedStatus" ng-options="status.name for status in invStatuses track by status.id">
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="update-card-inventoryNum">Inventory number:</label>
-                            <input type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum"/>
-                        </div>
-                        <button type="submit" class="btn btn-warning" ng-click="updateCard(editRecord)" data-dismiss="modal">Update</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 </div>

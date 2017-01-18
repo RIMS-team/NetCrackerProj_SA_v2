@@ -9,7 +9,7 @@
 
 
 
-    app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $modal, $filter) {
+    app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $uibModal, $filter) {
         var store = this;
 
         /* tabs */

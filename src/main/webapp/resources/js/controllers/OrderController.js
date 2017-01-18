@@ -24,7 +24,7 @@
     var app = angular.module("orders", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
     //////    var app = angular.module("orders", []);
 
-    app.controller("OrderController", function ($scope, $http, $modal) {
+    app.controller("OrderController", function ($scope, $http, $uibModal) {
         var _this = this;
 
         // _this.isRowSelected = false;

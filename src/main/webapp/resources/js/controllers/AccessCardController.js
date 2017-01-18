@@ -9,11 +9,10 @@
     var modul = angular.module("accesscards", ["ngSanitize","angularUtils.directives.dirPagination","ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize",
         "invstatuses"]);
 
-    modul.controller("AccessCardController", function ($scope, $http, $modal, invStatusService) {
+    modul.controller("AccessCardController", function ($scope, $http, $uibModal,   invStatusService, getByIdService) {
         var _this = this;
 
         $scope.editRecord = {};
-        //$scope.selectedStatus = {};
         $scope.invStatuses = [];
 
         $scope.fetchCardsList = function () {
@@ -22,29 +21,20 @@
             });
         };
 
-        $scope.addNewCard = function (editRecord) {
-            editRecord.statusId = editRecord.selectedStatus.id;
-            console.log(editRecord);
-            $http.post('accesscards/add', editRecord).success(function () {
+        $scope.addNewCard = function (editRec) {
+            editRec.statusId = editRec.selectedStatus.id;
+            console.log(editRec);
+            $http.post('accesscards/add', editRec).success(function () {
                 $scope.fetchCardsList();
-                $scope.editRecord.id = '';
-                $scope.editRecord.statusId = '';
-                $scope.editRecord.statusName = '';
-                $scope.editRecord.inventoryNum = '';
             }).error(function () {
                 console.log("Error sending insert request!");
             });
         };
 
-        $scope.updateCard = function (editRecord) {
-            editRecord.statusId = editRecord.selectedStatus.id;
-            console.log(editRecord);
-            $http.post('accesscards/update', editRecord).success(function () {
+        $scope.updateCard = function (editRec) {
+            editRec.statusId = editRec.selectedStatus.id;
+            $http.post('accesscards/update', editRec).success(function () {
                 $scope.fetchCardsList();
-                $scope.editRecord.id = '';
-                $scope.editRecord.statusId = '';
-                $scope.editRecord.statusName = '';
-                $scope.editRecord.inventoryNum = '';
             }).error(function () {
                 console.log("Error sending update request!");
             });
@@ -68,23 +58,52 @@
         $scope.fetchCardsList();
 
 
-        // editor
 
-        $scope.openUpdateEditor = function (editRecord) {
-            // $modal.open({
-            $uibModal.open({
+        _this.openEditor = function (card) {
+            var editRec = {};
+            if (card) {
+                editRec.id = card.id;
+                editRec.statusId = card.statusId;
+                editRec.inventoryNum = card.inventoryNum;
+                editRec.selectedStatus = getByIdService.getById(card.statusId, $scope.invStatuses);
+            }
+
+            var uibModalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'accesscards/layout.html',
-                controller: 'AccessCardController',
-                resolve: {
-                    // recordId: function () {
-                    //     return recordId;
-                    // },
-                    sender: function () {
-                        return _this;
-                    }
-                }
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'updateCard.html',
+                controller: 'AccessCardEditController'
+                ,resolve: {
+                    invStatuses: function () {
+                        return $scope.invStatuses;
+                    },
+                     editRecord: function () {
+                         return editRec;
+                     }
+                 }
             });
+
+            uibModalInstance.result.then(function (editRec) {
+                //modal ok
+                if (card) {
+                    $scope.updateCard(editRec);
+                }
+                else {
+                    $scope.addNewCard(editRec);
+                }
+            }, function () {
+                // modal cancel
+            });
+        }
+
+
+        $scope.openUpdateEditor = function (card) {
+            _this.openEditor(card);
+        }
+
+        $scope.openInsertEditor = function () {
+            _this.openEditor(null);
         }
 
 
@@ -96,11 +115,28 @@
         });
 
 
-    })
+    });
+
+
+    modul.controller('AccessCardEditController', ['$scope','$uibModalInstance', 'editRecord', 'invStatuses', function ($scope, uibModalInstance, editRec, invStatuses) {
+        $scope.editRecord = editRec;
+        $scope.invStatuses = invStatuses;
+
+        $scope.ok = function () {
+            // if (validation)
+            uibModalInstance.close($scope.editRecord);
+            // else
+            //   show error msg
+        };
+
+        $scope.close = function () {
+            uibModalInstance.dismiss('cancel');
+        };
+    }]);
+
 
     modul.directive("accesscardsList", function () {
         return {
-            //restrict: "E",
             templateUrl: "accesscards/layout.html"
         }
     });

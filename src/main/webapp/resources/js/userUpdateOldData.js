@@ -10,6 +10,8 @@ $(document).ready(function () {
         var telephone = data.eq(2).html();
         var email = data.eq(3).html();
 
+        $('#update-user-old-email').val(email);
+
         $('#update-user-id').val(id).trigger('input');
         $('#update-user-full-name').val(fullName).trigger('input');
         $('#update-user-telephone').val(telephone).trigger('input');

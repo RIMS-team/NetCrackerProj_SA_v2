@@ -4,34 +4,50 @@
     No users found
 </div>
 
-<!-- Modal -->
-
-<button id="addUserForm-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-</button>
-<table class="table table-bordered table-striped"  ng-show="users.length > 0">
+    <div class="row" style="margin-bottom: 5px;">
+        <div class="col-md-4">
+            <button id="addUserForm-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+            <input class="form-control" type="text" ng-model="test" placeholder="Search" style="float:right;"/>
+        </div>
+    </div>
+<table class="table table-bordered table-striped"  ng-show="users.length > 0" show-filter="true">
     <thead>
     <tr>
-        <th style="text-align: center;">User Name</th>
-        <th style="text-align: center;">Phone Number</th>
-        <th style="text-align: center;">Email</th>
+        <th ng-click="sort('fullName')" style="text-align: center;">Full Name
+            <span class="glyphicon sort-icon" ng-show="sortKey=='fullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('phoneNumber')" style="text-align: center;">Phone Number
+            <span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('eMail')" style="text-align: center;">Email
+            <span class="glyphicon sort-icon" ng-show="sortKey=='eMail'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
         <th style="text-align: center;">Update</th>
         <th style="text-align: center; width: 25px;">Delete</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="user in users">
+    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter: test | itemsPerPage:5 ">
         <td style="display:none">{{user.id}}</td>
         <td>{{user.fullName}}</td>
         <td>{{user.phoneNumber}}</td>
         <td>{{user.eMail}}</td>
-        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning updateUserButton" data-toggle="modal" data-target="#updateUser" ng-click="">
+        <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning updateUserButton" data-toggle="modal" data-target="#updateUser">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
         <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeUser(user.id)">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
     </tr>
     </tbody>
 </table>
+    <dir-pagination-controls style="float: right;"
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"  >
+    </dir-pagination-controls>
 
 <div class="modal fade" id="addUser" role="dialog">
     <div class="modal-dialog">
@@ -68,7 +84,7 @@
                         <div class="form-group" ng-class="{ 'has-error' : addUserForm.cpassword.$invalid &amp;&amp; !addUserForm.cpassword.$pristine }">
                             <label for="user-repeat-password">Repeat Password:</label>
                             <input name="cpassword" type="password" class="form-control" id="user-repeat-password" placeholder="Repeat Password" ng-model="user.confirmPassword" required="required" match-password="user.password"/>
-                            <p ng-show="addUserForm.cpassword.$error.matchPassword &amp;&amp; !addUserForm.cpassword.$error.required" class="help-block">Passwords don't match.</p>
+                            <p ng-show="addUserForm.cpassword.$error.matchPassword &amp;&amp; !addUserForm.cpassword.$pristine" class="help-block">Passwords don't match.</p>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" ng-disabled="addUserForm.$invalid">Add</button>
@@ -92,29 +108,36 @@
             </div>
             <div class="modal-body">
                 <div style="padding: 5px">
-                    <form class="form-horizontal user-update-form">
+                    <form name="updateUserForm" ng-submit="submitUpdateUserForm(user)" class="form-horizontal user-update-form" novalidate="novalidate">
                         <input type="text" id="update-user-id" style="display:none" ng-model="user.id"/>
-                        <div class="form-group">
+                        <input type="email" id="update-user-old-email" style="display: none"/>
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.fullname.$invalid &amp;&amp; !update.fullname.$pristine }">
                             <label for="update-user-full-name">Full Name:</label>
-                            <input type="text" class="form-control" id="update-user-full-name" placeholder="Full Name" ng-model="user.fullName"/>
+                            <input name="fullname" type="text" class="form-control" id="update-user-full-name" placeholder="Full Name" ng-model="user.fullName" ng-minlength="6" required="required"/>
+                            <p ng-show="updateUserForm.fullname.$error.minlength" class="help-block">Full Name is too short.</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.email.$invalid &amp;&amp; !update.email.$pristine }">
                             <label for="update-user-email">Email address:</label>
-                            <input type="email" class="form-control" id="update-user-email" placeholder="Email" ng-model="user.eMail"/>
+                            <input name="email" type="email" class="form-control" id="update-user-email" placeholder="Email" ng-model="user.eMail" unique-update-email=""/>
+                            <p ng-show="updateUserForm.email.$error.email &amp;&amp; !updateUserForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                            <p ng-show="updateUserForm.email.$error.uniqueUpdateEmail &amp;&amp; !updateUserForm.email.$pristine" class="help-block">Email is already taken!</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.phoneNumber.$invalid &amp;&amp; !update.phoneNumber.$pristine }">
                             <label for="update-user-telephone">Telephone:</label>
-                            <input type="text" class="form-control" id="update-user-telephone" placeholder="Telephone Number" ng-model="user.phoneNumber"/>
+                            <input name="phoneNumber" type="text" class="form-control" id="update-user-telephone" placeholder="Telephone Number" ng-model="user.phoneNumber" ng-pattern="/^[0-9]{1,12}$/"/>
+                            <p ng-show="updateUserForm.phoneNumber.$error.pattern" class="help-block">Phone Number is not valid.</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.password.$invalid &amp;&amp; !update.password.$pristine }">
                             <label for="update-user-password">Password:</label>
-                            <input type="password" class="form-control" id="update-user-password" placeholder="Password" ng-model="user.password"/>
+                            <input name="password" type="password" class="form-control" id="update-user-password" placeholder="Password" ng-model="user.password" ng-minlength="6" required="required"/>
+                            <p ng-show="updateUserForm.password.$error.minlength" class="help-block">Password is too short.</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.cpassword.$invalid &amp;&amp; !update.cpassword.$pristine }">
                             <label for="update-user-repeat-password">Repeat Password:</label>
-                            <input type="password" class="form-control" id="update-user-repeat-password" placeholder="Repeat Password"/>
+                            <input name="cpassword" type="password" class="form-control" id="update-user-repeat-password" placeholder="Repeat Password" ng-model="user.repeatPassword" required="required" match-password="user.password"/>
+                            <p ng-show="updateUserForm.cpassword.$error.matchPassword &amp;&amp; !updateUserForm.cpassword.$error.required" class="help-block">Passwords don't match.</p>
                         </div>
-                        <button type="submit" class="btn btn-warning" ng-click="updateUser(user)" data-dismiss="modal">Update</button>
+                        <button type="submit" class="btn btn-warning" ng-disabled="updateUserForm.$invalid">Update</button>
                     </form>
                 </div>
             </div>

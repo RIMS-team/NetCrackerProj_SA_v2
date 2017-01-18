@@ -46,3 +46,24 @@ AppDirectives.directive('uniqueEmail', function($http) {
         }
     }
 });
+
+AppDirectives.directive('uniqueUpdateEmail', function($http) {
+    var toId;
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+            scope.$watch(attr.ngModel, function(value) {
+                var oldValue = $('#update-user-old-email').val();
+                if (oldValue != value) {
+                    if(toId) clearTimeout(toId);
+                    toId = setTimeout(function(){
+                        $http.get('/user/checkEmail?email=' + value).success(function(data) {
+                            ctrl.$setValidity('uniqueUpdateEmail', !data);
+                        });
+                    }, 1000);
+                }
+            })
+        }
+    }
+});

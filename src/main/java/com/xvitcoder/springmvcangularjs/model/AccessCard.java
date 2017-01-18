@@ -21,8 +21,9 @@ public class AccessCard extends Inventory {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("AccessCard{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", status='").append(statusName).append('\'');
+        sb.append("id=").append(id).append('\'');
+        sb.append(", statusId=").append(statusId).append('\'');
+        sb.append(", statusName=").append(statusName).append('\'');
         sb.append(", inventoryNum=").append(inventoryNum);
         sb.append('}');
         return sb.toString();

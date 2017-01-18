@@ -24,7 +24,7 @@
     var app = angular.module("employees", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 //////    var app = angular.module("employees", []);
 
-    app.controller("EmpController", function ($scope, $http, $modal) {
+    app.controller("EmpController", function ($scope, $http, $uibModal) {
         var _this = this;
 
 

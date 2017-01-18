@@ -9,7 +9,7 @@
 (function () {
     var app = angular.module("notebooks", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 
-    app.controller("NotebookController", function ($scope, $http, $modal) {
+    app.controller("NotebookController", function ($scope, $http, $uibModal) {
         var _this = this;
 
         // _this.isRowSelected = false;

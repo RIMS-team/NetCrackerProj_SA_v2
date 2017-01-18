@@ -11,7 +11,7 @@
 (function () {
     var modul = angular.module("invstatuses", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
 
-    modul.controller("InvStatusController", function ($scope, $http, $modal, invStatusService) {
+    modul.controller("InvStatusController", function ($scope, $http, $uibModal, invStatusService) {
         var _this = this;
 
         invStatusService.loadList()
@@ -31,12 +31,3 @@
 })();
 
 
-// var InvStatusController = function($scope, $http) {
-//     $scope.fetchInvStatusList = function() {
-//         $http.get('invstats/invstatlist.json').success(function(InvStatusList){
-//             $scope.invStats = InvStatusList;
-//         });
-//     };
-//
-//     $scope.fetchInvStatusList();
-// };

@@ -3,13 +3,13 @@
 (function () {
     var app = angular.module("AngularSpringApp", ["ui.bootstrap",
         'AngularSpringApp.filters', 'AngularSpringApp.services', 'AngularSpringApp.directives',
-        "employees", "notebooks", "users", "accesscards", "orders", "invstatuses", "ordstatuses"
+        "employees", "notebooks","usersettings", "users", "accesscards", "orders", "invstatuses", "ordstatuses"
 
     ]);
 
 
 
-    app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $modal, $filter) {
+    app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $uibModal, $filter) {
         var store = this;
 
         /* tabs */

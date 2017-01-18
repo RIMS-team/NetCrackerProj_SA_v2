@@ -13,7 +13,7 @@
     //////    var app = angular.module("ordstatuses", []);
 
     //   var OrdStatusController = function($scope, $http) {
-    modul.controller("OrdStatusController", function ($scope, $http, $modal, ordStatusService) {
+    modul.controller("OrdStatusController", function ($scope, $http, $uibModal, ordStatusService) {
         var _this = this;
 
         ordStatusService.loadList()

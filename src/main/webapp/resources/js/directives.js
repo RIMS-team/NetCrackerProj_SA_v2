@@ -30,17 +30,19 @@ AppDirectives.directive("matchPassword", function () {
 });
 
 AppDirectives.directive('uniqueEmail', function($http) {
+    var toId;
     return {
         restrict: 'A',
-        require: 'ngModel,^form',
-        link: function (scope, element, attrs, ngModel) {
-            element.bind('blur', function (e) {
-                ngModel.$loading = true;
-                $http.get("/user/checkEmail/" + element.val()).success(function(data) {
-                    ngModel.$loading = false;
-                    ngModel.$setValidity('unique', !data);
-                });
-            });
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+            scope.$watch(attr.ngModel, function(value) {
+                if(toId) clearTimeout(toId);
+                toId = setTimeout(function(){
+                    $http.get('/user/checkEmail?email=' + value).success(function(data) {
+                        ctrl.$setValidity('uniqueEmail', !data);
+                    });
+                }, 1000);
+            })
         }
-    };
-})
+    }
+});

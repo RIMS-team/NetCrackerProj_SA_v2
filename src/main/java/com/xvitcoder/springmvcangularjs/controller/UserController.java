@@ -55,9 +55,8 @@ public class UserController {
         return "users/layout";
     }
 
-    @RequestMapping("/checkEmail/{email}")
-    public @ResponseBody boolean checkEmail(@PathVariable("email") String email) {
-        System.err.println("EMAIL CHECK");
+    @RequestMapping("/checkEmail")
+    public @ResponseBody boolean checkEmail(@RequestParam String email) {
         User user = userService.findByEmail(email);
         return user != null;
     }

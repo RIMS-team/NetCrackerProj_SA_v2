@@ -32,10 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //http.authorizeRequests().antMatchers("/**").access("hasRole('ROLE_USER')").and().formLogin();
-        http.authorizeRequests().antMatchers("/login*").anonymous()
-                .antMatchers("/**").authenticated()
+        http.authorizeRequests().antMatchers("/login*").permitAll()
+                .antMatchers("/*").authenticated()
+                .antMatchers("/user/getAuthorizedUser").permitAll()
                 .antMatchers("/user/*").access("hasRole('ROLE_ADMIN')")
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout=true")
-                .and().formLogin().loginPage("/login").and().csrf().disable();
+                .and().rememberMe().key("uniqueAndSecret")
+                .and().formLogin().loginPage("/login").failureForwardUrl("/login?error=true").and().csrf().disable();
     }
 }

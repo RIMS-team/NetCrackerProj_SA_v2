@@ -1,21 +1,28 @@
 <div ng-controller="UserSettingController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
     <h1>Settings</h1>
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="update-user-password">Change password:</label>
-            <input type="text" class="form-control col-xs-4" id="update-user-password" placeholder="Password" />
-            <input type="text" class="form-control col-xs-4" id="update-password" placeholder=" Repeat Password" />
+    <form name="settingsUpdate" ng-submit="updateUser(user)" class="form-horizontal">
+        <input id="settings-old-email" style="display: none" type="text" ng-model="user.oldEmail"/>
+        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.password.$invalid &amp;&amp; !settingsUpdate.password.$pristine }">
+            <label for="settings-password">Change password:</label>
+            <input name="password" type="password" style="margin-bottom: 10px" class="form-control col-xs-4" id="settings-password" ng-model="user.password" ng-minlength="6" required="required"/>
+            <p ng-show="settingsUpdate.password.$error.minlength" class="help-block">Password is too short.</p>
         </div>
-        <button type="submit" class="btn btn-primary" ng-click="updateUser(user)" data-dismiss="modal">Change</button>
-        <div class="form-group">
-            <label for="update-user-email">Change Email:</label>
-            <input type="text" class="form-control" id="update-user-email" placeholder="Email" ng-model="user.eMail"/>
+        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.repassword.$invalid &amp;&amp; !settingsUpdate.password.$pristine &amp;&amp; !settingsUpdate.repassword.$pristine }">
+            <label for="repeat-settings--password">Repeat password:</label>
+            <input name="repassword" type="password" class="form-control col-xs-4" id="repeat-settings--password" placeholder="Repeat Password" ng-model="user.repassword" match-password="user.password" required="required"/>
+            <p ng-show="settingsUpdate.repassword.$error.matchPassword &amp;&amp; !settingsUpdate.repassword.$pristine &amp;&amp; !settingsUpdate.password.$pristine" class="help-block">Passwords don't match.</p>
         </div>
-        <button type="submit" class="btn btn-primary" ng-click="updateUser(user)" data-dismiss="modal">Change</button>
-        <div class="form-group">
-            <label for="update-user-phone">Change Phone Number:</label>
-            <input type="text" class="form-control" id="update-user-phone" placeholder="Phone" ng-model="user.phoneNumber"/>
+        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.email.$invalid &amp;&amp; !settingsUpdate.email.$pristine }">
+            <label for="settings-email">Change Email:</label>
+            <input name="email" type="text" class="form-control" id="settings-email" placeholder="Email" ng-model="user.eMail" unique-settings-email=""/>
+            <p ng-show="settingsUpdate.email.$error.email &amp;&amp; !settingsUpdate.email.$pristine" class="help-block">Enter a valid email.</p>
+            <p ng-show="settingsUpdate.email.$error.uniqueSettingsEmail &amp;&amp; !settingsUpdate.email.$pristine" class="help-block">Email is already taken!</p>
         </div>
-        <button type="submit" class="btn btn-primary" ng-click="updateUser(user)" data-dismiss="modal">Change</button>
+        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.number.$invalid &amp;&amp; !settingsUpdate.number.$pristine }">
+            <label for="settings-phone">Change Phone Number:</label>
+            <input name="number" type="text" class="form-control" id="settings-phone" placeholder="Phone" ng-pattern="/^[0-9]{1,12}$/" ng-model="user.phoneNumber"/>
+            <p ng-show="settingsUpdate.number.$error.pattern" class="help-block">Phone Number is not valid.</p>
+        </div>
+        <button type="submit" style="float:right;" class="btn btn-primary" ng-disabled="settingsUpdate.$invalid">Change</button>
     </form>
 </div>

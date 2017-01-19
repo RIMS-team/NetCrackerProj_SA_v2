@@ -1,0 +1,42 @@
+<div ng-controller="NotificationController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
+    <div class="form-group">
+        <label >Search</label>
+        <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
+    </div>
+
+    <table class="table table-bordered table-striped" >
+        <thead>
+        <tr>
+            <th ng-click="sort('id')" style="text-align: center;">ID
+                <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('order.id')" style="text-align: center;">Order ID
+                <span class="glyphicon sort-icon" ng-show="sortKey=='order.id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('first')" style="text-align: center;">First Notify
+                <span class="glyphicon sort-icon" ng-show="sortKey=='first'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('second')" style="text-align: center;">Second Notify
+                <span class="glyphicon sort-icon" ng-show="sortKey=='second'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('third')" style="text-align: center;">Third Number
+                <span class="glyphicon sort-icon" ng-show="sortKey=='third'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: search | itemsPerPage:5 ">
+            <td>{{elem.id}}</td>
+            <td>{{elem.order.id}}</td>
+            <td>{{elem.first}}</td>
+            <td>{{elem.second}}</td>
+            <td>{{elem.third}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true"  >
+    </dir-pagination-controls>
+</div>

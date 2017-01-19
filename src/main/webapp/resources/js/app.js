@@ -3,7 +3,7 @@
 (function () {
     var app = angular.module("AngularSpringApp", ["ui.bootstrap",
         'AngularSpringApp.filters', 'AngularSpringApp.services', 'AngularSpringApp.directives',
-        "employees", "notebooks","usersettings", "users", "accesscards", "orders", "invstatuses", "ordstatuses"
+        "employees", "notebooks","usersettings","notifications", "users", "accesscards", "orders", "invstatuses", "ordstatuses"
 
     ]);
 

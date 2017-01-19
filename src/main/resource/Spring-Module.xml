@@ -12,5 +12,6 @@
     <import resource="Spring-OrderStatus.xml" />
     <import resource="Spring-InventStatus.xml" />
     <import resource="Spring-Order.xml" />
+    <import resource="Spring-Notification.xml" />
 
 </beans>

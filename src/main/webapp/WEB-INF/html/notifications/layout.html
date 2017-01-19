@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: search | itemsPerPage:5 ">
+        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: search | itemsPerPage:15 ">
             <td>{{elem.id}}</td>
             <td>{{elem.order.id}}</td>
             <td>{{elem.first}}</td>
@@ -35,7 +35,7 @@
         </tbody>
     </table>
     <dir-pagination-controls
-            max-size="5"
+            max-size="15"
             direction-links="true"
             boundary-links="true"  >
     </dir-pagination-controls>

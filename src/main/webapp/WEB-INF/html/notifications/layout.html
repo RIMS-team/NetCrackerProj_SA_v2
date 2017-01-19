@@ -1,31 +1,27 @@
 <div ng-controller="NotificationController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
-    <div class="form-group">
-        <label >Search</label>
-        <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
-    </div>
 
     <table class="table table-bordered table-striped" >
         <thead>
         <tr>
-            <th ng-click="sort('id')" style="text-align: center;">ID
+            <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
                 <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th ng-click="sort('order.id')" style="text-align: center;">Order ID
+            <th ng-click="sort('order.id')" style="text-align: center;"><a class="thumbnail1" href="#">Order ID<span>Seache by Order ID<input type="text" ng-model="ref.order.id" placeholder="Search"/></span></a>
                 <span class="glyphicon sort-icon" ng-show="sortKey=='order.id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th ng-click="sort('first')" style="text-align: center;">First Notify
+            <th ng-click="sort('first')" style="text-align: center;"><a class="thumbnail1" href="#">First Notify<span>Seache by First Notify<input type="text" ng-model="ref.first" placeholder="Search"/></span></a>
                 <span class="glyphicon sort-icon" ng-show="sortKey=='first'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th ng-click="sort('second')" style="text-align: center;">Second Notify
+            <th ng-click="sort('second')" style="text-align: center;"><a class="thumbnail1" href="#">Second Notify<span>Seache by Second Notify<input type="text" ng-model="ref.second" placeholder="Search"/></span></a>
                 <span class="glyphicon sort-icon" ng-show="sortKey=='second'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
-            <th ng-click="sort('third')" style="text-align: center;">Third Number
+            <th ng-click="sort('third')" style="text-align: center;"><a class="thumbnail1" href="#">Third Notify<span>Seache by Third Notify<input type="text" ng-model="ref.third" placeholder="Search"/></span></a>
                 <span class="glyphicon sort-icon" ng-show="sortKey=='third'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: search | itemsPerPage:15 ">
+        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | itemsPerPage:15 ">
             <td>{{elem.id}}</td>
             <td>{{elem.order.id}}</td>
             <td>{{elem.first}}</td>

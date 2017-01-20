@@ -4,30 +4,26 @@
     No employees found
 </div>
 
-    <div class="form-group">
-        <label >Search</label>
-        <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
-    </div>
 
 <table class="table table-bordered table-striped"  ng-show="emps.length > 0">
     <thead>
     <tr>
-        <th ng-click="sort('id')" style="text-align: center;">ID
+        <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('fullName')" style="text-align: center;">Employee Name
+        <th ng-click="sort('fullName')" style="text-align: center;"><a class="thumbnail1" href="#">Employee Name<span>Seache by Name<input type="text" ng-model="ref.fullName" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='fullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('phoneNumber')" style="text-align: center;">Phone Number
+        <th ng-click="sort('phoneNumber')" style="text-align: center;"><a class="thumbnail1" href="#">Phone Number<span>Seache by Phone Number<input type="text" ng-model="ref.phoneNumber" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='phoneNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('eMail')" style="text-align: center;">EMail
+        <th ng-click="sort('eMail')" style="text-align: center;"><a class="thumbnail1" href="#">EMail<span>Seache by EMail<input type="text" ng-model="ref.eMail" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='eMail'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: search | itemsPerPage: 15 ">
+    <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: ref | itemsPerPage: 15 ">
         <td>{{emp.id}}</td>
         <td>{{emp.fullName}}</td>
         <td>{{emp.phoneNumber}}</td>

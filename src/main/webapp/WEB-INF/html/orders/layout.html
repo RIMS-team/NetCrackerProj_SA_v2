@@ -3,59 +3,55 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="order.length == 0">
     No orders found
 </div>
-    <div class="form-group">
-        <label >Search</label>
-        <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
-    </div>
 <table class="table table-bordered table-striped"  ng-show="order.length > 0">
     <thead>
     <tr>
-        <th ng-click="sort('id')" style="text-align: center;">ID
+        <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('date')" style="text-align: center;">Date
+        <th ng-click="sort('date')" style="text-align: center;"><a class="thumbnail1" href="#">Date<span>Seache by Date<input type="text" ng-model="ref.date" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='date'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('statusName')" style="text-align: center;">Status
+        <th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Seache by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('inventoryId')" style="text-align: center;">Inventory ID
+        <th ng-click="sort('inventoryId')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory ID<span>Seache by Inventory ID<input type="text" ng-model="ref.inventoryId" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('inventoryType')" style="text-align: center;">Inventory type
+        <th ng-click="sort('inventoryType')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory type<span>Seache by Inventory type<input type="text" ng-model="ref.inventoryType" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory num
+        <th ng-click="sort('inventoryNum')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory num<span>Seache by Inventory num<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('noteName')" style="text-align: center;">Note name
+        <th ng-click="sort('noteName')" style="text-align: center;"><a class="thumbnail1" href="#">Note name<span>Seache by Note name<input type="text" ng-model="ref.noteName" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='noteName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('noteModel')" style="text-align: center;">Note model
+        <th ng-click="sort('noteModel')" style="text-align: center;"><a class="thumbnail1" href="#">Note model<span>Seache by Note model<input type="text" ng-model="ref.noteModel" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='noteModel'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('noteMemory')" style="text-align: center;">Note memory
+        <th ng-click="sort('noteMemory')" style="text-align: center;"><a class="thumbnail1" href="#">Note memory<span>Seache by Note memory<input type="text" ng-model="ref.noteMemory" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='noteMemory'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('noteSerial')" style="text-align: center;">Note serial
+        <th ng-click="sort('noteSerial')" style="text-align: center;"><a class="thumbnail1" href="#">Note serial<span>Seache by Note serial<input type="text" ng-model="ref.noteSerial" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='noteSerial'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('employeeId')" style="text-align: center;">Employee ID
+        <th ng-click="sort('employeeId')" style="text-align: center;"><a class="thumbnail1" href="#">Employee ID<span>Seache by Employee ID<input type="text" ng-model="ref.employeeId" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='employeeId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('employeeFullName')" style="text-align: center;">Employee name
+        <th ng-click="sort('employeeFullName')" style="text-align: center;"><a class="thumbnail1" href="#">Employee name<span>Seache by Employee name<input type="text" ng-model="ref.employeeFullName" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='employeeFullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('userId')" style="text-align: center;">User ID
+        <th ng-click="sort('userId')" style="text-align: center;"><a class="thumbnail1" href="#">User ID<span>Seache by User ID<input type="text" ng-model="ref.userId" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='userId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
-        <th ng-click="sort('userFullName')" style="text-align: center;">User Name
+        <th ng-click="sort('userFullName')" style="text-align: center;"><a class="thumbnail1" href="#">User Name<span>Seache by User Name<input type="text" ng-model="ref.userFullName" placeholder="Search"/></span></a>
             <span class="glyphicon sort-icon" ng-show="sortKey=='userFullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="elem in order | orderBy:sortKey:reverse | filter: search | itemsPerPage:15 ">
+    <tr dir-paginate="elem in order | orderBy:sortKey:reverse | filter: ref | itemsPerPage:15 ">
         <td>{{elem.id}}</td>
         <td>{{elem.date}}</td>
         <td>{{elem.statusName}}</td>

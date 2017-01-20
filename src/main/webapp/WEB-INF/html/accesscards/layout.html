@@ -4,8 +4,6 @@
         No cards found
     </div>
         <div class="form-group">
-            <label >Search</label>
-            <input type="text" ng-model="search" class="form-control" placeholder="Search"/>
             <button id="add-card-button" type="button" class="btn btn-default btn-mini" ng-click="openInsertEditor()" style="margin-bottom: 10px">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
@@ -15,13 +13,13 @@
     <table class="table table-bordered table-striped"  ng-show="cards.length > 0" show-filter="true">
         <thead>
             <tr>
-                <th ng-click="sort('id')" style="text-align: center;">ID
+                <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
                     <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('statusName')" style="text-align: center;">Status
+                <th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Seache by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
                     <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('inventoryNum')" style="text-align: center;">Inventory number
+                <th ng-click="sort('inventoryNum')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory number<span>Seache by Inv number<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
                     <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th style="text-align: center; width: 25px;">Update</th>
@@ -29,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: search | itemsPerPage: 15 ">
+            <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: ref | itemsPerPage: 15 ">
                 <td>{{card.id}}</td>
                 <td>{{card.statusName}}</td>
                 <td>{{card.inventoryNum}}</td>

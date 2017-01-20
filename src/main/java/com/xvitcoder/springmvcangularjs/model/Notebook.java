@@ -15,7 +15,7 @@ public class Notebook extends Inventory {
     public Notebook(){}
 
     public Notebook(int id, int statusId, String statusName, String name, String location, String memoryType,
-                    String model, long inventoryNum, String serialNumber) {
+                    String model, String inventoryNum, String serialNumber) {
         this.id = id;
         this.statusId = statusId;
         this.statusName = statusName;

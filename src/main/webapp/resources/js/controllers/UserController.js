@@ -14,6 +14,7 @@
             $scope.addNewUser(sendUser);
             $('#addUser').modal('hide');
             $scope.addUserForm.$setPristine();
+            $scope.addUserForm.$setValidity();
         };
 
         $scope.submitUpdateUserForm = function (user) {
@@ -21,6 +22,7 @@
             $scope.updateUser(updateUser);
             $('#updateUser').modal('hide');
             $scope.updateUserForm.$setPristine();
+            $scope.updateUserForm.$setValidity();
         };
 
         $scope.fetchUserList = function() {

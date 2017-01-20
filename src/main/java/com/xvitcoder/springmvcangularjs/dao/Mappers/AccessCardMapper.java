@@ -18,7 +18,7 @@ public class AccessCardMapper implements RowMapper<AccessCard> {
                 rs.getInt("OBJECT_ID"),
                 rs.getInt("INV_STATUS_ID"),
                 rs.getString("INV_STATUS_NAME"),
-                rs.getLong("INVENTORY_NUM")
+                rs.getString("INVENTORY_NUM")
         );
         return accessCard;
     }

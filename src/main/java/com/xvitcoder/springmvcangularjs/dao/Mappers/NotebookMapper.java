@@ -21,7 +21,7 @@ public class NotebookMapper implements RowMapper<Notebook> {
                 rs.getString("LOCATION"),
                 rs.getString("MEM_TYPE"),
                 rs.getString("MODEL"),
-                rs.getLong("INVENTORY_NUM"),
+                rs.getString("INVENTORY_NUM"),
                 rs.getString("SERIAL_NUMBER")
         );
         return notebook;

@@ -7,14 +7,14 @@ public class AccessCard extends Inventory {
 
     public AccessCard() {}
 
-    public AccessCard(int id, int statusId, String statusName, long inventoryNum) {
+    public AccessCard(int id, int statusId, String statusName, String inventoryNum) {
         this.id = id;
         this.statusId = statusId;
         this.statusName = statusName;
         this.inventoryNum = inventoryNum;
     }
 
-    public long getInventoryNum() {
+    public String getInventoryNum() {
         return inventoryNum;
     }
 

@@ -22,10 +22,8 @@ public class JdbcNotebook implements NotebookDAO {
 
     private Logger logger = Logger.getLogger(JdbcNotebook.class);
 
-
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
@@ -34,12 +32,12 @@ public class JdbcNotebook implements NotebookDAO {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<Notebook> findAll() {
         logger.debug("Entering findAll()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         List<Notebook> notebooks;
         try {
             String sql =
@@ -70,12 +68,12 @@ public class JdbcNotebook implements NotebookDAO {
                             "AND SER_ATTR.ATTR_ID = 14/*SERIAL_NUMBER*/ " +
                             "AND STATUS_ATTR.ATTR_ID = 16/*STATUS*/ " +
                             "AND STATUS_ATTR.VALUE = LIST_STATUS.ID ";
-
             notebooks = jdbcTemplateObject.query(sql, new NotebookMapper());
+            transactionManager.commit(status);
         }
         catch (DataAccessException e) {
             logger.error("Error in select record, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + notebooks);

@@ -24,7 +24,6 @@ public class JdbcOrder implements OrderDAO {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     private SimpleJdbcCall orderSelectSP;
 
@@ -40,12 +39,12 @@ public class JdbcOrder implements OrderDAO {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<OrderCursor> findAll() {
         logger.debug("Entering findAll()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(2);
         Map<String, Object> result = new HashMap<>(1);
         List<OrderCursor> orders;
@@ -57,10 +56,11 @@ public class JdbcOrder implements OrderDAO {
             result.put("P_OUT_CURSOR", "");
             result = orderSelectSP.execute(args);
             orders = (List<OrderCursor>) result.get("P_OUT_CURSOR");
+            transactionManager.commit(status);
         }
         catch (DataAccessException e) {
             logger.error("Error inserting user, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + orders);

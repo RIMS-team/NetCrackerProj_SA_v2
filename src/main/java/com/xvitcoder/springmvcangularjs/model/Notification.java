@@ -53,8 +53,12 @@ public class Notification extends Entity {
         return third;
     }
 
+    @Override
     public String toString() {
-        ///ToDo
-        return super.toString();
+        return "Notification{" +
+                "first=" + first +
+                ", second=" + second +
+                ", third=" + third +
+                '}';
     }
 }

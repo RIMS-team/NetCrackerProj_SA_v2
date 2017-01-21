@@ -1,5 +1,7 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
+import com.xvitcoder.springmvcangularjs.mail.EmailSender;
+import com.xvitcoder.springmvcangularjs.mail.MulltyMailer;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,9 @@ public class IndexController {
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void doSomething() {
-//        TODO: Email notifications
+        MulltyMailer mulltyMailer=new MulltyMailer(new EmailSender());
+        Thread thread=new Thread(mulltyMailer);
+        thread.start();
         System.err.println("Schedule Task!");
     }
 

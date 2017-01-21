@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,6 +26,12 @@ public class IndexController {
     public String getLogin() {
         logger.debug("Request URL: /login; Entering getLogin()");
         return "login";
+    }
+
+    @Scheduled(cron = "0 0 1 * * ?")
+    public void doSomething() {
+//        TODO: Email notifications
+        System.err.println("Schedule Task!");
     }
 
 }

@@ -24,7 +24,6 @@ public class JdbcInventStatus implements InventStatusDao {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
@@ -33,12 +32,12 @@ public class JdbcInventStatus implements InventStatusDao {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<InventStatus> findAll() {
         logger.debug("Entering findAll()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         List<InventStatus> inventStatusList;
         try {
             String sql =
@@ -47,9 +46,10 @@ public class JdbcInventStatus implements InventStatusDao {
                             " WHERE T.ATTRTYPE_CODE = 'INV_STATUS' ";
 
             inventStatusList = jdbcTemplateObject.query(sql, new InventStatusMapper());
+            transactionManager.commit(status);
         }catch (DataAccessException e) {
             logger.error("Error in select status records, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
 //        System.out.println("DAO - Inventory Status");
@@ -63,6 +63,7 @@ public class JdbcInventStatus implements InventStatusDao {
     @Override
     public InventStatus findById(int id) {
         logger.debug("Entering findById(id=" + id + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         InventStatus inventStatus;
         try {
             String sql =
@@ -71,9 +72,10 @@ public class JdbcInventStatus implements InventStatusDao {
                             " where t.attrtype_code = 'INV_STATUS' " +
                             "and t.id = ? " ;
             inventStatus = jdbcTemplateObject.queryForObject(sql, new Object[]{id}, new InventStatusMapper());
+            transactionManager.commit(status);
         }catch (DataAccessException e) {
             logger.error("Error in select status record, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findById():" + inventStatus);

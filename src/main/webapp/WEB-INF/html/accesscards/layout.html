@@ -70,8 +70,8 @@
 
                 <div class="form-group" ng-class="{ 'has-error' : addCardForm.inventorynum.$invalid &amp;&amp; !addCardForm.inventorynum.$pristine }">
                     <label for="update-card-inventoryNum">Inventory number*:</label>
-                    <input name="inventorynum" type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum" ng-pattern="/^[0-9]+$/"/>
-                    <p ng-show="addCardForm.inventorynum.$error.pattern" class="help-block">Inventory Number is not valid.</p>
+                    <input name="inventorynum" type="text" class="form-control" id="update-card-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum" required="required"/>
+                    <p ng-show="addCardForm.inventorynum.$error.required &amp;&amp; !addCardForm.inventorynum.$pristine" class="help-block">Inventory Number is required.</p>
                 </div>
                 <div class="modal-footer">
                     <!--<button type="submit" class="btn btn-default btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>-->

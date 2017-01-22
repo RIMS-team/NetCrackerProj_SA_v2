@@ -24,7 +24,6 @@ public class JdbcOrderStatus implements OrderStatusDao {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
@@ -33,12 +32,12 @@ public class JdbcOrderStatus implements OrderStatusDao {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public List<OrderStatus> findAll() {
         logger.debug("Entering findAll()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         List<OrderStatus> orderStatusList;
         try {
             String sql =
@@ -47,9 +46,10 @@ public class JdbcOrderStatus implements OrderStatusDao {
                 " WHERE T.ATTRTYPE_CODE = 'ORD_STATUS' ";
 
             orderStatusList = jdbcTemplateObject.query(sql, new OrderStatusMapper());
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error in select record, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
 //        System.out.println("DAO - Order Status");
@@ -63,6 +63,7 @@ public class JdbcOrderStatus implements OrderStatusDao {
     @Override
     public OrderStatus findById(int id) {
         logger.debug("Entering findById(id=" + id + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         OrderStatus orderStatus;
         try {
             String sql =
@@ -71,9 +72,10 @@ public class JdbcOrderStatus implements OrderStatusDao {
                     " where t.attrtype_code = 'ORD_STATUS' " +
                     "and t.id = ? " ;
             orderStatus = jdbcTemplateObject.queryForObject(sql, new Object[]{id}, new OrderStatusMapper());
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error in select record, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findById():" + orderStatus);

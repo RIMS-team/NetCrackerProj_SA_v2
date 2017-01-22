@@ -64,27 +64,32 @@
                             <label for="user-full-name">Full Name:</label>
                             <input name="fullname" type="text" class="form-control" id="user-full-name" placeholder="Full Name" ng-model="user.fullName" ng-minlength="6" required="required"/>
                             <p ng-show="addUserForm.fullname.$error.minlength" class="help-block">Full Name is too short.</p>
+                            <p ng-show="addUserForm.fullname.$error.required &amp;&amp; !addUserForm.fullname.$pristine" class="help-block">Full Name is required.</p>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : addUserForm.email.$invalid &amp;&amp; !addUserForm.email.$pristine }">
                             <label for="user-email">Email address:</label>
-                            <input name="email" type="email" class="form-control" id="user-email" placeholder="Email" ng-model="user.eMail"  unique-email=""/>
+                            <input name="email" type="email" class="form-control" id="user-email" placeholder="Email" ng-model="user.eMail"  unique-email="" required="required"/>
                             <p ng-show="addUserForm.email.$error.email &amp;&amp; !addUserForm.email.$pristine" class="help-block">Enter a valid email.</p>
-                            <p ng-show="addUserForm.email.$error.uniqueEmail &amp;&amp; !addUserForm.email.$pristine" class="help-block">Email is already taken!</p>
+                            <p ng-show="addUserForm.email.$error.uniqueEmail &amp;&amp; !addUserForm.email.$pristine" class="help-block">Email is already taken.</p>
+                            <p ng-show="addUserForm.email.$error.required &amp;&amp; !addUserForm.email.$pristine" class="help-block">Email is required.</p>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : addUserForm.phoneNumber.$invalid &amp;&amp; !addUserForm.phoneNumber.$pristine }">
                             <label for="user-telephone">Telephone:</label>
                             <input name="phoneNumber" type="text" class="form-control" id="user-telephone" placeholder="Telephone Number" ng-pattern="/^[0-9]{1,12}$/" ng-model="user.phoneNumber" required="required"/>
                             <p ng-show="addUserForm.phoneNumber.$error.pattern" class="help-block">Phone Number is not valid.</p>
+                            <p ng-show="addUserForm.phoneNumber.$error.required &amp;&amp; !addUserForm.phoneNumber.$pristine" class="help-block">Phone Number is required.</p>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : addUserForm.password.$invalid &amp;&amp; !addUserForm.password.$pristine }">
                             <label for="user-password">Password:</label>
                             <input name="password" type="password" class="form-control" id="user-password" placeholder="Password" ng-model="user.password" ng-minlength="6" required="required"/>
                             <p ng-show="addUserForm.password.$error.minlength" class="help-block">Password is too short.</p>
+                            <p ng-show="addUserForm.password.$error.required &amp;&amp; !addUserForm.password.$pristine" class="help-block">Password is required.</p>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.cpassword.$invalid &amp;&amp; !addUserForm.cpassword.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : addUserForm.cpassword.$invalid &amp;&amp; (!addUserForm.cpassword.$pristine || !addUserForm.password.$pristine) }">
                             <label for="user-repeat-password">Repeat Password:</label>
                             <input name="cpassword" type="password" class="form-control" id="user-repeat-password" placeholder="Repeat Password" ng-model="user.confirmPassword" required="required" match-password="user.password"/>
-                            <p ng-show="addUserForm.cpassword.$error.matchPassword &amp;&amp; !addUserForm.cpassword.$pristine" class="help-block">Passwords don't match.</p>
+                            <p ng-show="addUserForm.cpassword.$error.matchPassword &amp;&amp; !addUserForm.cpassword.$pristine &amp;&amp; !addUserForm.cpassword.$error.required" class="help-block">Passwords don't match.</p>
+                            <p ng-show="addUserForm.cpassword.$error.required &amp;&amp; !addUserForm.password.$pristine" class="help-block">Repeat password please.</p>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" ng-disabled="addUserForm.$invalid">Add</button>
@@ -111,31 +116,36 @@
                     <form name="updateUserForm" ng-submit="submitUpdateUserForm(user)" class="form-horizontal user-update-form" novalidate="novalidate">
                         <input type="text" id="update-user-id" style="display:none" ng-model="user.id"/>
                         <input type="email" id="update-user-old-email" style="display: none"/>
-                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.fullname.$invalid &amp;&amp; !update.fullname.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.fullname.$invalid &amp;&amp; !updateUserForm.fullname.$pristine }">
                             <label for="update-user-full-name">Full Name:</label>
                             <input name="fullname" type="text" class="form-control" id="update-user-full-name" placeholder="Full Name" ng-model="user.fullName" ng-minlength="6" required="required"/>
                             <p ng-show="updateUserForm.fullname.$error.minlength" class="help-block">Full Name is too short.</p>
+                            <p ng-show="updateUserForm.fullname.$error.required &amp;&amp; !updateUserForm.fullname.$pristine" class="help-block">Full Name is required.</p>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : updateUserForm.email.$invalid &amp;&amp; !update.email.$pristine }">
                             <label for="update-user-email">Email address:</label>
-                            <input name="email" type="email" class="form-control" id="update-user-email" placeholder="Email" ng-model="user.eMail" unique-update-email=""/>
+                            <input name="email" type="email" class="form-control" id="update-user-email" placeholder="Email" ng-model="user.eMail" unique-update-email="" required="required"/>
                             <p ng-show="updateUserForm.email.$error.email &amp;&amp; !updateUserForm.email.$pristine" class="help-block">Enter a valid email.</p>
-                            <p ng-show="updateUserForm.email.$error.uniqueUpdateEmail &amp;&amp; !updateUserForm.email.$pristine" class="help-block">Email is already taken!</p>
+                            <p ng-show="updateUserForm.email.$error.uniqueUpdateEmail &amp;&amp; !updateUserForm.email.$pristine" class="help-block">Email is already taken.</p>
+                            <p ng-show="updateUserForm.email.$error.required &amp;&amp; !updateUserForm.email.$pristine" class="help-block">Email is required.</p>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : updateUserForm.phoneNumber.$invalid &amp;&amp; !update.phoneNumber.$pristine }">
                             <label for="update-user-telephone">Telephone:</label>
-                            <input name="phoneNumber" type="text" class="form-control" id="update-user-telephone" placeholder="Telephone Number" ng-model="user.phoneNumber" ng-pattern="/^[0-9]{1,12}$/"/>
+                            <input name="phoneNumber" type="text" class="form-control" id="update-user-telephone" placeholder="Telephone Number" ng-model="user.phoneNumber" ng-pattern="/^[0-9]{1,12}$/" required="required"/>
                             <p ng-show="updateUserForm.phoneNumber.$error.pattern" class="help-block">Phone Number is not valid.</p>
+                            <p ng-show="updateUserForm.phoneNumber.$error.required &amp;&amp; !update.phoneNumber.$pristine" class="help-block">Phone Number is required.</p>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : updateUserForm.password.$invalid &amp;&amp; !update.password.$pristine }">
                             <label for="update-user-password">Password:</label>
                             <input name="password" type="password" class="form-control" id="update-user-password" placeholder="Password" ng-model="user.password" ng-minlength="6" required="required"/>
                             <p ng-show="updateUserForm.password.$error.minlength" class="help-block">Password is too short.</p>
+                            <p ng-show="updateUserForm.password.$error.required &amp;&amp; !update.password.$pristine" class="help-block">Password is required.</p>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.cpassword.$invalid &amp;&amp; !update.cpassword.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : updateUserForm.cpassword.$invalid &amp;&amp; ( !update.cpassword.$pristine || !update.password.$pristine ) }">
                             <label for="update-user-repeat-password">Repeat Password:</label>
                             <input name="cpassword" type="password" class="form-control" id="update-user-repeat-password" placeholder="Repeat Password" ng-model="user.repeatPassword" required="required" match-password="user.password"/>
-                            <p ng-show="updateUserForm.cpassword.$error.matchPassword &amp;&amp; !updateUserForm.cpassword.$error.required" class="help-block">Passwords don't match.</p>
+                            <p ng-show="updateUserForm.cpassword.$error.matchPassword &amp;&amp; !updateUserForm.cpassword.$error.required &amp;&amp; !update.cpassword.$pristine" class="help-block">Passwords don't match.</p>
+                            <p ng-show="updateUserForm.cpassword.$error.required &amp;&amp; !updateUserForm.password.$error.$pristine" class="help-block">Repeat password please.</p>
                         </div>
                         <button type="submit" class="btn btn-warning" ng-disabled="updateUserForm.$invalid">Update</button>
                     </form>

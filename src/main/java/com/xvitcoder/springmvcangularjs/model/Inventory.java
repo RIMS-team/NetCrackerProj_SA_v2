@@ -7,7 +7,7 @@ class Inventory extends Entity {
 
     protected int statusId;
     protected String statusName;
-    protected long inventoryNum;
+    protected String inventoryNum;
 
     public Inventory() {
         //throw new IllegalArgumentException();
@@ -29,7 +29,7 @@ class Inventory extends Entity {
         this.statusName = statusName;
     }
 
-    public long getInventoryNum() {
+    public String getInventoryNum() {
         return inventoryNum;
     }
 }

@@ -1,5 +1,8 @@
 <div ng-controller="NotificationController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
 
+    <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notifications.length == 0">
+        No notifications found
+    </div>
     <table class="table table-bordered table-striped" >
         <thead>
         <tr>

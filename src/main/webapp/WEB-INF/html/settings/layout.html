@@ -4,23 +4,27 @@
         <input id="settings-old-email" style="display: none" type="text" ng-model="user.oldEmail"/>
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.password.$invalid &amp;&amp; !settingsUpdate.password.$pristine }">
             <label for="settings-password">Change password:</label>
-            <input name="password" type="password" style="margin-bottom: 10px" class="form-control col-xs-4" id="settings-password" ng-model="user.password" ng-minlength="6" required="required"/>
+            <input name="password" type="password" style="margin-bottom: 10px" placeholder="Passoword" class="form-control col-xs-4" id="settings-password" ng-model="user.password" ng-minlength="6" required="required"/>
             <p ng-show="settingsUpdate.password.$error.minlength" class="help-block">Password is too short.</p>
+            <p ng-show="settingsUpdate.password.$error.required &amp;&amp; !settingsUpdate.password.$pristine" class="help-block">Password is required.</p>
         </div>
-        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.repassword.$invalid &amp;&amp; !settingsUpdate.password.$pristine &amp;&amp; !settingsUpdate.repassword.$pristine }">
+        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.repassword.$invalid &amp;&amp; ( !settingsUpdate.password.$pristine || !settingsUpdate.repassword.$pristine ) }">
             <label for="repeat-settings--password">Repeat password:</label>
             <input name="repassword" type="password" class="form-control col-xs-4" id="repeat-settings--password" placeholder="Repeat Password" ng-model="user.repassword" match-password="user.password" required="required"/>
-            <p ng-show="settingsUpdate.repassword.$error.matchPassword &amp;&amp; !settingsUpdate.repassword.$pristine &amp;&amp; !settingsUpdate.password.$pristine" class="help-block">Passwords don't match.</p>
+            <p ng-show="settingsUpdate.repassword.$error.matchPassword &amp;&amp; !settingsUpdate.repassword.$pristine &amp;&amp; !settingsUpdate.repassword.$error.required" class="help-block">Passwords don't match.</p>
+            <p ng-show="settingsUpdate.repassword.$error.required &amp;&amp; !settingsUpdate.password.$pristine" class="help-block">Repeat password please.</p>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.email.$invalid &amp;&amp; !settingsUpdate.email.$pristine }">
             <label for="settings-email">Change Email:</label>
-            <input name="email" type="text" class="form-control" id="settings-email" placeholder="Email" ng-model="user.eMail" unique-settings-email=""/>
+            <input name="email" type="email" class="form-control" id="settings-email" placeholder="Email" ng-model="user.eMail" unique-settings-email="" required="required"/>
+            <p ng-show="settingsUpdate.email.$error.required &amp;&amp; !settingsUpdate.email.$pristine" class="help-block">Email is required.</p>
             <p ng-show="settingsUpdate.email.$error.email &amp;&amp; !settingsUpdate.email.$pristine" class="help-block">Enter a valid email.</p>
             <p ng-show="settingsUpdate.email.$error.uniqueSettingsEmail &amp;&amp; !settingsUpdate.email.$pristine" class="help-block">Email is already taken!</p>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.number.$invalid &amp;&amp; !settingsUpdate.number.$pristine }">
             <label for="settings-phone">Change Phone Number:</label>
-            <input name="number" type="text" class="form-control" id="settings-phone" placeholder="Phone" ng-pattern="/^[0-9]{1,12}$/" ng-model="user.phoneNumber"/>
+            <input name="number" type="text" class="form-control" id="settings-phone" placeholder="Phone" ng-pattern="/^[0-9]{1,12}$/" ng-model="user.phoneNumber" required="required"/>
+            <p ng-show="settingsUpdate.number.$error.required" class="help-block">Phone Number is required.</p>
             <p ng-show="settingsUpdate.number.$error.pattern" class="help-block">Phone Number is not valid.</p>
         </div>
         <button type="submit" style="float:right;" class="btn btn-primary" ng-disabled="settingsUpdate.$invalid">Change</button>

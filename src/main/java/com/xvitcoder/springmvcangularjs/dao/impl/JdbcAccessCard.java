@@ -31,7 +31,6 @@ public class JdbcAccessCard implements AccessCardDao {
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     private SimpleJdbcCall cardSelectSP;
 
@@ -48,12 +47,12 @@ public class JdbcAccessCard implements AccessCardDao {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public void insert(AccessCard accessCard) {
         logger.debug("Entering insert(accessCard=" + accessCard + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         SimpleJdbcCall simpleJdbcCall;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_insert");
@@ -62,9 +61,10 @@ public class JdbcAccessCard implements AccessCardDao {
             map.put("p_inventory_num",accessCard.getInventoryNum());
             map.put("p_inv_status_id", accessCard.getStatusId());
             simpleJdbcCall.execute(map);
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error inserting access card", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -72,6 +72,7 @@ public class JdbcAccessCard implements AccessCardDao {
     @Override
     public AccessCard findByInventoryNum(int cardId) {
         logger.debug("Entering findByInventoryNum(cardId=" + cardId + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         AccessCard accessCard;
         try {
             String sql =
@@ -89,9 +90,10 @@ public class JdbcAccessCard implements AccessCardDao {
                             "AND ATTR_INVENTORY_NUM.VALUE = ?";
             accessCard = jdbcTemplateObject.queryForObject(sql,
                     new Object[]{cardId}, new AccessCardMapper());
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error finding access card", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findByInventoryNum():" + accessCard);
@@ -101,6 +103,7 @@ public class JdbcAccessCard implements AccessCardDao {
     @Override
     public List<AccessCard> findAll() {
         logger.debug("Entering findAll()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         String sql =
                 "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
                         ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
@@ -117,9 +120,10 @@ public class JdbcAccessCard implements AccessCardDao {
         try {
             accessCards = jdbcTemplateObject.query(sql,
                     new AccessCardMapper());
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error finding all access cards, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + accessCards);
@@ -129,7 +133,8 @@ public class JdbcAccessCard implements AccessCardDao {
     @Override
     public void update(AccessCard card) {
         logger.debug("Entering update(card=" + card + ")");
-        SimpleJdbcCall simpleJdbcCall=null;
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        SimpleJdbcCall simpleJdbcCall;
         try {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_update");
             Map<String ,Object> map=new HashMap<String ,Object>();
@@ -137,11 +142,10 @@ public class JdbcAccessCard implements AccessCardDao {
             map.put("p_inventory_num",card.getInventoryNum());
             map.put("p_inv_status_id",card.getStatusId());
             simpleJdbcCall.execute(map);
-
-            //System.out.println("2ebhovbhwe bv");
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error updating card, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -198,6 +202,7 @@ public class JdbcAccessCard implements AccessCardDao {
     @Override
     public void deleteCard(int id) {
         logger.debug("Entering deleteCard(id="+ id + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         SimpleJdbcCall simpleJdbcCall=null;
         try {
             simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_delete");
@@ -205,9 +210,10 @@ public class JdbcAccessCard implements AccessCardDao {
             map.put("p_object_id",id);
             simpleJdbcCall.execute(map);
             System.out.println("2ebhovbhwe bv");
+            transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error deleting card, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }

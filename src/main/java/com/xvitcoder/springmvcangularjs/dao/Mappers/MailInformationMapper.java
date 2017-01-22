@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class MailInformationMapper implements RowMapper<MailInformation> {
     @Override
     public MailInformation mapRow(ResultSet resultSet, int i) throws SQLException {
-        MailInformation mailInformation=new MailInformation(resultSet.getInt("ORDER_ID"),
+        MailInformation mailInformation = new MailInformation(resultSet.getInt("ORDER_ID"),
                 resultSet.getDate("ORD_DATE"),
                 resultSet.getInt("INVENTORY_ID"),
                 resultSet.getString("INVENTORY_NAME"),

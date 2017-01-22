@@ -82,4 +82,36 @@ public class JdbcInventStatus implements InventStatusDao {
         return inventStatus;
     }
 
+    @Override
+    public void addStatus(InventStatus inventStatus) {
+        logger.debug("Entering addStatus(" + inventStatus + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try {
+            String sql = "INSERT INTO LISTTYPE(CODE,NAME,ATTRTYPE_CODE) VALUES (?,?,'INV_STATUS')";
+            jdbcTemplateObject.update(sql,inventStatus.getCode(),inventStatus.getName());
+            transactionManager.commit(status);
+        } catch (DataAccessException ex) {
+            logger.error("Error inserting inventStatus, rolling back", ex);
+            transactionManager.rollback(status);
+            throw ex;
+        }
+        logger.debug("Leaving addStatus(" + inventStatus + ")");
+    }
+
+    @Override
+    public void updateStatus(InventStatus inventStatus) {
+        logger.debug("Entering updateStatus(" + inventStatus + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try {
+            String sql = "UPDATE LISTTYPE SET CODE = ?, NAME = ? WHERE ATTRTYPE_CODE = 'INV_STATUS' AND ID = ?";
+            jdbcTemplateObject.update(sql,inventStatus.getCode(),inventStatus.getName(),inventStatus.getId());
+            transactionManager.commit(status);
+        } catch (DataAccessException ex) {
+            logger.debug("Error updating inventStatus, rolling back", ex);
+            transactionManager.rollback(status);
+            throw ex;
+        }
+        logger.debug("Leaving updateStatus(" + inventStatus + ")");
+    }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.smartcardio.Card;
 import java.util.List;
@@ -60,6 +61,11 @@ public class AccessCardController {
     public String getCardPartialPage() {
         logger.debug("Request URL: /accesscards/layout; Entering getCardPartialPage()");
         return "accesscards/layout";
+    }
+
+    @RequestMapping(value = "/DownloadPDF", method = RequestMethod.GET)
+    public ModelAndView downloadPDF() {
+        return new ModelAndView("pdfView", "listCards", accessCardService.findAll());
     }
 
 }

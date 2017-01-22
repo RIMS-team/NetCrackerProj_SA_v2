@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class MulltyMailer implements Runnable {
 
-    EmailSender emailSender;
-    ApplicationContext context;
-    NotificationTempDao notificationService;
+    private EmailSender emailSender;
+    private ApplicationContext context;
+    private NotificationTempDao notificationService;
 
     public MulltyMailer(EmailSender emailSender){
         this.emailSender=emailSender;

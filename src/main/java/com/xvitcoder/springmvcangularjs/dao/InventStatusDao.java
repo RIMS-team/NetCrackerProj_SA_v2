@@ -10,4 +10,6 @@ import java.util.List;
 public interface InventStatusDao {
     List<InventStatus> findAll();
     InventStatus findById(int id);
+    void addStatus(InventStatus status);
+    void updateStatus(InventStatus status);
 }

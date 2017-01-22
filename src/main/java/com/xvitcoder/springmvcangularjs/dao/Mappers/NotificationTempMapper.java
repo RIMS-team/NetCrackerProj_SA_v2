@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class NotificationTempMapper implements RowMapper<NotificationTemp> {
     @Override
     public NotificationTemp mapRow(ResultSet resultSet, int i) throws SQLException {
-        NotificationTemp notificationTemp=new NotificationTemp(0,
+        NotificationTemp notificationTemp = new NotificationTemp(0,
                 0,
                 resultSet.getString("template"));
         return notificationTemp;

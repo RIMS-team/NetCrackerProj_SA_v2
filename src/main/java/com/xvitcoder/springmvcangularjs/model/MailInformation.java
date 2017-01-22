@@ -6,22 +6,22 @@ import java.util.Date;
  * Created by Admin on 21.01.2017.
  */
 public class MailInformation {
-    int ORDER_ID;
-    Date ORD_DATE;
-    int INVENTORY_ID;
-    String INVENTORY_NAME;
-    String INVENTORY_NUM;
-    String INVENTORY_EXTRA_PARAM;
-    int EMPLOYEE_ID;
-    String EMPLOYEE_FUll_NAME;
-    String EMPLOYEE_EMAIL;
-    int  USER_ID;
-    String  USER_FUll_NAME;
-    String  USER_EMAIL;
-    String  USER_PHONE;
-    int  NOTIFICATION_ID;
-    int  NOTIFICATION_NUM;
-    String  NOTIFICATION_TEMPLATE;
+    private int ORDER_ID;
+    private Date ORD_DATE;
+    private int INVENTORY_ID;
+    private String INVENTORY_NAME;
+    private String INVENTORY_NUM;
+    private String INVENTORY_EXTRA_PARAM;
+    private int EMPLOYEE_ID;
+    private String EMPLOYEE_FUll_NAME;
+    private String EMPLOYEE_EMAIL;
+    private int  USER_ID;
+    private String  USER_FUll_NAME;
+    private String  USER_EMAIL;
+    private String  USER_PHONE;
+    private int  NOTIFICATION_ID;
+    private int  NOTIFICATION_NUM;
+    private String  NOTIFICATION_TEMPLATE;
 
     public MailInformation(int ORDER_ID, Date ORD_DATE, int INVENTORY_ID, String INVENTORY_NAME, String INVENTORY_NUM, String INVENTORY_EXTRA_PARAM, int EMPLOYEE_ID, String EMPLOYEE_FUll_NAME, String EMPLOYEE_EMAIL, int USER_ID, String USER_FUll_NAME, String USER_EMAIL, String USER_PHONE, int NOTIFICATION_ID, int NOTIFICATION_NUM, String NOTIFICATION_TEMPLATE) {
         this.ORDER_ID = ORDER_ID;

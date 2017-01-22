@@ -51,7 +51,6 @@ public class JdbcNotificationTemp implements NotificationTempDao {
 
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     private SimpleJdbcCall notificationTempCall;
 
@@ -63,13 +62,13 @@ public class JdbcNotificationTemp implements NotificationTempDao {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
 
 
     @Override
     public NotificationTemp findById(int notifi_num, int user_id) {
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         notificationTempCall.withCatalogName("dm_notif_templ");
         notificationTempCall.withFunctionName("notif_templ_get");
         logger.debug("Entering findAll()");
@@ -80,11 +79,11 @@ public class JdbcNotificationTemp implements NotificationTempDao {
             SqlParameterSource in = new MapSqlParameterSource().addValue("p_notif_num", notifi_num).addValue("p_user_id", null);
             notificationTemp=notificationTempCall.executeFunction(String.class,in);
             notificationTemp1=new NotificationTemp(notifi_num,user_id,notificationTemp);
-
+            transactionManager.commit(status);
         }
         catch (DataAccessException e) {
             logger.error("Error inserting user, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         return notificationTemp1;
@@ -107,6 +106,7 @@ public class JdbcNotificationTemp implements NotificationTempDao {
 
     @Override
     public List<MailInformation> getCursor(int day_1, int day_2, int day_3) {
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         notificationTempCall.withCatalogName("dm_notification");
         notificationTempCall.withProcedureName("debtors_info_select");
         notificationTempCall.returningResultSet("P_OUT_CURSOR", new MailInformationMapper());
@@ -121,10 +121,11 @@ public class JdbcNotificationTemp implements NotificationTempDao {
             result.put("P_OUT_CURSOR", "");
             result = notificationTempCall.execute(args);
             orders = (List<MailInformation>) result.get("P_OUT_CURSOR");
+            transactionManager.commit(status);
         }
         catch (DataAccessException e) {
             logger.error("Error inserting user, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
         logger.debug("Leaving findAll():" + orders);
@@ -133,6 +134,7 @@ public class JdbcNotificationTemp implements NotificationTempDao {
 
     @Override
     public void updateStatus() {
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         notificationTempCall.withCatalogName("dm_notification");
         notificationTempCall.withProcedureName("recalc_orders_statuses");
         try {
@@ -141,13 +143,14 @@ public class JdbcNotificationTemp implements NotificationTempDao {
         transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error updating, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }
 
     @Override
     public void registerNotifi(String orderid, int day_1, int day_2, int day_3) {
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         notificationTempCall.withCatalogName("dm_notification");
         notificationTempCall.withProcedureName("register_notifications");
         Map<String, Object> args = new HashMap<>(3);
@@ -161,7 +164,7 @@ public class JdbcNotificationTemp implements NotificationTempDao {
             transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error updating, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }

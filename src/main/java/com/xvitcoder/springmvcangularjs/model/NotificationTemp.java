@@ -4,9 +4,9 @@ package com.xvitcoder.springmvcangularjs.model;
  * Created by Admin on 20.01.2017.
  */
 public class NotificationTemp {
-    int notif_num;
-    int user_id;
-    String template;
+    private int notif_num;
+    private int user_id;
+    private String template;
 
     public NotificationTemp(int notif_num,int user_id,String template){
         this.notif_num=notif_num;

@@ -4,6 +4,7 @@ import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderStatusMapper;
 import com.xvitcoder.springmvcangularjs.dao.OrderStatusDao;
 import com.xvitcoder.springmvcangularjs.model.OrderStatus;
 import org.apache.log4j.Logger;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -80,6 +81,38 @@ public class JdbcOrderStatus implements OrderStatusDao {
         }
         logger.debug("Leaving findById():" + orderStatus);
         return orderStatus;
+    }
+
+    @Override
+    public void addStatus(OrderStatus orderStatus) {
+        logger.debug("Entering addStatus(" + orderStatus + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try {
+            String sql = "INSERT INTO LISTTYPE(CODE,NAME,ATTRTYPE_CODE) VALUES (?,?,'ORD_STATUS')";
+            jdbcTemplateObject.update(sql,orderStatus.getCode(),orderStatus.getName());
+            transactionManager.commit(status);
+        } catch (DataAccessException ex) {
+            logger.error("Error inserting OrderStatus, rolling back", ex);
+            transactionManager.rollback(status);
+            throw ex;
+        }
+        logger.debug("Leaving addStatus(" + orderStatus + ")");
+    }
+
+    @Override
+    public void updateStatus(OrderStatus orderStatus) {
+        logger.debug("Entering updateStatus(" + orderStatus + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try {
+            String sql = "UPDATE LISTTYPE SET CODE = ?, NAME = ? WHERE ATTRTYPE_CODE = 'ORD_STATUS' AND ID = ?";
+            jdbcTemplateObject.update(sql,orderStatus.getCode(),orderStatus.getName(),orderStatus.getId());
+            transactionManager.commit(status);
+        } catch (DataAccessException ex) {
+            logger.debug("Error updating OrderStatus, rolling back", ex);
+            transactionManager.rollback(status);
+            throw ex;
+        }
+        logger.debug("Leaving updateStatus(" + orderStatus + ")");
     }
 
 }

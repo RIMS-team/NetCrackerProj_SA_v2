@@ -32,10 +32,9 @@ public class IndexController {
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void doSomething() {
-        MulltyMailer mulltyMailer=new MulltyMailer(new EmailSender());
-        Thread thread=new Thread(mulltyMailer);
+        MulltyMailer mulltyMailer = new MulltyMailer(new EmailSender());
+        Thread thread = new Thread(mulltyMailer);
         thread.start();
-        System.err.println("Schedule Task!");
     }
 
 }

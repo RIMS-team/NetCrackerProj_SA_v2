@@ -4,7 +4,7 @@
         <input id="settings-old-email" style="display: none" type="text" ng-model="user.oldEmail"/>
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.password.$invalid &amp;&amp; !settingsUpdate.password.$pristine }">
             <label for="settings-password">Change password:</label>
-            <input name="password" type="password" style="margin-bottom: 10px" placeholder="Passoword" class="form-control col-xs-4" id="settings-password" ng-model="user.password" ng-minlength="6" required="required"/>
+            <input name="password" type="password" style="margin-bottom: 10px" placeholder="Password" class="form-control col-xs-4" id="settings-password" ng-model="user.password" ng-minlength="6" required="required"/>
             <p ng-show="settingsUpdate.password.$error.minlength" class="help-block">Password is too short.</p>
             <p ng-show="settingsUpdate.password.$error.required &amp;&amp; !settingsUpdate.password.$pristine" class="help-block">Password is required.</p>
         </div>

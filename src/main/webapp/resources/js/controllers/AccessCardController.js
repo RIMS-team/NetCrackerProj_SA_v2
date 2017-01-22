@@ -95,16 +95,16 @@
             }, function () {
                 // modal cancel
             });
-        }
+        };
 
 
         $scope.openUpdateEditor = function (card) {
             _this.openEditor(card);
-        }
+        };
 
         $scope.openInsertEditor = function () {
             _this.openEditor(null);
-        }
+        };
 
 
         invStatusService.loadList()

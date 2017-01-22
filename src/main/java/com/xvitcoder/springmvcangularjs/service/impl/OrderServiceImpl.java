@@ -25,5 +25,20 @@ public class OrderServiceImpl implements OrderService {
     public OrderCursor findById(int id) {
         return orderDao.findById(id);
     }
+
+    @Override
+    public void updateOrder(OrderCursor order) {
+        orderDao.updateOrder(order);
+    }
+
+    @Override
+    public void addOrder(OrderCursor order) {
+        orderDao.addOrder(order);
+    }
+
+    @Override
+    public void deleteOrder(int id) {
+        orderDao.deleteOrder(id);
+    }
 }
 

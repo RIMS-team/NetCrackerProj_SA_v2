@@ -33,10 +33,16 @@ public class JdbcAccessCard implements AccessCardDao {
     private PlatformTransactionManager transactionManager;
     private TransactionStatus status;
 
+    private SimpleJdbcCall cardSelectSP;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+
+        cardSelectSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        cardSelectSP.withCatalogName("DM_ACCESS_CARD");
+        cardSelectSP.withProcedureName("ACCESS_CARD_SELECT");
+        cardSelectSP.returningResultSet("P_OUT_CURSOR", new AccessCardMapper());
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -138,6 +144,55 @@ public class JdbcAccessCard implements AccessCardDao {
 //            transactionManager.rollback(status);
             throw e;
         }
+    }
+
+    @Override
+    public List<AccessCard> findByStatus(int statusId) {
+        logger.debug("Entering JdbcAccessCard.findByStatus()");
+        Map<String, Object> args = new HashMap<>(4);
+        Map<String, Object> result = new HashMap<>(1);
+        List<AccessCard> cards;
+        try {
+            args.put("P_OBJECT_ID", null);
+            args.put("P_INV_STATUS_ID", statusId);
+            args.put("P_ROWNUM_FIRST", null);
+            args.put("P_ROWNUM_LAST", null);
+            result.put("P_OUT_CURSOR", "");
+            result = cardSelectSP.execute(args);
+            cards = (List<AccessCard>) result.get("P_OUT_CURSOR");
+        }
+        catch (DataAccessException e) {
+            logger.error("Error selecting cards by status, rolling back", e);
+//            transactionManager.rollback(status);
+            throw e;
+        }
+        logger.debug("Leaving JdbcAccessCard.findAll():" + cards);
+        return cards;
+
+//        logger.debug("Entering findAll()");
+//        String sql =
+//                "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
+//                        ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
+//                        ",ATTR_STATUS.VALUE  AS INV_STATUS_ID " +
+//                        ",LIST_STATUS.NAME   AS INV_STATUS_NAME " +
+//                        "FROM OBJECTS CARD, ATTRIBUTES ATTR_INVENTORY_NUM, ATTRIBUTES ATTR_STATUS, LISTTYPE LIST_STATUS " +
+//                        "WHERE CARD.OBJECT_TYPE_ID = 6 /* CARD */ " +
+//                        "AND CARD.OBJECT_ID = ATTR_INVENTORY_NUM.OBJECT_ID " +
+//                        "AND CARD.OBJECT_ID = ATTR_STATUS.OBJECT_ID " +
+//                        "AND ATTR_INVENTORY_NUM.ATTR_ID = 13 /* INVENTORY_NUM */ " +
+//                        "AND ATTR_STATUS.ATTR_ID = 16 /* STATUS */ " +
+//                        "AND ATTR_STATUS.VALUE = LIST_STATUS.ID AND LIST_STATUS.ID="+statusId;
+//        List <AccessCard> accessCards;
+//        try {
+//            accessCards = jdbcTemplateObject.query(sql,
+//                    new AccessCardMapper());
+//        } catch (DataAccessException e) {
+//            logger.error("Error finding all access cards, rolling back", e);
+////            transactionManager.rollback(status);
+//            throw e;
+//        }
+//        logger.debug("Leaving findAll():" + accessCards);
+//        return accessCards;
     }
 
     @Override

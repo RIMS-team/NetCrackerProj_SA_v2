@@ -43,4 +43,9 @@ public class AccessCardServiceImpl implements AccessCardService {
     public void updateCard(AccessCard card) {
         accessCardDao.update(card);
     }
+
+    @Override
+    public List<AccessCard> findByStatus(int statusId) {
+        return accessCardDao.findByStatus(statusId);
+    }
 }

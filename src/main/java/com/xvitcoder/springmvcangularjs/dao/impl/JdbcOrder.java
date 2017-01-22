@@ -2,8 +2,12 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 
 import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderMapper;
 import com.xvitcoder.springmvcangularjs.dao.OrderDAO;
+import com.xvitcoder.springmvcangularjs.model.AccessCard;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
+import com.xvitcoder.springmvcangularjs.service.AccessCardService;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -27,6 +31,14 @@ public class JdbcOrder implements OrderDAO {
     private TransactionStatus status;
 
     private SimpleJdbcCall orderSelectSP;
+    private SimpleJdbcCall orderUpdateSP;
+    private SimpleJdbcCall orderInsertSP;
+    private SimpleJdbcCall orderDeleteSP;
+
+    private SimpleJdbcCall cardUpdateSP;
+
+//    ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+//    private AccessCardService accessCardService = (AccessCardService) context.getBean("accessCardServiceImpl");
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
@@ -35,6 +47,22 @@ public class JdbcOrder implements OrderDAO {
         orderSelectSP.withCatalogName("DM_ORDER");
         orderSelectSP.withProcedureName("ORDER_SELECT");
         orderSelectSP.returningResultSet("P_OUT_CURSOR", new OrderMapper());
+
+        orderUpdateSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        orderUpdateSP.withCatalogName("DM_ORDER");
+        orderUpdateSP.withProcedureName("ORDER_UPDATE");
+
+        orderInsertSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        orderInsertSP.withCatalogName("DM_ORDER");
+        orderInsertSP.withProcedureName("ORDER_INSERT");
+
+        orderDeleteSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        orderDeleteSP.withCatalogName("DM_ORDER");
+        orderDeleteSP.withProcedureName("ORDER_DELETE");
+
+        cardUpdateSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        cardUpdateSP.withCatalogName("DM_ACCESS_CARD");
+        cardUpdateSP.withProcedureName("ACCESS_CARD_UPDATE");
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -45,8 +73,8 @@ public class JdbcOrder implements OrderDAO {
 
     @Override
     public List<OrderCursor> findAll() {
-        logger.debug("Entering findAll()");
-        Map<String, Object> args = new HashMap<>(2);
+        logger.debug("Entering JdbcOrder.findAll()");
+        Map<String, Object> args = new HashMap<>(4);
         Map<String, Object> result = new HashMap<>(1);
         List<OrderCursor> orders;
         try {
@@ -59,19 +87,86 @@ public class JdbcOrder implements OrderDAO {
             orders = (List<OrderCursor>) result.get("P_OUT_CURSOR");
         }
         catch (DataAccessException e) {
-            logger.error("Error inserting user, rolling back", e);
+            logger.error("Error selecting orders, rolling back", e);
 //            transactionManager.rollback(status);
             throw e;
         }
-        logger.debug("Leaving findAll():" + orders);
+        logger.debug("Leaving JdbcOrder.findAll():" + orders);
         return orders;
     }
 
     @Override
     public OrderCursor findById(int id) {
-        logger.debug("Entering findById(id=" + id + ")");
+        logger.debug("Entering JdbcOrder.findById(id=" + id + ")");
         logger.warn("Method JdbcOrder.findById() not yet implemented");
         return null;
+    }
+
+    @Override
+    public void updateOrder(OrderCursor order) {
+        logger.debug("Entering JdbcOrder.updateOrder(order=" + order + ")");
+        Map<String, Object> args = new HashMap<>(6);
+        try {
+            args.put("P_OBJECT_ID", order.getId());
+            args.put("P_INVENTORY_ID", order.getInventoryId());
+            args.put("P_EMPLOYEE_ID", order.getEmployeeId());
+            args.put("P_USER_ID", order.getUserId());
+            args.put("P_ORD_STATUS_ID", order.getStatusId());
+            args.put("P_DATE", order.getDate());
+
+            orderUpdateSP.execute(args);
+        }
+        catch (DataAccessException e) {
+            logger.error("Error updating order, rolling back", e);
+//            transactionManager.rollback(status);
+            throw e;
+        }
+    }
+
+    @Override
+    public void addOrder(OrderCursor order) {
+        logger.debug("Entering JdbcOrder.insertOrder(order=" + order + ")");
+        logger.debug("Entering JdbcOrder.insertOrder(inv=" + order.getInventoryNum() + ")");
+        Map<String, Object> args = new HashMap<>(6);
+        try {
+            args.put("P_OBJECT_ID", null);
+            args.put("P_INVENTORY_ID", order.getInventoryId());
+            args.put("P_EMPLOYEE_ID", order.getEmployeeId());
+            args.put("P_USER_ID", order.getUserId());
+            args.put("P_ORD_STATUS_ID", order.getStatusId());
+            args.put("P_DATE", order.getDate());
+
+            orderInsertSP.execute(args);
+
+            args.put("P_OBJECT_ID",order.getInventoryId());
+            args.put("P_INVENTORY_NUM",order.getInventoryNum());
+            args.put("P_INV_STATUS_ID",1); // IN_USE (Используется)
+
+            cardUpdateSP.execute(args);
+
+//            accessCardService.updateCard(new AccessCard
+//                    (order.getInventoryId(), 1, "Используется", order.getInventoryNum()));
+        }
+        catch (DataAccessException e) {
+            logger.error("Error adding new order, rolling back", e);
+//            transactionManager.rollback(status);
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteOrder(int id) {
+        logger.debug("Entering JdbcOrder.deleteOrder(orderId=" + id + ")");
+        Map<String, Object> args = new HashMap<>(1);
+        try {
+            args.put("P_OBJECT_ID", id);
+            orderDeleteSP.execute(args);
+        }
+        catch (DataAccessException e) {
+            logger.error("Error deleting order, rolling back", e);
+//            transactionManager.rollback(status);
+            throw e;
+        }
     }
 
 }

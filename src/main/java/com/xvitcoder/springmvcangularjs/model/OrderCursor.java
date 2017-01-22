@@ -14,7 +14,7 @@ public class OrderCursor extends Entity {
 
     protected int inventoryId;
     protected String inventoryType;
-    protected long inventoryNum;
+    protected String inventoryNum;
 
     protected String noteName;
     protected String noteModel;
@@ -33,7 +33,7 @@ public class OrderCursor extends Entity {
     }
 
     public OrderCursor(int id, long rowNum, Date date, int statusId, String statusName,
-                       int inventoryId, String inventoryType, long inventoryNum,
+                       int inventoryId, String inventoryType, String inventoryNum,
                        String noteName, String noteModel, String noteMemory, String noteSerial,
                        int employeeId, String employeeFullName, String employeeEmail,
                        int userId, String userFullName, String userEmail) {
@@ -105,11 +105,11 @@ public class OrderCursor extends Entity {
         this.inventoryType = inventoryType;
     }
 
-    public long getInventoryNum() {
+    public String getInventoryNum() {
         return inventoryNum;
     }
 
-    public void setInventoryNum(long inventoryNum) {
+    public void setInventoryNum(String inventoryNum) {
         this.inventoryNum = inventoryNum;
     }
 

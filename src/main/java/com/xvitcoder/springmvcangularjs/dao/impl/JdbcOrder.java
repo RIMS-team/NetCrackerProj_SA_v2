@@ -102,6 +102,7 @@ public class JdbcOrder implements OrderDAO {
     @Override
     public void updateOrder(OrderCursor order) {
         logger.debug("Entering JdbcOrder.updateOrder(order=" + order + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(6);
         try {
             args.put("P_OBJECT_ID", order.getId());
@@ -112,10 +113,11 @@ public class JdbcOrder implements OrderDAO {
             args.put("P_DATE", order.getDate());
 
             orderUpdateSP.execute(args);
+            transactionManager.commit(status);
         }
         catch (DataAccessException e) {
             logger.error("Error updating order, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }
@@ -123,7 +125,7 @@ public class JdbcOrder implements OrderDAO {
     @Override
     public void addOrder(OrderCursor order) {
         logger.debug("Entering JdbcOrder.insertOrder(order=" + order + ")");
-        logger.debug("Entering JdbcOrder.insertOrder(inv=" + order.getInventoryNum() + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(6);
         try {
             args.put("P_OBJECT_ID", null);
@@ -135,11 +137,13 @@ public class JdbcOrder implements OrderDAO {
 
             orderInsertSP.execute(args);
 
-            args.put("P_OBJECT_ID",order.getInventoryId());
-            args.put("P_INVENTORY_NUM",order.getInventoryNum());
-            args.put("P_INV_STATUS_ID",1); // IN_USE (Используется)
+            args.put("P_OBJECT_ID", order.getInventoryId());
+            args.put("P_INVENTORY_NUM", order.getInventoryNum());
+            args.put("P_INV_STATUS_ID", 1); // IN_USE (Используется)
 
             cardUpdateSP.execute(args);
+
+            transactionManager.commit(status);
 
 //            accessCardService.updateCard(new AccessCard
 //                    (order.getInventoryId(), 1, "Используется", order.getInventoryNum()));
@@ -154,14 +158,16 @@ public class JdbcOrder implements OrderDAO {
     @Override
     public void deleteOrder(int id) {
         logger.debug("Entering JdbcOrder.deleteOrder(orderId=" + id + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(1);
         try {
             args.put("P_OBJECT_ID", id);
             orderDeleteSP.execute(args);
+            transactionManager.commit(status);
         }
         catch (DataAccessException e) {
             logger.error("Error deleting order, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
     }

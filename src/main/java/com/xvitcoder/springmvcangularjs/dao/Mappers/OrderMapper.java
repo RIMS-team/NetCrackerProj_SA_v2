@@ -20,7 +20,7 @@ public class OrderMapper implements RowMapper<OrderCursor> {
                 rs.getString("ORD_STATUS_NAME"),
                 rs.getInt("INVENTORY_ID"),
                 rs.getString("INVENTORY_TYPE"),
-                rs.getLong("INVENTORY_NUM"),
+                rs.getString("INVENTORY_NUM"),
                 rs.getString("NOTE_NAME"),
                 rs.getString("NOTE_MODEL"),
                 rs.getString("NOTE_MEMORY_TYPE"),
@@ -30,7 +30,7 @@ public class OrderMapper implements RowMapper<OrderCursor> {
                 rs.getString("EMPLOYEE_EMAIL"),
                 rs.getInt("USER_ID"),
                 rs.getString("USER_FULL_NAME"),
-                rs.getString("USER_FULL_NAME")
+                rs.getString("USER_ATTR_EMAIL")
         );
         return order;
     }

@@ -1,78 +1,188 @@
-<div ng-controller="OrderController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
+<div ng-controller="OrderController as formController"
+     style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;"
+     xmlns:date="http://www.w3.org/1999/xhtml">
+    <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="orders.length == 0">
+        No orders found
+    </div>
 
-<div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="order.length == 0">
-    No orders found
-</div>
-<table class="table table-bordered table-striped"  ng-show="order.length > 0">
-    <thead>
-    <tr>
-        <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Search by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('date')" style="text-align: center;"><a class="thumbnail1" href="#">Date<span>Search by Date<input type="text" ng-model="ref.date" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='date'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Search by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('inventoryId')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory ID<span>Search by Inventory ID<input type="text" ng-model="ref.inventoryId" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('inventoryType')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory type<span>Search by Inventory type<input type="text" ng-model="ref.inventoryType" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('inventoryNum')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory num<span>Search by Inventory num<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('noteName')" style="text-align: center;"><a class="thumbnail1" href="#">Note name<span>Search by Note name<input type="text" ng-model="ref.noteName" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='noteName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('noteModel')" style="text-align: center;"><a class="thumbnail1" href="#">Note model<span>Search by Note model<input type="text" ng-model="ref.noteModel" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='noteModel'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('noteMemory')" style="text-align: center;"><a class="thumbnail1" href="#">Note memory<span>Search by Note memory<input type="text" ng-model="ref.noteMemory" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='noteMemory'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('noteSerial')" style="text-align: center;"><a class="thumbnail1" href="#">Note serial<span>Search by Note serial<input type="text" ng-model="ref.noteSerial" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='noteSerial'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('employeeId')" style="text-align: center;"><a class="thumbnail1" href="#">Employee ID<span>Search by Employee ID<input type="text" ng-model="ref.employeeId" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='employeeId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('employeeFullName')" style="text-align: center;"><a class="thumbnail1" href="#">Employee name<span>Search by Employee name<input type="text" ng-model="ref.employeeFullName" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='employeeFullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('userId')" style="text-align: center;"><a class="thumbnail1" href="#">User ID<span>Search by User ID<input type="text" ng-model="ref.userId" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='userId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th ng-click="sort('userFullName')" style="text-align: center;"><a class="thumbnail1" href="#">User Name<span>Search by User Name<input type="text" ng-model="ref.userFullName" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='userFullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr dir-paginate="elem in order | orderBy:sortKey:reverse | filter: ref | itemsPerPage:15 ">
-        <td>{{elem.id}}</td>
-        <td>{{elem.date}}</td>
-        <td>{{elem.statusName}}</td>
-        <td>{{elem.inventoryId}}</td>
-        <td>{{elem.inventoryType}}</td>
-        <td>{{elem.inventoryNum}}</td>
-        <td>{{elem.noteName}}</td>
-        <td>{{elem.noteModel}}</td>
-        <td>{{elem.noteMemory}}</td>
-        <td>{{elem.noteSerial}}</td>
-        <td>{{elem.employeeId}}</td>
-        <td>{{elem.employeeFullName}}</td>
-        <td>{{elem.userId}}</td>
-        <td>{{elem.userFullName}}</td>
-    </tr>
-    </tbody>
-</table>
+    <div class="form-group">
+        <button id="add-order-button" type="button" class="btn btn-default btn-mini" ng-click="openInsertEditor()" style="margin-bottom: 10px">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <table class="table table-bordered table-striped"  ng-show="orders.length > 0">
+        <thead>
+        <tr>
+            <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Search by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('date')" style="text-align: center;"><a class="thumbnail1" href="#">Date<span>Search by Date<input type="text" ng-model="ref.date" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='date'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Search by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('inventoryId')" style="display:none; text-align: center;"><a class="thumbnail1" href="#">Inventory ID<span>Search by Inventory ID<input type="text" ng-model="ref.inventoryId" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('inventoryType')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory type<span>Search by Inventory type<input type="text" ng-model="ref.inventoryType" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('inventoryNum')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory num<span>Search by Inventory num<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('noteName')" style="text-align: center;"><a class="thumbnail1" href="#">Note name<span>Search by Note name<input type="text" ng-model="ref.noteName" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='noteName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('noteModel')" style="text-align: center;"><a class="thumbnail1" href="#">Note model<span>Search by Note model<input type="text" ng-model="ref.noteModel" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='noteModel'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('noteMemory')" style="text-align: center;"><a class="thumbnail1" href="#">Note memory<span>Search by Note memory<input type="text" ng-model="ref.noteMemory" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='noteMemory'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('noteSerial')" style="text-align: center;"><a class="thumbnail1" href="#">Note serial<span>Search by Note serial<input type="text" ng-model="ref.noteSerial" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='noteSerial'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('employeeId')" style="display:none; text-align: center;"><a class="thumbnail1" href="#">Employee ID<span>Search by Employee ID<input type="text" ng-model="ref.employeeId" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='employeeId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('employeeFullName')" style="text-align: center;"><a class="thumbnail1" href="#">Employee name<span>Search by Employee name<input type="text" ng-model="ref.employeeFullName" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='employeeFullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('userId')" style="display:none; text-align: center;"><a class="thumbnail1" href="#">User ID<span>Search by User ID<input type="text" ng-model="ref.userId" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='userId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('userFullName')" style="text-align: center;"><a class="thumbnail1" href="#">User Name<span>Search by User Name<input type="text" ng-model="ref.userFullName" placeholder="Search"/></span></a>
+                <span class="glyphicon sort-icon" ng-show="sortKey=='userFullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | itemsPerPage:15 ">
+            <td>{{order.id}}</td>
+            <td>{{order.date|date:'dd.MM.yyyy'}}</td>
+            <td style="display:none">{{order.statusId}}</td>
+            <td>{{order.statusName}}</td>
+            <td style="display:none">{{order.inventoryId}}</td>
+            <td>{{order.inventoryType}}</td>
+            <td>{{order.inventoryNum}}</td>
+            <td>{{order.noteName}}</td>
+            <td>{{order.noteModel}}</td>
+            <td>{{order.noteMemory}}</td>
+            <td>{{order.noteSerial}}</td>
+            <td style="display:none">{{order.employeeId}}</td>
+            <td>{{order.employeeFullName}}</td>
+            <td style="display:none">{{order.userId}}</td>
+            <td>{{order.userFullName}}</td>
+            <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning" ng-click="openUpdateEditor(order)"
+                                                               ng-show="checkInvType(order)">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+            <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger" ng-click="removeOrder(order.id)"
+                                                               ng-show="checkInvType(order)">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+        </tr>
+        </tbody>
+    </table>
+
     <dir-pagination-controls
             max-size="15"
             direction-links="true"
-            boundary-links="true"  >
+            boundary-links="true">
     </dir-pagination-controls>
 
+    <script type="text/ng-template" id="updateOrder.html">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="close()">&times;</button>
+            <h3 class="modal-title" ng-if="editRecord.id">Update Order</h3>
+            <h3 class="modal-title" ng-if="!editRecord.id">New Order</h3>
+        </div>
+        <div class="modal-body">
+            <div style="padding: 5px" ng-form="" name="addOrderForm">
+                <!--<p>editRecord = {{editRecord}}</p>-->
+                <input type="text" id="update-order-id" style="display:none" ng-model="editRecord.id"/>
+
+                <div class="form-group">
+                    <label for="update-order-date"> Date </label>
+                    <input type="date" id="update-order-date" class="form-control" ng-model="editRecord.date.value"/>
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' : addOrderForm.status.$invalid &amp;&amp; !addOrderForm.status.$pristine }">
+                    <label for="status"> Status* </label>
+                    <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
+                    <select id="status" name="status" class="form-control" ng-model="editRecord.selectedStatus"
+                            ng-options="status.name for status in ordStatuses track by status.id" required="required">
+                    </select>
+                    <p ng-show="addOrderForm.status.$error.required &amp;&amp; !addOrderForm.status.$pristine" class="help-block">
+                        Status is required.
+                    </p>
+                </div>
+
+                <div class="form-group" ng-if="editRecord.id"
+                     ng-class="{ 'has-error' : addOrderForm.inventory.$invalid &amp;&amp; !addOrderForm.inventory.$pristine }">
+                    <!--<p>-->
+                        <!--<label> Card number   </label>-->
+                        <!--<input type="text" ng-model="editRecord.inventoryNum" ng-readonly="true"/>-->
+                    <!--</p>-->
+                    <label for="inventory"> Card Number </label>
+                    <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
+                    <select id="inventory" name="inventory" class="form-control" ng-model="$parent.editRecord.selectedInv"
+                            ng-options="inventory.inventoryNum for inventory in ordInventoryNums track by inventory.id"
+                            required="required">
+                    </select>
+                    <p ng-show="addOrderForm.inventory.$error.required &amp;&amp; !addOrderForm.inventory.$pristine" class="help-block">
+                        Inventory number is required.
+                    </p>
+                </div>
+
+                <div class="form-group" ng-if="!editRecord.id"
+                     ng-class="{ 'has-error' : addOrderForm.inventoryn.$invalid &amp;&amp; !addOrderForm.inventoryn.$pristine }">
+                    <label for="inventoryn"> Card number </label>
+                    <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
+                    <select id="inventoryn" name="inventoryn" class="form-control" ng-model="$parent.editRecord.selectedInv"
+                            ng-options="inventory.inventoryNum for inventory in ordInventoryNums | filter: {statusId: 2} track by inventory.id"
+                            required="required">
+                        <option style="display:none" value="">select inventory number</option>
+                    </select>
+                    <p ng-show="addOrderForm.inventoryn.$error.required &amp;&amp; !addOrderForm.inventoryn.$pristine" class="help-block">
+                        Inventory number is required.
+                    </p>
+                </div>
+
+                <!--<div class="form-group" ng-class="{ 'has-error' : addOrderForm.inventorynum.$invalid &amp;&amp; !addOrderForm.inventorynum.$pristine }">-->
+                    <!--<label for="update-Order-inventoryNum">Inventory number*:</label>-->
+                    <!--<input name="inventorynum" type="text" class="form-control" id="update-Order-inventoryNum" placeholder="Inventory number" ng-model="editRecord.inventoryNum" ng-pattern="/^[0-9]+$/"/>-->
+                    <!--<p ng-show="addOrderForm.inventorynum.$error.pattern" class="help-block">Inventory Number is not valid.</p>-->
+                <!--</div>-->
+
+                <div class="form-group" ng-class="{ 'has-error' : addOrderForm.employee.$invalid &amp;&amp; !addOrderForm.employee.$pristine }">
+                    <label for="employee"> Employee </label>
+                    <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
+                    <select id="employee" name="employee" class="form-control" ng-model="editRecord.selectedEmp"
+                            ng-options="employee.fullName for employee in ordEmployees | orderBy:'fullName' track by employee.id"
+                            required="required">
+                    </select>
+                    <p ng-show="addOrderForm.employee.$error.required &amp;&amp; !addOrderForm.employee.$pristine" class="help-block">
+                        Employee is required.
+                    </p>
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' : addOrderForm.user.$invalid &amp;&amp; !addOrderForm.user.$pristine }">
+                    <label for="user"> User </label>
+                    <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
+                    <select id="user" name="user" class="form-control" ng-model="editRecord.selectedUser"
+                            ng-options="user.fullName for user in ordUsers | orderBy:'fullName' track by user.id" required="required">
+                    </select>
+                    <p ng-show="addOrderForm.user.$error.required &amp;&amp; !addOrderForm.user.$pristine" class="help-block">
+                        User is required.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <!--<button type="submit" class="btn btn-default btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>-->
+                    <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()" ng-disabled="addOrderForm.$invalid" style="width: 80px; ">Ok</button>
+                </div>
+            </div>
+        </div>
+    </script>
 </div>

@@ -14,7 +14,7 @@ public class OrderCursor extends Entity {
 
     protected int inventoryId;
     protected String inventoryType;
-    protected long inventoryNum;
+    protected String inventoryNum;
 
     protected String noteName;
     protected String noteModel;
@@ -33,7 +33,7 @@ public class OrderCursor extends Entity {
     }
 
     public OrderCursor(int id, long rowNum, Date date, int statusId, String statusName,
-                       int inventoryId, String inventoryType, long inventoryNum,
+                       int inventoryId, String inventoryType, String inventoryNum,
                        String noteName, String noteModel, String noteMemory, String noteSerial,
                        int employeeId, String employeeFullName, String employeeEmail,
                        int userId, String userFullName, String userEmail) {
@@ -105,11 +105,11 @@ public class OrderCursor extends Entity {
         this.inventoryType = inventoryType;
     }
 
-    public long getInventoryNum() {
+    public String getInventoryNum() {
         return inventoryNum;
     }
 
-    public void setInventoryNum(long inventoryNum) {
+    public void setInventoryNum(String inventoryNum) {
         this.inventoryNum = inventoryNum;
     }
 
@@ -191,5 +191,28 @@ public class OrderCursor extends Entity {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("OrderCursor{");
+        sb.append("date=").append(date);
+        sb.append(", statusId=").append(statusId);
+        sb.append(", statusName='").append(statusName).append('\'');
+        sb.append(", inventoryId=").append(inventoryId);
+        sb.append(", inventoryType='").append(inventoryType).append('\'');
+        sb.append(", inventoryNum=").append(inventoryNum);
+        sb.append(", noteName='").append(noteName).append('\'');
+        sb.append(", noteModel='").append(noteModel).append('\'');
+        sb.append(", noteMemory='").append(noteMemory).append('\'');
+        sb.append(", noteSerial='").append(noteSerial).append('\'');
+        sb.append(", employeeId=").append(employeeId);
+        sb.append(", employeeFullName='").append(employeeFullName).append('\'');
+        sb.append(", employeeEmail='").append(employeeEmail).append('\'');
+        sb.append(", userId=").append(userId);
+        sb.append(", userFullName='").append(userFullName).append('\'');
+        sb.append(", userEmail='").append(userEmail).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

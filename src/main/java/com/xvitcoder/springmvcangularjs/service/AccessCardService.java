@@ -16,4 +16,5 @@ public interface AccessCardService {
     void addAccessCard(AccessCard card);
     void deleteCard(int id);
     void updateCard(AccessCard card);
+    List<AccessCard> findByStatus(int statusId);
 }

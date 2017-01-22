@@ -1,8 +1,6 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
-import com.xvitcoder.springmvcangularjs.dao.impl.JdbcInventStatus;
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcOrderStatus;
-import com.xvitcoder.springmvcangularjs.model.InventStatus;
 import com.xvitcoder.springmvcangularjs.model.OrderStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

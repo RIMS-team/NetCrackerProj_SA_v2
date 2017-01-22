@@ -10,4 +10,7 @@ import java.util.List;
 public interface OrderService {
     List<OrderCursor> findAll();
     OrderCursor findById(int id);
+    void updateOrder(OrderCursor order);
+    void addOrder(OrderCursor order);
+    void deleteOrder(int id);
 }

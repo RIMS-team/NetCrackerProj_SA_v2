@@ -32,10 +32,16 @@ public class JdbcAccessCard implements AccessCardDao {
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
 
+    private SimpleJdbcCall cardSelectSP;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+
+        cardSelectSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        cardSelectSP.withCatalogName("DM_ACCESS_CARD");
+        cardSelectSP.withProcedureName("ACCESS_CARD_SELECT");
+        cardSelectSP.returningResultSet("P_OUT_CURSOR", new AccessCardMapper());
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -142,6 +148,32 @@ public class JdbcAccessCard implements AccessCardDao {
             transactionManager.rollback(status);
             throw e;
         }
+    }
+
+    @Override
+    public List<AccessCard> findByStatus(int statusId) {
+        logger.debug("Entering JdbcAccessCard.findByStatus()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        Map<String, Object> args = new HashMap<>(4);
+        Map<String, Object> result = new HashMap<>(1);
+        List<AccessCard> cards;
+        try {
+            args.put("P_OBJECT_ID", null);
+            args.put("P_INV_STATUS_ID", statusId);
+            args.put("P_ROWNUM_FIRST", null);
+            args.put("P_ROWNUM_LAST", null);
+            result.put("P_OUT_CURSOR", "");
+            result = cardSelectSP.execute(args);
+            cards = (List<AccessCard>) result.get("P_OUT_CURSOR");
+            transactionManager.commit(status);
+        }
+        catch (DataAccessException e) {
+            logger.error("Error selecting cards by status, rolling back", e);
+            transactionManager.rollback(status);
+            throw e;
+        }
+        logger.debug("Leaving JdbcAccessCard.findAll():" + cards);
+        return cards;
     }
 
     @Override

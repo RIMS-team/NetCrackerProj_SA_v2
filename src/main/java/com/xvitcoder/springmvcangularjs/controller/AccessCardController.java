@@ -38,6 +38,12 @@ public class AccessCardController {
         return cards;
     }
 
+    @RequestMapping(value = "/find/{statusId}")
+    public @ResponseBody List<AccessCard> getCardsByStatus(@PathVariable("statusId") int statusId) {
+        logger.debug("Request URL: /accesscards/find/" + statusId + "; Entering getCardsByStatus(id=" + statusId + ")");
+        return accessCardService.findByStatus(statusId);
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody void addAccessCard(@RequestBody AccessCard card) {
         logger.debug("Request URL: /accesscards/add; Entering addAccessCard(card=" + card + ")");

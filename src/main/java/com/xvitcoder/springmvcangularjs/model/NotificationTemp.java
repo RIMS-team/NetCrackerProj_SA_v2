@@ -8,6 +8,8 @@ public class NotificationTemp {
     private int user_id;
     private String template;
 
+    public NotificationTemp(){}
+
     public NotificationTemp(int notif_num,int user_id,String template){
         this.notif_num=notif_num;
         this.user_id=user_id;

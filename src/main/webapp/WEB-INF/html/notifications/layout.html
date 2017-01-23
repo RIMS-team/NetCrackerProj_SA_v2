@@ -27,9 +27,9 @@
         <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | itemsPerPage:15 ">
             <td>{{elem.id}}</td>
             <td>{{elem.order.id}}</td>
-            <td>{{elem.first}}<button class="btn btn-mini btn-warning" ng-click="openUpdateEditor(elem)"></button></td>
-            <td>{{elem.second}}</td>
-            <td>{{elem.third}}</td>
+            <td><a ng-click="openUpdateEditor(elem)">{{elem.first}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem)">{{elem.second}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem)">{{elem.third}}</a></td>
         </tr>
         </tbody>
     </table>
@@ -47,8 +47,21 @@
         <div class="modal-body">
             <div style="padding: 5px" ng-form="" name="addTemplForm">
 
-                <input class="form-control" type="text" name="employeeID" ng-model="editRecord.employeeID"/>
-
+                <div class="form-group">
+                    <label for="orderID"> Notification ID </label>
+                    <input id="orderID" name="orderID" class="form-control" ng-model="editRecord.notif_num" >
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label for="userID"> User ID </label>
+                    <input id="userID" name="userID" class="form-control" ng-model="editRecord.user_id" >
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label for="tempText"> Temp Text </label>
+                    <textarea id="tempText" name="tempText" class="form-control" ng-model="editRecord.template" >
+                    </textarea>
+                </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()" ng-disabled="addStatForm.$invalid" style="width: 80px; ">Ok</button>
                 </div>

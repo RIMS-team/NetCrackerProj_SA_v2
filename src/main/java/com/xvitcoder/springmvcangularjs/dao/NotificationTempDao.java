@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface NotificationTempDao {
     NotificationTemp findById(int notifi_num,int user_id);
-    void insertNotifiTemp(int notifi_num,int user_id);
+    void insertNotifiTemp(NotificationTemp notificationTemp);
     void updateNotifiTemp(int notifi_num,int user_id);
     void deleteNotifiTemp(int notifi_num,int user_id);
     List<MailInformation> getCursor(int day_1, int day_2, int day_3);

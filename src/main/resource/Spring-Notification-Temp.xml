@@ -8,4 +8,8 @@
         <property name="transactionManager" ref="transactionManager" />
     </bean>
 
+    <bean id="notificationTempService" class="com.xvitcoder.springmvcangularjs.service.impl.NotificationTempServiceImpl">
+        <property name="notificationTempDao" ref="notificationTempDAO"/>
+    </bean>
+
 </beans>

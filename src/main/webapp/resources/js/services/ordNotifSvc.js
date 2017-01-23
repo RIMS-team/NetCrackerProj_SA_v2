@@ -18,14 +18,23 @@ function ordNotifyService ($http) {
         res.success(function(orderList){
             _this.orders = orderList;
         }).error(function () {
-            _this.orders = [];
+            console.log("Error geting orders");
         });
     };
 
+    _this.loadUserList = function () {
+        var res = $http.get('order/all');
+
+        res.success(function(userList){
+            _this.orders = userList;
+            //console.log('OK loading ordUserList');
+        }).error(function () {
+            console.log("Error geting orders");
+        });
+    }
+
     _this.getEmployeeIdByOrderId = function (orderId) {
-        if(typeof _this.orders != "undefined" && _this.orders != null && _this.orders.length > 0){
-            _this.loadEmpList();
-        }
+        console.log(_this.orders);
         var employeeId = 0;
         _this.orders.forEach(function (order) {
             if (order.id == orderId) {
@@ -33,5 +42,16 @@ function ordNotifyService ($http) {
             }
         });
         return employeeId;
+    }
+
+    _this.getUserIdByOrderId = function (orderId) {
+        console.log(_this.orders);
+        var userId = 0;
+        _this.orders.forEach(function (order) {
+            if (order.id == orderId) {
+                userId = order.userId;
+            }
+        });
+        return userId;
     }
 }

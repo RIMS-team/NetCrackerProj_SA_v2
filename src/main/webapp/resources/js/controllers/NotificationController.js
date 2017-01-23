@@ -12,6 +12,8 @@
     app.controller("NotificationController", function ($scope, $http, $uibModal, ordNotifyService) {
         var _this = this;
 
+        ordNotifyService.loadUserList();
+
         $scope.fetchNotificationList = function() {
             $http.get('notification/all').success(function(notificationList){
                 $scope.notifications = notificationList;
@@ -20,17 +22,26 @@
 
         $scope.fetchNotificationList();
 
+        $scope.insertNewTemplete = function (editRec) {
+            $http.post('notification/insert', editRec).success(function () {
+            }).error(function () {
+                console.log("Error sending insert request!");
+            });
+        };
 
         $scope.sort = function (keyname) {
             $scope.sortKey=keyname;
             $scope.reverse=!$scope.reverse;
         };
 
+
         _this.openEditor = function (templ) {
             var editRec = {};
             if (templ) {
-                // TODO: editRec add fields from templ
-                alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
+                editRec.notif_num = templ.id;
+                editRec.user_id = ordNotifyService.getUserIdByOrderId(templ.order.id);
+                editRec.template = templ.template;
+                //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
 
             var uibModalInstance = $uibModal.open({
@@ -49,9 +60,10 @@
             uibModalInstance.result.then(function (editRec) {
                 //modal ok
                 if (editRec) {
-                    // TODO: Call update function()
+                    $scope.insertNewTemplete(editRec);
                 }
                 else {
+                    $scope.insertNewTemplete(editRec);
                     // TODO: Call insert function()
                 }
             }, function () {
@@ -84,11 +96,10 @@
             //   show error msg
         };
 
+
         $scope.close = function () {
             uibModalInstance.dismiss('cancel');
         };
     }]);
 
 })();
-
-

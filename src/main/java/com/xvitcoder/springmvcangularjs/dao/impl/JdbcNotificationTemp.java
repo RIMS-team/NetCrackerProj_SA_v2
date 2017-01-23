@@ -90,8 +90,23 @@ public class JdbcNotificationTemp implements NotificationTempDao {
     }
 
     @Override
-    public void insertNotifiTemp(int notifi_num, int user_id) {
-
+    public void insertNotifiTemp(NotificationTemp notificationTemp) {
+        logger.debug("Entering insert(notificationTemp=" + notificationTemp + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        SimpleJdbcCall simpleJdbcCall;
+        try {
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_notif_templ").withProcedureName("notif_templ_set");
+            Map<String ,Object> map=new HashMap<String ,Object>();
+            map.put("p_notif_num",notificationTemp.getNotif_num());
+            map.put("p_user_id",notificationTemp.getUser_id());
+            map.put("p_template",notificationTemp.getTemplate());
+            simpleJdbcCall.execute(map);
+            transactionManager.commit(status);
+        } catch (DataAccessException e) {
+            logger.error("Error inserting access notificationTemp", e);
+            transactionManager.rollback(status);
+            throw e;
+        }
     }
 
     @Override

@@ -30,7 +30,6 @@ public class CSVImportService implements ImportService {
     private JdbcTemplate jdbcTemplateObject;
     private SimpleJdbcCall processData;
     private PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
@@ -39,11 +38,11 @@ public class CSVImportService implements ImportService {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         Locale.setDefault(Locale.ENGLISH);
         this.transactionManager = transactionManager;
-        this.status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     public void fileProcessing(String filePath, String type) {
         logger.debug("Entering fileProcessing()");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         String ctlFile;
         String procedureName;
         if("notebooks".equals(type)) {
@@ -74,6 +73,7 @@ public class CSVImportService implements ImportService {
                 Map<String, Object> args = new HashMap<>();
                 args.put("user_id", "1");
                 processData.execute(args);
+                transactionManager.commit(status);
             } catch (DataAccessException e) {
                 logger.error("Error processing data", e);
                 throw e;

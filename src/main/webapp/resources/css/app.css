@@ -144,3 +144,27 @@ textarea {
 .pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus {
     background-color: #5f98a4;
 }
+
+
+.table-bordered>thead>tr>th, .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>td {
+    border: 2px solid #dce4ec;
+}
+
+.table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>th, .table>caption+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>td, .table>thead:first-child>tr:first-child>td {
+    border-top: 2px solid #dce4ec;
+}
+
+.thumbnail {
+    border: 2px solid #dce4ec;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #dce4ec;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    border-top: 2px solid #dce4ec;
+    border-left: 2px solid #dce4ec;
+    border-right: 2px solid #dce4ec;
+    background-color: #e9e9ef;
+}

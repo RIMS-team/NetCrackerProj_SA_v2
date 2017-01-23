@@ -2,6 +2,7 @@ package com.xvitcoder.springmvcangularjs.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 import org.thymeleaf.dialect.IDialect;
@@ -49,6 +50,13 @@ public class ThymeleafConfig {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setOrder(2);
+        return resolver;
+    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxUploadSize(2100000);
         return resolver;
     }
 

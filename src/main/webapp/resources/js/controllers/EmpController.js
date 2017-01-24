@@ -6,35 +6,19 @@
  */
 
 
-
-// var EmpController = function($scope, $http) {
-//     $scope.fetchEmpsList = function() {
-//         $http.get('employees/empoyeelist.json').success(function(empList){
-//             $scope.emps = empList;
-//         });
-//     };
-//
-//     $scope.fetchEmpsList();
-// };
-
-
-
-
 (function () {
-    var app = angular.module("employees", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
-//////    var app = angular.module("employees", []);
+    var app = angular.module("employees", ["ngSanitize",
+                "angularUtils.directives.dirPagination", "ui.bootstrap"]);
 
     app.controller("EmpController", function ($scope, $http, $uibModal) {
         var _this = this;
-
+        $scope.pageSize = 11;
 
         $scope.fetchEmpsList = function () {
             $http.get('employees/empoyeelist.json').success(function (empList) {
                 $scope.emps = empList;
             });
         };
-
-
 
         $scope.removeEmp = function (id) {
             $http.delete('accesscards/remove/' + id).success(function () {
@@ -50,6 +34,10 @@
             $scope.sortKey=keyname;
             $scope.reverse=!$scope.reverse;
         };
+
+        $scope.isSortKey = function(keyname) {
+            return $scope.sortKey == keyname;
+        }
 
 
         $scope.fetchEmpsList();

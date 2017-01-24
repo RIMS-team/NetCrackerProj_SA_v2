@@ -12,6 +12,9 @@
     app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $uibModal, $filter) {
         var store = this;
 
+        $scope.curUser = {};
+        $scope.curUser.fullName = 'Current User Name';    // TODO    заменить на имя юзера после авторизации
+
         /* tabs */
         store.addTab = function (name, caption, directive) {
             if ($element.find("#tabHeader_" + name).length === 0) {
@@ -22,7 +25,7 @@
                 $compile(headerElement)($scope);
 
                 var bodyHtml = '<div style="width: 100%; height: 100%; padding: 10px" class="tab-pane" id="tabContent_' + name + '">' + '<'+directive +'></'+ directive + '>' + '</div>';
-                console.log(bodyHtml);
+                //console.log(bodyHtml);
                 var bodyElement = angular.element(bodyHtml);
                 $element.find("#pageTabContent").append(bodyElement);
                 $compile(bodyElement)($scope);
@@ -57,72 +60,12 @@
 
         store.recalcTabContentHeight = function () {
             var tabHeight = $element.find("#pageTab")[0].scrollHeight;
-            $element.find("#pageTabContent").css("height", "calc(100% - " + tabHeight + "px)");
+            $element.find("#pageTabContent").css("height", "calc(100% - " + tabHeight + 60 + "px)");
         };
 
+
     });
-
-
-
 
 })();
 
 
-// var AngularSpringApp = {};
-//
-// var App = angular.module('AngularSpringApp', ['AngularSpringApp.filters', 'AngularSpringApp.services', 'AngularSpringApp.directives']);
-//
-// App.config(['$routeProvider', function ($routeProvider) {
-//     $routeProvider.when('/cars', {
-//         templateUrl: 'cars/layout',
-//         controller: CarController
-//     });
-//
-//     $routeProvider.when('/employees', {
-//         templateUrl: 'employees/layout',
-//         controller: EmpController
-//     });
-//
-//     $routeProvider.when('/trains', {
-//         templateUrl: 'trains/layout',
-//         controller: TrainController
-//     });
-//
-//     $routeProvider.when('/railwaystations', {
-//         templateUrl: 'railwaystations/layout',
-//         controller: RailwayStationController
-//     });
-//
-//     $routeProvider.when('/notebooks', {
-//         templateUrl: 'notebook/layout',
-//         controller: NotebookController
-//     });
-//
-//     $routeProvider.when('/accesscards', {
-//         templateUrl: 'accesscards/layout',
-//         controller: AccessCardController
-//     });
-//
-//     $routeProvider.when('/users', {
-//         templateUrl: 'user/layout',
-//         controller: UserController
-//     });
-//
-//     $routeProvider.when('/orders', {
-//         templateUrl: 'order/layout',
-//         controller: OrderController
-//     });
-
-    // $routeProvider.when('/invstats', {
-    //     templateUrl: 'invstats/layout',
-    //     controller: InvStatusController
-    // });
-    //
-    // $routeProvider.when('/ordstats', {
-    //     templateUrl: 'ordstats/layout',
-    //     controller: OrdStatusController
-    // });
-
-//
-//     $routeProvider.otherwise({redirectTo: '/employees'});
-// }]);

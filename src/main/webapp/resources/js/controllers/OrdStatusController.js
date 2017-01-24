@@ -9,18 +9,11 @@
  */
 
 (function () {
-    var modul = angular.module("ordstatuses", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
-    //////    var app = angular.module("ordstatuses", []);
+    var modul = angular.module("ordstatuses", ["ngSanitize", "angularUtils.directives.dirPagination", "ui.bootstrap"]);
 
-    //   var OrdStatusController = function($scope, $http) {
     modul.controller("OrdStatusController", function ($scope, $http, $uibModal, ordStatusService) {
         var _this = this;
-
-        $scope.fetchOrdStatusList = function() {
-            $http.get('ordstats/ordstatlist.json').success(function(OrdStatusList){
-                $scope.ordStats = OrdStatusList;
-            });
-        };
+        $scope.pageSize = 11;
 
         ordStatusService.loadList()
             .success(function(OrdStatusList){
@@ -29,11 +22,19 @@
              $scope.ordStats = ordStatusService.getList();
         });
 
+        $scope.sort = function (keyname) {
+            $scope.sortKey=keyname;
+            $scope.reverse = !$scope.reverse;
+        };
+
+        $scope.isSortKey = function(keyname) {
+            return $scope.sortKey == keyname;
+        }
 
 
         $scope.addNewStatus = function (editRec) {
             $http.post('ordstats/add', editRec).success(function () {
-                $scope.fetchOrdStatusList();
+                $scope.loadList();
             }).error(function () {
                 console.log("Error sending insert request!");
             });
@@ -41,7 +42,7 @@
 
         $scope.updateStatus = function (editRec) {
             $http.put('ordstats/update', editRec).success(function () {
-                $scope.fetchOrdStatusList();
+                $scope.loadList();
             }).error(function () {
                 console.log("Error sending update request!");
             });
@@ -116,13 +117,3 @@
 
 })();
 
-
-// var OrdStatusController = function($scope, $http) {
-//     $scope.fetchOrdStatusList = function() {
-//         $http.get('ordstats/ordstatlist.json').success(function(OrdStatusList){
-//             $scope.ordStats = OrdStatusList;
-//         });
-//     };
-//
-//     $scope.fetchOrdStatusList();
-// };

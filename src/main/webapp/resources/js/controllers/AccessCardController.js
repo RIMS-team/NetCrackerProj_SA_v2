@@ -6,14 +6,15 @@
  */
 
 (function () {
-    var modul = angular.module("accesscards", ["ngSanitize","angularUtils.directives.dirPagination","ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize",
-        "invstatuses"]);
+    var modul = angular.module("accesscards", ["ngSanitize",
+            "angularUtils.directives.dirPagination","ui.bootstrap", "invstatuses"]);
 
     modul.controller("AccessCardController", function ($scope, $http, $uibModal,   invStatusService, getByIdService) {
         var _this = this;
 
         $scope.editRecord = {};
         $scope.invStatuses = [];
+        $scope.pageSize = 11;
 
         $scope.fetchCardsList = function () {
             $http.get('accesscards/accesscardlist.json').success(function (cardList) {
@@ -50,10 +51,15 @@
             });
         };
 
+
         $scope.sort = function (keyname) {
             $scope.sortKey=keyname;
-            $scope.reverse=!$scope.reverse;
+            $scope.reverse = !$scope.reverse;
         };
+
+        $scope.isSortKey = function(keyname) {
+            return $scope.sortKey == keyname;
+        }
 
         $scope.fetchCardsList();
 
@@ -113,7 +119,6 @@
             }).error(function () {
             $scope.invStatuses = invStatusService.getList();
         });
-
 
     });
 

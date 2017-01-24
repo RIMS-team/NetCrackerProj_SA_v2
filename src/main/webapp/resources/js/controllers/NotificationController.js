@@ -7,10 +7,11 @@
 
 
 (function () {
-    var app = angular.module("notifications", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("notifications", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap"]);
 
     app.controller("NotificationController", function ($scope, $http, $uibModal, ordNotifyService) {
         var _this = this;
+        $scope.pageSize = 11;
 
         ordNotifyService.loadUserList();
 
@@ -34,6 +35,9 @@
             $scope.reverse=!$scope.reverse;
         };
 
+        $scope.isSortKey = function(keyname) {
+            return $scope.sortKey == keyname;
+        }
 
         _this.openEditor = function (templ) {
             var editRec = {};
@@ -96,10 +100,11 @@
             //   show error msg
         };
 
-
         $scope.close = function () {
             uibModalInstance.dismiss('cancel');
         };
     }]);
 
 })();
+
+

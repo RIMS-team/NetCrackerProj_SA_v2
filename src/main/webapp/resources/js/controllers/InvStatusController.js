@@ -9,10 +9,11 @@
  */
 
 (function () {
-    var modul = angular.module("invstatuses", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var modul = angular.module("invstatuses", ["ngSanitize", "angularUtils.directives.dirPagination", "ui.bootstrap" ]);
 
     modul.controller("InvStatusController", function ($scope, $http, $uibModal, invStatusService) {
         var _this = this;
+        $scope.pageSize = 11;
 
         invStatusService.loadList()
             .success(function(InvStatusList){
@@ -21,22 +22,18 @@
             $scope.invStats = invStatusService.getList();
         });
 
-        $scope.fetchInvStatusList = function() {
-            $http.get('invstats/invstatlist.json').success(function(InvStatusList){
-                $scope.invStats = InvStatusList;
-            });
+        $scope.sort = function (keyname) {
+            $scope.sortKey=keyname;
+            $scope.reverse = !$scope.reverse;
         };
 
-        invStatusService.loadList()
-            .success(function(InvStatusList){
-                $scope.invStats = invStatusService.getList();
-            }).error(function () {
-            $scope.invStats = invStatusService.getList();
-        });
+        $scope.isSortKey = function(keyname) {
+            return $scope.sortKey == keyname;
+        }
 
         $scope.addNewStatus = function (editRec) {
             $http.post('invstats/add', editRec).success(function () {
-                $scope.fetchInvStatusList();
+                $scope.loadList();
             }).error(function () {
                 console.log("Error sending insert request!");
             });
@@ -44,7 +41,7 @@
 
         $scope.updateStatus = function (editRec) {
             $http.put('invstats/update', editRec).success(function () {
-                $scope.fetchInvStatusList();
+                $scope.loadList();
             }).error(function () {
                 console.log("Error sending update request!");
             });
@@ -94,13 +91,6 @@
             _this.openEditor(null);
         };
 
-        modul.directive("invstatusesList", function () {
-            return {
-                templateUrl: "invstats/layout.html"
-            }
-        });
-
-        // $scope.fetchInvStatusList();
     });
 
     modul.directive("invstatusesList", function () {

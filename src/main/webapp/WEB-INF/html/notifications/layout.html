@@ -6,25 +6,50 @@
     <table class="table table-bordered table-striped" >
         <thead>
         <tr>
-            <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Search by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
-                <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            <th style="text-align: center;">
+                <a class="thumbnail1" href="#">ID
+                    <span>Search by ID
+                    <input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
+                <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('id')}" ng-click="sort('id')" style="float: right;">
+                    <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </button>
             </th>
-            <th ng-click="sort('order.id')" style="text-align: center;"><a class="thumbnail1" href="#">Order ID<span>Search by Order ID<input type="text" ng-model="ref.order.id" placeholder="Search"/></span></a>
-                <span class="glyphicon sort-icon" ng-show="sortKey=='order.id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            <th style="text-align: center;">
+                <a class="thumbnail1" href="#">Order ID
+                    <span>Search by Order ID
+                    <input type="text" ng-model="ref.order.id" placeholder="Search"/></span></a>
+                <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('order.id')}" ng-click="sort('order.id')" style="float: right;">
+                    <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </button>
             </th>
-            <th ng-click="sort('first')" style="text-align: center;"><a class="thumbnail1" href="#">First Notify<span>Search by First Notify<input type="text" ng-model="ref.first" placeholder="Search"/></span></a>
-                <span class="glyphicon sort-icon" ng-show="sortKey=='first'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            <th style="text-align: center;">
+                <a class="thumbnail1" href="#">First Notify
+                    <span>Search by First Notify
+                    <input type="text" ng-model="ref.first" placeholder="Search"/></span></a>
+                <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('first')}" ng-click="sort('first')" style="float: right;">
+                    <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </button>
             </th>
-            <th ng-click="sort('second')" style="text-align: center;"><a class="thumbnail1" href="#">Second Notify<span>Search by Second Notify<input type="text" ng-model="ref.second" placeholder="Search"/></span></a>
-                <span class="glyphicon sort-icon" ng-show="sortKey=='second'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            <th style="text-align: center;">
+                <a class="thumbnail1" href="#">Second Notify
+                    <span>Search by Second Notify
+                    <input type="text" ng-model="ref.second" placeholder="Search"/></span></a>
+                <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('second')}" ng-click="sort('second')" style="float: right;">
+                    <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </button>
             </th>
-            <th ng-click="sort('third')" style="text-align: center;"><a class="thumbnail1" href="#">Third Notify<span>Search by Third Notify<input type="text" ng-model="ref.third" placeholder="Search"/></span></a>
-                <span class="glyphicon sort-icon" ng-show="sortKey=='third'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            <th style="text-align: center;">
+                <a class="thumbnail1" href="#">Third Notify
+                    <span>Search by Third Notify
+                    <input type="text" ng-model="ref.third" placeholder="Search"/></span></a>
+                <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('third')}" ng-click="sort('third')" style="float: right;">
+                    <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </button>
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | itemsPerPage:15 ">
+        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | itemsPerPage:pageSize " pagination-id="notific">
             <td>{{elem.id}}</td>
             <td>{{elem.order.id}}</td>
             <td><a ng-click="openUpdateEditor(elem)">{{elem.first}}</a></td>
@@ -34,9 +59,10 @@
         </tbody>
     </table>
     <dir-pagination-controls
-            max-size="15"
+            max-size="7"
             direction-links="true"
-            boundary-links="true"  >
+            boundary-links="true"
+            pagination-id="notific">
     </dir-pagination-controls>
 
     <script type="text/ng-template" id="updateNotifTemplate.html">

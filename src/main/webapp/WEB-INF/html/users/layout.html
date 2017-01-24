@@ -25,7 +25,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter: ref | itemsPerPage: 15 ">
+    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter: test | itemsPerPage: pageSize " pagination-id="user">
         <td style="display:none">{{user.id}}</td>
         <td>{{user.fullName}}</td>
         <td>{{user.phoneNumber}}</td>
@@ -38,9 +38,10 @@
     </tbody>
 </table>
     <dir-pagination-controls style="float: right;"
-            max-size="15"
+            max-size="7"
             direction-links="true"
-            boundary-links="true"  >
+            boundary-links="true"
+            pagination-id="user">
     </dir-pagination-controls>
 
 <div class="modal fade" id="addUser" role="dialog">

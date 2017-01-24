@@ -10,7 +10,7 @@
  */
 
 (function () {
-    var app = angular.module("usersettings", ["ngSanitize", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("usersettings", ["ngSanitize", "ui.bootstrap"]);
 
     app.controller("UserSettingController", function ($scope, $http) {
 
@@ -30,7 +30,6 @@
                 console.log("Error sending update request");
             });
         };
-
 
         $scope.getUser();
     });

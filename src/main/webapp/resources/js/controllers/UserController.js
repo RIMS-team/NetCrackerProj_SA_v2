@@ -5,9 +5,11 @@
  */
 
 (function () {
-    var app = angular.module("users", ["ngSanitize", "angularUtils.directives.dirPagination", "ui.bootstrap", "ui.grid", "ui.grid.selection", "ui.select", "ui.grid.autoResize"]);
+    var app = angular.module("users", ["ngSanitize", "angularUtils.directives.dirPagination", "ui.bootstrap"]);
 
     app.controller("UserController", function ($scope, $http) {
+
+        $scope.pageSize = 11;
 
         $scope.submitAddUserForm = function(user) {
             var sendUser = {fullName : user.fullName, eMail : user.eMail, phoneNumber : user.phoneNumber, password : user.password};

@@ -4,38 +4,111 @@
     No notebooks found
 </div>
 
-    <a class="btn btn-default" href="notebook/DownloadPDF" target="_blank" style="float: right; margin-bottom: 5px;"><span class="glyphicon glyphicon-floppy-disk"></span></a>
+    <a class="btn btn-default btn-top-grid" href="notebook/DownloadPDF" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
+        <span class="glyphicon glyphicon-floppy-disk" style="padding: 7px 9px;"></span></a>
+
     <table class="table table-bordered table-striped"  ng-show="notebook.length > 0">
     <thead>
     <tr>
-        <th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Search by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        <!--<th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">ID
+                <span>Search by ID
+                    <input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('id')}" ng-click="sort('id')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('name')" style="text-align: center;"><a class="thumbnail1" href="#">Name<span>Search by Name<input type="text" ng-model="ref.name" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('name')" style="text-align: center;"><a class="thumbnail1" href="#">Name<span>Seache by Name<input type="text" ng-model="ref.name" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Name
+                <span>Search by Name
+                    <input type="text" ng-model="ref.name" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('name')}" ng-click="sort('name')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('model')" style="text-align: center;"><a class="thumbnail1" href="#">Model<span>Search by Model<input type="text" ng-model="ref.model" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='model'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('model')" style="text-align: center;"><a class="thumbnail1" href="#">Model<span>Seache by Model<input type="text" ng-model="ref.model" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='model'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Model
+                <span>Search by Model
+                    <input type="text" ng-model="ref.model" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('model')}" ng-click="sort('model')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('memoryType')" style="text-align: center;"><a class="thumbnail1" href="#">Memory Type<span>Search by Memory Type<input type="text" ng-model="ref.memoryType" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='memoryType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('memoryType')" style="text-align: center;"><a class="thumbnail1" href="#">Memory Type<span>Seache by Memory Type<input type="text" ng-model="ref.memoryType" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='memoryType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Memory Type
+                <span>Search by Memory Type
+                    <input type="text" ng-model="ref.memoryType" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('memoryType')}" ng-click="sort('memoryType')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('serialNumber')" style="text-align: center;"><a class="thumbnail1" href="#">Serial Number<span>Search by Serial Number<input type="text" ng-model="ref.serialNumber" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='serialNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('serialNumber')" style="text-align: center;"><a class="thumbnail1" href="#">Serial Number<span>Seache by Serial Number<input type="text" ng-model="ref.serialNumber" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='serialNumber'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Serial Number
+                <span>Search by Serial Number
+                    <input type="text" ng-model="ref.serialNumber" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('serialNumber')}" ng-click="sort('serialNumber')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('inventoryNum')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory Num<span>Search by Inventory Num<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('inventoryNum')" style="text-align: center;"><a class="thumbnail1" href="#">Inventory Num<span>Seache by Inventory Num<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='inventoryNum'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Inventory Num
+                <span>Search by Inventory Num
+                    <input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inventoryNum')}" ng-click="sort('inventoryNum')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('location')" style="text-align: center;"><a class="thumbnail1" href="#">Location<span>Search by Location<input type="text" ng-model="ref.location" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='location'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('location')" style="text-align: center;"><a class="thumbnail1" href="#">Location<span>Seache by Location<input type="text" ng-model="ref.location" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='location'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Location
+                <span>Search by Location
+                    <input type="text" ng-model="ref.location" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('location')}" ng-click="sort('location')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
-        <th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Search by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
-            <span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+
+        <!--<th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Seache by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>-->
+            <!--<span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+        <!--</th>-->
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Status
+                <span>Search by Status
+                    <input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('statusName')}" ng-click="sort('statusName')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
         </th>
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="elem in notebook | orderBy:sortKey:reverse | filter: ref | itemsPerPage: 15 ">
+    <tr dir-paginate="elem in notebook | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="notebook">
         <td>{{elem.id}}</td>
         <td>{{elem.name}}</td>
         <td>{{elem.model}}</td>
@@ -48,8 +121,9 @@
     </tbody>
 </table>
     <dir-pagination-controls
-            max-size="15"
+            max-size="7"
             direction-links="true"
-            boundary-links="true"  >
+            boundary-links="true"
+            pagination-id="notebook">
     </dir-pagination-controls>
 </div>

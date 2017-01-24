@@ -1,30 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="AngularSpringApp" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <!--<meta charset="UTF-8"/>-->
-    <!--<meta pageEncoding="UTF-8" />-->
-
-    <title>Example App</title>
-
+    <title>RIMS</title>
 
     <link rel="stylesheet" type="text/css" href="resources/css2/bootstrap.min.ex.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/css2/ui-grid-unstable.min.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/css2/select.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/css2/select2.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/css2/selectize.default.css"/>
-
-
     <script type="text/javascript" src="resources/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="resources/js/lib/angular/angular.js"></script>
     <!--<script type="text/javascript" src="resources/js/lib/angular/angular.min.js"></script>-->
     <script type="text/javascript" src="resources/js/lib/angular/angular-sanitize.min.js"></script>
-
-    <!--<script type="text/javascript" src="resources/js2/ui-bootstrap-tpls-0.13.0.min.js"></script>-->
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.4.0.js"></script>
-    <script type="text/javascript" src="resources/js2/ui-grid-unstable.min.js"></script>
-    <script type="text/javascript" src="resources/js2/select.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="resources/css/app.css"/>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
@@ -52,21 +39,16 @@
     <script type="text/javascript" src="resources/js/services/getByIdSvc.js"></script>
     <script type="text/javascript" src="resources/js/services/ordNotifSvc.js"></script>
 
-
-    <!--<script type="text/javascript" src="resources/js2/buildings/buildings.js"></script>-->
-
-
     <script type="text/javascript" src="resources/js/dirPagination.js"></script>
-    </head>
+</head>
 <body ng-controller="MainController as mainCtrl">
 <nav class="navbar navbar-default navbar-fixed">
 
     <div class="container-fluid">
 
-        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
         <div class="navbar-header" >
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    data-target="#my-menu-collapse" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -75,64 +57,47 @@
             <a class="navbar-brand" href="/" style="background-color: #9acfea;"><img style="height: 50px; margin-top: -18px; " src="resources/img2/logo.png"/></a>
         </div>
 
-
-
-
-       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="my-menu-collapse">
 
             <ul class="nav navbar-nav">
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <!--<span class="glyphicon glyphicon-user"></span>-->
-                        <!--<img style="height: 40px; margin-top: -10px;" src="resources/img2/start_menu-01-blue_c.png"/>-->
                         <img style="height: 40px; margin-top: -10px;" src="resources/img2/start_menu-01-white_c.png"/>
                     </a>
                     <ul class="dropdown-menu ">
-                        <li><a href="#" ng-click="toggleModal()" sec:authentication="name"></a></li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li><a href="help.html" target="_blank">Help</a></li>
                         <!--<li role="separator" class="divider"></li>-->
-                        <li><a href="#" ng-click="toggleModalFeedback()">Personal Settings</a></li>
-                        <!--<li role="separator" class="divider"></li>-->
+                        <li><a href="#" ng-click="mainCtrl.addTab('usersettings', 'Usersettings', 'user-setting')">User's Settings</a></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 </li>
-            </ul>
 
-
-            <ul class="nav navbar-nav">
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">People <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" ng-click="mainCtrl.addTab('employees', 'Employees', 'employees-list')">Employees</a> </li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" ng-click="mainCtrl.addTab('users', 'Users', 'users-list')">Users</a> </li>
                     </ul>
                 </li>
-
-
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Inventory <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" ng-click="mainCtrl.addTab('cards', 'Cards', 'accesscards-list')">Cards</a> </li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li><a href="#" ng-click="mainCtrl.addTab('notebooks', 'Notebooks', 'notebooks-list')">Notebooks</a> </li>
                     </ul>
                 </li>
-
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Inventory control <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" ng-click="mainCtrl.addTab('orders', 'Orders', 'orders-list')">Orders</a> </li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li><a href="#" ng-click="mainCtrl.addTab('notifications', 'Notifications', 'notifications-list')">Notifications</a> </li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li><a href="#" data-toggle="modal" data-target="#importCSV" ng-click="">Import CSV</a> </li>
                     </ul>
                 </li>
@@ -142,25 +107,16 @@
                        aria-expanded="false">Catalog <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" ng-click="mainCtrl.addTab('invstatuses', 'Inventory statuses', 'invstatuses-list')">Inventory statuses</a> </li>
-                        <!--<li role="separator" class="divider"></li>-->
                         <li><a href="#" ng-click="mainCtrl.addTab('ordstatuses', 'Order statuses', 'ordstatuses-list')">Order statuses</a> </li>
                     </ul>
                 </li>
 
+           </ul>
 
-
-
-                <!--<li ng-hide="isHidden('mi-objects')" class="dropdown">-->
-                <li ng-hide="true" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Objects <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li ng-hide="isHidden('buildings') " role="separator" class="divider"></li>
-                        <li ng-hide="isHidden('buildings')"><a href="#" ng-click="mainCtrl.addTab('buildings', 'Building', 'buildings-list')">Building</a></li>
-                    </ul>
-                </li>
-
-
+           <ul class="nav navbar-nav navbar-right">
+               <li >
+                    <a href="/logout"  role="button"><span class="glyphicon glyphicon-log-in"></span> {{curUser.fullName}}</a>
+               </li>
            </ul>
 
 
@@ -169,14 +125,14 @@
 </nav>
 
 <div style="top: 65px; left: 0; right: 0; bottom: 0; position: absolute; width: auto; height: auto;">
-    <!--<current-user-profile></current-user-profile>-->
-
-
     <div style="height: calc(100% - 40px);  min-height: 660px; margin-bottom: 40px;">
-        <ul id="pageTab" class="nav nav-tabs ">
-            <li ng-hide="isHidden('page-tab')" id="mainTabHeader3" class="active"><a href="#mainTabBody3" data-toggle="tab"><b>Main</b></a></li>
-        </ul>
-        <div id="pageTabContent" class="tab-content" style="height: calc(100% - 43px);">
+        <div class="pageTab" >
+            <ul id="pageTab" class="nav nav-tabs ">
+                <li ng-hide="isHidden('page-tab')" id="mainTabHeader3" class="active"><a href="#mainTabBody3" data-toggle="tab"><b>Main</b></a></li>
+            </ul>
+        </div>
+
+        <div id="pageTabContent" class="tab-content" style="height: calc(100% - 43px); padding-top: 50px;">
 
             <div ng-hide="isHidden('page-tab')" id="mainTabBody3" class="tab-pane active fill-height">
                 <div class="container-fluid fill-height" style="padding: 20px;">
@@ -188,9 +144,8 @@
                                         <div class="caption" style="text-align: center">
                                             <a href="#" ng-click="mainCtrl.addTab('notebooks', 'Notebooks', 'notebooks-list')">
                                                 <img style="height: 120px;" src="resources/img2/Laptop-01_c.png" alt="..."/>
-                                                <h3>Notebooks</h3>
+                                                <h3 style="word-wrap: break-word;">Notebooks</h3>
                                             </a>
-                                            <p>Notebooks States</p>
                                         </div>
                                     </div>
                                 </div>
@@ -199,9 +154,8 @@
                                         <div class="caption" style="text-align: center">
                                             <a href="#" ng-click="mainCtrl.addTab('cards', 'Cards', 'accesscards-list')">
                                                 <img style="height: 120px;" src="resources/img2/card-01_c.png" alt="..."/>
-                                                <h3>Cards</h3>
+                                                <h3 style="word-wrap: break-word;">Cards</h3>
                                             </a>
-                                            <p>Cards Statuses</p>
                                         </div>
                                     </div>
                                 </div>
@@ -210,9 +164,8 @@
                                         <div class="caption" style="text-align: center">
                                             <a href="#" ng-click="mainCtrl.addTab('orders', 'Orders', 'orders-list')">
                                                 <img style="height: 120px;" src="resources/img2/order-01_c.png" alt="..."/>
-                                                <h3>Orders</h3>
+                                                <h3 style="word-wrap: break-word;">Orders</h3>
                                             </a>
-                                            <p>Orders</p>
                                         </div>
                                     </div>
                                 </div>
@@ -221,9 +174,8 @@
                                         <div class="caption" style="text-align: center">
                                             <a href="#" ng-click="mainCtrl.addTab('notifications', 'Notifications', 'notifications-list')">
                                                 <img style="height: 120px;" src="resources/img2/notifcation-01_c.png" alt="..."/>
-                                                <h3>Notifications</h3>
+                                                <h3 style="word-wrap: break-word;">Notifications</h3>
                                             </a>
-                                            <p>Notifications</p>
                                         </div>
                                     </div>
                                 </div>
@@ -236,9 +188,8 @@
                                                 <div class="caption" style="text-align: center">
                                                     <a href="#" data-toggle="modal" data-target="#importCSV" ng-click="">
                                                         <img style="height: 120px;" src="resources/img2/import_csv-01_c.png" alt="..."/>
-                                                        <h3>Import CSV</h3>
+                                                        <h3 style="word-wrap: break-word;">Import CSV</h3>
                                                     </a>
-                                                    <p>Import CSV</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,9 +198,8 @@
                                                 <div class="caption" style="text-align: center">
                                                     <a href="#" ng-click="mainCtrl.addTab('employees', 'Employees', 'employees-list')">
                                                         <img style="height: 120px;" src="resources/img2/employee-02_c.png" alt="..."/>
-                                                        <h3>Employees</h3>
+                                                        <h3 style="word-wrap: break-word;">Employees</h3>
                                                     </a>
-                                                    <p>Employees</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +210,6 @@
                                                         <img style="height: 120px;" src="resources/img2/user-02_c.png" alt="..."/>
                                                         <h3>Users</h3>
                                                     </a>
-                                                    <p>Users</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,9 +218,8 @@
                                                 <div class="caption" style="text-align: center">
                                                     <a href="#" ng-click="mainCtrl.addTab('usersettings', 'Usersettings', 'user-setting')">
                                                         <img style="height: 120px;" src="resources/img2/settigs-02_c.png" alt="..."/>
-                                                        <h3>User's Settings</h3>
+                                                        <h3 style="word-wrap: break-word;">User's Settings</h3>
                                                     </a>
-                                                    <p>User Settings</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -286,20 +234,10 @@
         </div>
     </div>
 
-
-    <!--<div class="puller"></div>-->
-    <!--<div class="footer"  style="height: 40px; background-color: #2c3e50;   clear: both;">-->
-        <!--<div style="text-align: right; height: 100%">-->
-            <!--<a href="http://odessa.edu-netcracker.com/" target="_blank">-->
-                <!--<img style="height: 100%; background-color: rgb(149, 165, 166);" src="resources/img2/logo.png"/>-->
-            <!--</a>-->
-        <!--</div>-->
-    <!--</div>-->
 </div>
 
 
-<!--<div class="puller"></div>-->
-<div class="footer"  style="height: 40px; background-color: #2c3e50;   clear: both;">
+<div class="footer"  style="height: 40px; background-color: #2c3e50;   clear: both; z-index: 1000;">
     <div style="text-align: right; height: 100%">
         <a href="http://odessa.edu-netcracker.com/" target="_blank">
             <img style="height: 100%; background-color: rgb(149, 165, 166);" src="resources/img2/logo.png"/>

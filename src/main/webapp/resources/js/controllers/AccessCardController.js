@@ -9,7 +9,7 @@
     var modul = angular.module("accesscards", ["ngSanitize",
             "angularUtils.directives.dirPagination","ui.bootstrap", "invstatuses"]);
 
-    modul.controller("AccessCardController", function ($scope, $http, $uibModal,   invStatusService, getByIdService) {
+    modul.controller("AccessCardController", function ($scope, $http, $uibModal, $window ,invStatusService, getByIdService) {
         var _this = this;
 
         $scope.editRecord = {};
@@ -19,6 +19,13 @@
         $scope.fetchCardsList = function () {
             $http.get('accesscards/accesscardlist.json').success(function (cardList) {
                 $scope.cards = cardList;
+            });
+        };
+
+        $scope.printCards = function (filteredCards) {
+            console.log(filteredCards);
+            $http.post("accesscards/sendPrintList", filteredCards).success(function () {
+                $window.open("accesscards/DownloadPDF","_blank");
             });
         };
 

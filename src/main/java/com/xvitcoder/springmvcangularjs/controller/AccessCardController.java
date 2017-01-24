@@ -4,6 +4,7 @@ import com.xvitcoder.springmvcangularjs.dao.JdbcEmployeeDao;
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcAccessCard;
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
 import com.xvitcoder.springmvcangularjs.model.Employee;
+import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.AccessCardService;
 import com.xvitcoder.springmvcangularjs.service.UserService;
@@ -28,6 +29,8 @@ public class AccessCardController {
 
     ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private AccessCardService accessCardService = (AccessCardService) context.getBean("accessCardServiceImpl");
+
+    private List<AccessCard> printList;
 
     @RequestMapping("/accesscardlist.json")
     public @ResponseBody List<AccessCard> getAccessCardList() {
@@ -71,7 +74,13 @@ public class AccessCardController {
 
     @RequestMapping(value = "/DownloadPDF", method = RequestMethod.GET)
     public ModelAndView downloadPDF() {
-        return new ModelAndView("pdfView", "listCards", accessCardService.findAll());
+        return new ModelAndView("pdfView", "listCards", printList);
+    }
+
+    @RequestMapping(value = "/sendPrintList", method = RequestMethod.POST)
+    public @ResponseBody void getPrintList(@RequestBody List<AccessCard> cardList) {
+        printList = cardList;
+        System.err.println(printList);
     }
 
 }

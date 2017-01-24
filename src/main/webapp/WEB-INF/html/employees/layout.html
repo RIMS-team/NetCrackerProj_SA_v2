@@ -11,7 +11,7 @@
         <!--<th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>-->
             <!--<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
         <!--</th>-->
-        <th style="text-align: center;">
+        <th style="text-align: center;" ng-hide="true">
             <a class="thumbnail1" href="#">ID
                 <span>Search by ID
                             <input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
@@ -59,7 +59,7 @@
     </thead>
     <tbody>
     <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="employee">
-        <td>{{emp.id}}</td>
+        <td ng-hide="true">{{emp.id}}</td>
         <td>{{emp.fullName}}</td>
         <td>{{emp.phoneNumber}}</td>
         <td>{{emp.eMail}}</td>

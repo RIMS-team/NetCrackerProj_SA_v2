@@ -19,7 +19,7 @@
             .success(function(InvStatusList){
                 $scope.invStats = invStatusService.getList();
             }).error(function () {
-            $scope.invStats = invStatusService.getList();
+                $scope.invStats = invStatusService.getList();
         });
 
         $scope.sort = function (keyname) {
@@ -33,7 +33,7 @@
 
         $scope.addNewStatus = function (editRec) {
             $http.post('invstats/add', editRec).success(function () {
-                $scope.loadList();
+                $scope.invStats = invStatusService.getList();
             }).error(function () {
                 console.log("Error sending insert request!");
             });
@@ -41,7 +41,7 @@
 
         $scope.updateStatus = function (editRec) {
             $http.put('invstats/update', editRec).success(function () {
-                $scope.loadList();
+                $scope.invStats = invStatusService.getList();
             }).error(function () {
                 console.log("Error sending update request!");
             });

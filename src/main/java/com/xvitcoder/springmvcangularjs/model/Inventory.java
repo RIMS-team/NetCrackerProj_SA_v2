@@ -1,5 +1,7 @@
 package com.xvitcoder.springmvcangularjs.model;
 
+import java.util.Date;
+
 /**
  * Created by Kristina on 23.11.2016.
  */
@@ -8,6 +10,9 @@ class Inventory extends Entity {
     protected int statusId;
     protected String statusName;
     protected String inventoryNum;
+    protected String employeeName = "EMP NAME";
+    protected Date dueDate = new Date();
+    protected Date openDate = new Date();
 
     public Inventory() {
         //throw new IllegalArgumentException();
@@ -31,5 +36,29 @@ class Inventory extends Entity {
 
     public String getInventoryNum() {
         return inventoryNum;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Date getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(Date openDate) {
+        this.openDate = openDate;
     }
 }

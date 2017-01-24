@@ -4,7 +4,7 @@
     No notebooks found
 </div>
 
-    <a class="btn btn-default btn-top-grid" href="notebook/DownloadPDF" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
+    <a class="btn btn-default btn-top-grid" ng-click="printNotebooks(filteredNotebook)" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
         <span class="glyphicon glyphicon-floppy-disk" style="padding: 7px 9px;"></span></a>
 
     <table class="table table-bordered table-striped"  ng-show="notebook.length > 0">
@@ -13,7 +13,7 @@
         <!--<th ng-click="sort('id')" style="text-align: center;"><a class="thumbnail1" href="#">ID<span>Seache by ID<input type="text" ng-model="ref.id" placeholder="Search"/></span></a>-->
             <!--<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
         <!--</th>-->
-        <th style="text-align: center;">
+        <th style="text-align: center;" ng-hide="true">
             <a class="thumbnail1" href="#">ID
                 <span>Search by ID
                     <input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
@@ -94,13 +94,41 @@
             </button>
         </th>
 
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Employee Name
+                <span>Search by Employee Name<input type="text" ng-model="ref.employeeName" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('employeeName')}" ng-click="sort('employeeName')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
+        </th>
+
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Due Date
+                <span>Search by Due Date<input type="text" ng-model="ref.dueDate" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('dueDate')}" ng-click="sort('dueDate')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
+        </th>
+
+        <th style="text-align: center;">
+            <a class="thumbnail1" href="#">Open Date
+                <span>Search by Open Date<input type="text" ng-model="ref.openDate" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('openDate')}" ng-click="sort('openDate')" style="float: right;">
+                <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </button>
+        </th>
+
         <!--<th ng-click="sort('statusName')" style="text-align: center;"><a class="thumbnail1" href="#">Status<span>Seache by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>-->
             <!--<span class="glyphicon sort-icon" ng-show="sortKey=='statusName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
         <!--</th>-->
         <th style="text-align: center;">
             <a class="thumbnail1" href="#">Status
                 <span>Search by Status
-                    <input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
+                    <select ng-model="ref.statusName">>
+                            <option value=""></option>
+                            <option ng-repeat="status in invStatuses" value="{{status.name}}">{{status.name}}</option>
+                    </select>
+                </span></a>
             <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('statusName')}" ng-click="sort('statusName')" style="float: right;">
                 <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </button>
@@ -108,14 +136,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="elem in notebook | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="notebook">
-        <td>{{elem.id}}</td>
+    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter: ref) | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize" pagination-id="notebook" >
+        <td ng-hide="true">{{elem.id}}</td>
         <td>{{elem.name}}</td>
         <td>{{elem.model}}</td>
         <td>{{elem.memoryType}}</td>
         <td>{{elem.serialNumber}}</td>
         <td>{{elem.inventoryNum}}</td>
         <td>{{elem.location}}</td>
+        <td>{{elem.employeeName}}</td>
+        <td>{{elem.dueDate}}</td>
+        <td>{{elem.openDate}}</td>
         <td>{{elem.statusName}}</td>
     </tr>
     </tbody>

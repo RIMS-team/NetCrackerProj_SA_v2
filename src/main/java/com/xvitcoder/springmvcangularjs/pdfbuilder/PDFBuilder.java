@@ -90,9 +90,9 @@ public class PDFBuilder extends AbstractITextPdfView {
 
             doc.add(new Paragraph("Access Cards Stock Status:"));
 
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(100.0f);
-            table.setWidths(new float[] {0.25f, 0.25f, 0.25f, 0.25f});
+            table.setWidths(new float[] {0.2f, 0.4f, 0.4f});
             table.setSpacingBefore(10);
 
             Font font = FontFactory.getFont(FontFactory.HELVETICA);
@@ -106,9 +106,6 @@ public class PDFBuilder extends AbstractITextPdfView {
             cell.setPhrase(new Phrase("N", font));
             table.addCell(cell);
 
-            cell.setPhrase(new Phrase("ID", font));
-            table.addCell(cell);
-
             cell.setPhrase(new Phrase("Inventory Number", font));
             table.addCell(cell);
 
@@ -119,7 +116,6 @@ public class PDFBuilder extends AbstractITextPdfView {
             Integer i = 1;
             for (AccessCard card : listCards) {
                 table.addCell(i.toString());
-                table.addCell(Integer.toString(card.getId()));
                 table.addCell(card.getInventoryNum());
                 table.addCell(card.getStatusName());
                 i++;

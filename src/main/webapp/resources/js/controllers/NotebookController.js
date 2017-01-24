@@ -9,14 +9,29 @@
 (function () {
     var app = angular.module("notebooks", ["ngSanitize","angularUtils.directives.dirPagination", "ui.bootstrap"]);
 
-    app.controller("NotebookController", function ($scope, $http, $uibModal) {
+    app.controller("NotebookController", function ($scope, $http, $uibModal, $window, invStatusService) {
         var _this = this;
+
+        $scope.invStatuses = [];
 
         $scope.pageSize = 11;
 
         $scope.fetchNotebookList = function() {
             $http.get('notebook/all').success(function(notebookList){
                 $scope.notebook = notebookList;
+            });
+        };
+
+        invStatusService.loadList()
+            .success(function(){
+                $scope.invStatuses = invStatusService.getList();
+            }).error(function () {
+                $scope.invStatuses = invStatusService.getList();
+        });
+
+        $scope.printNotebooks = function (filteredNotebook) {
+            $http.post("notebook/sendPrintList", filteredNotebook).success(function () {
+                $window.open("notebook/DownloadPDF","_blank");
             });
         };
 

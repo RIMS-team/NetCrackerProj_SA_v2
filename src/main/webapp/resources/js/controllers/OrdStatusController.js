@@ -19,7 +19,7 @@
             .success(function(OrdStatusList){
                 $scope.ordStats = ordStatusService.getList();
             }).error(function () {
-             $scope.ordStats = ordStatusService.getList();
+                $scope.ordStats = ordStatusService.getList();
         });
 
         $scope.sort = function (keyname) {
@@ -34,7 +34,7 @@
 
         $scope.addNewStatus = function (editRec) {
             $http.post('ordstats/add', editRec).success(function () {
-                $scope.loadList();
+                $scope.ordStats = ordStatusService.getList();
             }).error(function () {
                 console.log("Error sending insert request!");
             });
@@ -42,7 +42,7 @@
 
         $scope.updateStatus = function (editRec) {
             $http.put('ordstats/update', editRec).success(function () {
-                $scope.loadList();
+                $scope.ordStats = ordStatusService.getList();
             }).error(function () {
                 console.log("Error sending update request!");
             });

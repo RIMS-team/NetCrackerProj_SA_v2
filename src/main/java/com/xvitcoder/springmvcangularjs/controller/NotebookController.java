@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,8 @@ public class NotebookController {
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private NotebookService notebookService = (NotebookServiceImpl) context.getBean("notebookServiceImpl");
 
+    private List<Notebook> printList;
+
     @RequestMapping("/all")
     @ResponseBody
     public List<Notebook> getNotebooks(){
@@ -42,7 +45,13 @@ public class NotebookController {
 
     @RequestMapping(value = "/DownloadPDF", method = RequestMethod.GET)
     public ModelAndView downloadPDF() {
-        return new ModelAndView("pdfView", "listNotebook", notebookService.findAll());
+        return new ModelAndView("pdfView", "listNotebook", printList);
+    }
+
+    @RequestMapping(value = "/sendPrintList", method = RequestMethod.POST)
+    public @ResponseBody void getPrintList(@RequestBody List<Notebook> noteList) {
+        printList = noteList;
+        System.err.println(printList);
     }
 
 }

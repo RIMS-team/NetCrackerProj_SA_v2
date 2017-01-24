@@ -11,7 +11,7 @@
             </button>
         </div>
         <div class="col-md-4 col-md-offset-4">
-            <a class="btn btn-default btn-top-grid" href="accesscards/DownloadPDF" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
+            <a class="btn btn-default btn-top-grid" ng-click="printCards(filteredCards)" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
                 <span class="glyphicon glyphicon-floppy-disk" style="padding: 7px 9px;"></span></a>
         </div>
     </div>
@@ -20,19 +20,11 @@
     <table class="table table-bordered table-striped"  ng-show="cards.length > 0" show-filter="true">
         <thead>
             <tr>
-                <th style="text-align: center;">
+                <th style="text-align: center;" ng-hide="true">
                     <a class="thumbnail1" href="#">ID
                         <span>Search by ID
                             <input type="text" ng-model="ref.id" placeholder="Search"/></span></a>
                     <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('id')}" ng-click="sort('id')" style="float: right;">
-                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                    </button>
-                </th>
-
-                <th style="text-align: center;">
-                    <a class="thumbnail1" href="#">Status
-                        <span>Search by Status<input type="text" ng-model="ref.statusName" placeholder="Search"/></span></a>
-                    <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('statusName')}" ng-click="sort('statusName')" style="float: right;">
                         <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </button>
                 </th>
@@ -45,16 +37,55 @@
                     </button>
                 </th>
 
+                <th style="text-align: center;">
+                    <a class="thumbnail1" href="#">Employee Name
+                        <span>Search by Employee Name<input type="text" ng-model="ref.employeeName" placeholder="Search"/></span></a>
+                    <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('employeeName')}" ng-click="sort('employeeName')" style="float: right;">
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </button>
+                </th>
+
+                <th style="text-align: center;">
+                    <a class="thumbnail1" href="#">Due Date
+                        <span>Search by Due Date<input type="text" ng-model="ref.dueDate" placeholder="Search"/></span></a>
+                    <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('dueDate')}" ng-click="sort('dueDate')" style="float: right;">
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </button>
+                </th>
+
+                <th style="text-align: center;">
+                    <a class="thumbnail1" href="#">Open Date
+                        <span>Search by Open Date<input type="text" ng-model="ref.openDate" placeholder="Search"/></span></a>
+                    <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('openDate')}" ng-click="sort('openDate')" style="float: right;">
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </button>
+                </th>
+
+                <th style="text-align: center;">
+                    <a class="thumbnail1" href="#">Status
+                        <span>Search by Status
+                        <select ng-model="ref.statusName">>
+                            <option value=""></option>
+                            <option ng-repeat="status in invStatuses" value="{{status.name}}">{{status.name}}</option>
+                        </select></span></a>
+                    <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('statusName')}" ng-click="sort('statusName')" style="float: right;">
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </button>
+                </th>
+
                 <th style="text-align: center; width: 70px;">Update</th>
                 <th style="text-align: center; width: 70px;">Remove</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr dir-paginate="card in cards | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="card">
-                <td>{{card.id}}</td>
-                <td>{{card.statusName}}</td>
+            <tr dir-paginate="card in filteredCards = ( cards | orderBy:sortKey:reverse | filter: ref ) | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="card">
+                <td ng-hide="true">{{card.id}}</td>
                 <td>{{card.inventoryNum}}</td>
+                <td>{{card.employeeName}}</td>
+                <td>{{card.dueDate}}</td>
+                <td>{{card.openDate}}</td>
+                <td>{{card.statusName}}</td>
                 <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-warning btn-tab" ng-click="openUpdateEditor(card)">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
                 <td  style="width:70px;text-align:center;"><button class="btn btn-mini btn-danger btn-tab" ng-click="removeCard(card.id)">

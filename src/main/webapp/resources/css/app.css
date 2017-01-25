@@ -263,11 +263,7 @@ button.btn.btn-tab-header.sort {
 }
 
 /* file import */
-body {
-    font-family: sans-serif;
-    background: #eee;
-}
-label {
+.file-name-label {
     cursor: pointer;
     display: block;
     text-align: center;

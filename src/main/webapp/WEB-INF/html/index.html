@@ -255,7 +255,11 @@
             </div>
             <div class="modal-body">
                 <div ng-controller = "fileUploadController">
-                    <input type="file" accept=".csv" file-model="myFile"/>
+                    <label for="attach-project-file">
+                        <i id="remove-project-file" class="remove">x</i>
+                        <div class="filename" id="attached-project-file">Click to select a file</div>
+                    </label>
+                    <input id="attach-project-file" type="file" accept=".csv" file-model="myFile"/>
                     <div>
                         <button class="btn btn-primary btn-mini" ng-click="uploadFile('notebooks')">Import Notebooks</button>
                         <button class="btn btn-primary btn-mini" ng-click="uploadFile('employees')">Import Employees</button>

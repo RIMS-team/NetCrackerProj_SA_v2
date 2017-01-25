@@ -262,5 +262,45 @@ button.btn.btn-tab-header.sort {
     }
 }
 
+/* file import */
+body {
+    font-family: sans-serif;
+    background: #eee;
+}
+label {
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    color: #828f94;
+    background: #fff;
+    border-radius: 4px;
+    min-height: 50px;
+    max-width: 307px;
+    border: 2px dashed #e0dfd5;
+    position: relative;
+}
+[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.remove {
+    line-height: 1em;
+    font-size: 16px;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-style: normal;
+}
+.filename {
+    font-size: 20px;
+    line-height: 50px;
+}
+
 
 

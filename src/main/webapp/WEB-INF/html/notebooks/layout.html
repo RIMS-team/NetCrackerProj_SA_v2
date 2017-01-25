@@ -103,17 +103,17 @@
         </th>
 
         <th style="text-align: center;">
-            <a class="thumbnail1" href="#">Due Date
-                <span>Search by Due Date<input type="text" ng-model="ref.dueDate" placeholder="Search"/></span></a>
-            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('dueDate')}" ng-click="sort('dueDate')" style="float: right;">
+            <a class="thumbnail1" href="#">Open Date
+                <span>Search by Open Date<input type="text" ng-model="ref.openDate" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('openDate')}" ng-click="sort('openDate')" style="float: right;">
                 <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </button>
         </th>
 
         <th style="text-align: center;">
-            <a class="thumbnail1" href="#">Open Date
-                <span>Search by Open Date<input type="text" ng-model="ref.openDate" placeholder="Search"/></span></a>
-            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('openDate')}" ng-click="sort('openDate')" style="float: right;">
+            <a class="thumbnail1" href="#">Due Date
+                <span>Search by Due Date<input type="text" ng-model="ref.dueDate" placeholder="Search"/></span></a>
+            <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('dueDate')}" ng-click="sort('dueDate')" style="float: right;">
                 <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </button>
         </th>
@@ -145,8 +145,8 @@
         <td>{{elem.inventoryNum}}</td>
         <td>{{elem.location}}</td>
         <td>{{elem.employeeName}}</td>
-        <td>{{elem.dueDate}}</td>
         <td>{{elem.openDate}}</td>
+        <td>{{elem.dueDate}}</td>
         <td>{{elem.statusName}}</td>
     </tr>
     </tbody>

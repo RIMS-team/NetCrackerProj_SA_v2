@@ -9,11 +9,16 @@
 
 
 
-    app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $uibModal, $filter) {
+    app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $uibModal, $filter, getAuthorizedUserService) {
         var store = this;
 
+
+
         $scope.curUser = {};
-        $scope.curUser.fullName = 'Current User Name';    // TODO    заменить на имя юзера после авторизации
+        getAuthorizedUserService.loadAuthorizedUser().success(function () {
+           $scope.curUser = getAuthorizedUserService.getAuthorizedUser();
+        });
+
 
         /* tabs */
         store.addTab = function (name, caption, directive) {

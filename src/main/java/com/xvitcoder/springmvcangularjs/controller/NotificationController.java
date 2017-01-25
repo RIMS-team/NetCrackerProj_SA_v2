@@ -12,10 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +23,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/notification")
 public class NotificationController {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+        NotificationService notificationService=(NotificationServiceImpl) context.getBean("notificationServiceImpl");
+        NotificationTempService notificationTempService=(NotificationTempService) context.getBean("notificationTempService");
+        List<NotificationTemp> notificationTemp=notificationTempService.getAllDefTemp();
+        System.out.println(notificationTemp.get(1));
+
+
+    }
 
     private Logger logger = Logger.getLogger(OrderController.class);
 
@@ -42,6 +49,16 @@ public class NotificationController {
         return notificationService.findAll();
     }
 
+    @RequestMapping("/allDefTemp")
+    @ResponseBody
+    public List<NotificationTemp> getAllDefTemp(){
+        logger.debug("Request URL: /notebook/all; Entering getNotebooks()");
+        logger.debug("Response: " + notificationService.findAll());
+        List<NotificationTemp> temps=notificationTempService.getAllDefTemp();
+        System.out.println(temps.get(1).toString());
+        return temps;
+    }
+
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public @ResponseBody void insertNotificationTemp(@RequestBody NotificationTemp notificationTemp) {
         notificationTempService.insertNotifiTemp(notificationTemp);
@@ -51,5 +68,10 @@ public class NotificationController {
     public String getOrdersPartialPage() {
         logger.debug("Request URL: /order/layout; Entering getOrdersPartialPage()");
         return "notifications/layout";
+    }
+
+    @RequestMapping("/findNotifiById/{id}")
+    public @ResponseBody NotificationTemp getNotifiTemp(@PathVariable("id") int id){
+        return notificationTempService.selectNotifiTemp(id,0);
     }
 }

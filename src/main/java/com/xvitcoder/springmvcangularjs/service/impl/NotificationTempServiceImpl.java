@@ -20,6 +20,17 @@ public class NotificationTempServiceImpl implements NotificationTempService {
         notificationTempDao.insertNotifiTemp(notificationTemp);
     }
 
+    @Override
+    public NotificationTemp selectNotifiTemp(int notifi_num, int user_id) {
+        NotificationTemp notificationTemp=notificationTempDao.findById(notifi_num,user_id);
+        return notificationTemp;
+    }
+
+    @Override
+    public List<NotificationTemp> getAllDefTemp() {
+        return notificationTempDao.getAllDefTemp();
+    }
+
     public NotificationTempDao getNotificationTempDao() {
         return notificationTempDao;
     }

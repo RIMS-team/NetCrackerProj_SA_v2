@@ -11,7 +11,14 @@
 
     app.controller("NotificationController", function ($scope, $http, $uibModal, ordNotifyService) {
         var _this = this;
+
+        ordNotifyService.loadNotifiTempList();
+
         $scope.pageSize = 11;
+        $scope.temp_1=ordNotifyService.findNotifiTemp1(1);
+        $scope.id=ordNotifyService.findNotifiTemp1(2);
+        $scope.num=ordNotifyService.findNotifiTemp1(3);
+
 
         ordNotifyService.loadUserList();
 
@@ -20,6 +27,8 @@
                 $scope.notifications = notificationList;
             });
         };
+
+
 
         $scope.fetchNotificationList();
 
@@ -44,7 +53,7 @@
             if (templ) {
                 editRec.notif_num = templ.id;
                 editRec.user_id = ordNotifyService.getUserIdByOrderId(templ.order.id);
-                editRec.template = templ.template;
+                editRec.template = ordNotifyService.findNotifiTemp1(1);
                 //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
 
@@ -75,8 +84,48 @@
             });
         };
 
+        _this.openEditorDef = function () {
+                var template_1 = ordNotifyService.findNotifiTemp1(1);
+                var template_2 = ordNotifyService.findNotifiTemp1(2);
+                var template_3 = ordNotifyService.findNotifiTemp1(3);
+                var editRec={}
+                editRec.temp_1=template_1;
+                editRec.id=template_2;
+                editRec.num=template_3;
+                $scope.edit=editRec;
+
+            var uibModalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'updateNotifTemplateDef.html',
+                controller: 'updateNotifTemplateControllerTemp',
+                resolve: {
+                    editRecord: function () {
+                        return $scope.edit;
+                    }
+                }
+            });
+
+            uibModalInstance.result.then(function (editRec) {
+                //modal ok
+                if (editRec) {
+                   // $scope.insertNewTemplete(editRec);
+                }
+                else {
+                    //$scope.insertNewTemplete(editRec);
+                    // TODO: Call insert function()
+                }
+            }, function () {
+                // modal cancel
+            });
+        };
+
         $scope.openUpdateEditor = function (templ) {
             _this.openEditor(templ);
+        };
+        $scope.openUpdateEditorDef = function () {
+            _this.openEditorDef();
         };
 
 
@@ -91,6 +140,21 @@
     });
 
     app.controller('updateNotifTemplateController', ['$scope','$uibModalInstance', 'editRecord', function ($scope, uibModalInstance, editRec) {
+        $scope.editRecord = editRec;
+
+        $scope.ok = function () {
+            // if (validation)
+            uibModalInstance.close($scope.editRecord);
+            // else
+            //   show error msg
+        };
+
+        $scope.close = function () {
+            uibModalInstance.dismiss('cancel');
+        };
+    }]);
+
+    app.controller('updateNotifTemplateControllerTemp', ['$scope','$uibModalInstance', 'editRecord', function ($scope, uibModalInstance, editRec) {
         $scope.editRecord = editRec;
 
         $scope.ok = function () {

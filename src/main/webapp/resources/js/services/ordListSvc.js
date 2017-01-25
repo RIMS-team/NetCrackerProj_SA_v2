@@ -11,6 +11,7 @@ function ordListService ($http) {
     _this.invList = [];
     _this.empList = [];
     _this.userList = [];
+    _this.notificationTemps = [];
 
     _this.getInvList = function () {
         return _this.invList;
@@ -63,4 +64,5 @@ function ordListService ($http) {
         });
         return res;
     }
+
 }

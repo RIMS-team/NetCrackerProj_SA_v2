@@ -38,15 +38,15 @@ import java.util.Map;
  */
 public class JdbcNotificationTemp implements NotificationTempDao {
 
-//    public static void main(String[] args) {
-//        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-//        NotificationTempDao notificationService=(NotificationTempDao) context.getBean("notificationTempDAO");
-//        //notificationService.registerNotifi();
-//        List<MailInformation> list=notificationService.getCursor(0,3,7);
-//        for(MailInformation mailInformation:list) {
-//            System.out.println(mailInformation.toString());
-//        }
-//    }
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+        NotificationTempDao notificationService=(NotificationTempDao) context.getBean("notificationTempDAO");
+        //notificationService.registerNotifi();
+        List<NotificationTemp> list=notificationService.getAllDefTemp();
+        for(NotificationTemp mailInformation:list) {
+            System.out.println(mailInformation.toString());
+        }
+    }
     private Logger logger = Logger.getLogger(JdbcOrder.class);
 
     private JdbcTemplate jdbcTemplateObject;
@@ -182,5 +182,29 @@ public class JdbcNotificationTemp implements NotificationTempDao {
             transactionManager.rollback(status);
             throw e;
         }
+    }
+
+    @Override
+    public List<NotificationTemp> getAllDefTemp() {
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        notificationTempCall.withCatalogName("dm_notif_templ");
+        notificationTempCall.withProcedureName("notif_templ_select");
+        notificationTempCall.returningResultSet("P_OUT_CURSOR", new NotificationTempMapper());
+
+        Map<String, Object> result = new HashMap<>(1);
+        List<NotificationTemp> orders;
+        try {
+            result.put("P_OUT_CURSOR", "");
+            result = notificationTempCall.execute();
+            orders = (List<NotificationTemp>) result.get("P_OUT_CURSOR");
+            transactionManager.commit(status);
+        }
+        catch (DataAccessException e) {
+            logger.error("Error inserting user, rolling back", e);
+            transactionManager.rollback(status);
+            throw e;
+        }
+        logger.debug("Leaving findAll():" + orders);
+        return orders;
     }
 }

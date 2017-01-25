@@ -18,4 +18,5 @@ public interface NotificationTempDao {
     List<MailInformation> getCursor(int day_1, int day_2, int day_3);
     void updateStatus();
     void registerNotifi(String orderid,int day_1, int day_2, int day_3);
+    List<NotificationTemp> getAllDefTemp();
 }

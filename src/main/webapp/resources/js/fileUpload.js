@@ -1,6 +1,41 @@
 /**
  * Created by Kristina on 18.01.2017.
  */
+$(document).ready(function () {
+    var $attach = $('#attach-project-file'),
+        $remove = $('#remove-project-file'),
+        $name = $('#attached-project-file');
+
+    $remove.hide();
+
+    $attach.on('change', function() {
+        var val = $(this).val().replace("C:\\fakepath\\", "");
+        if (val !== '') {
+            $name
+                .hide()
+                .text(val)
+                .fadeIn();
+            $remove.fadeIn();
+        } else {
+            $name
+                .hide()
+                .text('Click to select a file')
+                .fadeIn();
+            $remove.fadeOut();
+        }
+    });
+
+    $remove.on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $attach
+            .val('')
+            .change();
+    });
+
+});
+
 var myApp = angular.module('AngularSpringApp');
 
 myApp.directive('fileModel', ['$parse', function ($parse) {

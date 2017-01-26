@@ -13,7 +13,7 @@ function ordNotifyService ($http) {
 
     _this.orders = [];
     _this.notificationTemps = [];
-    _this.notificationTemp;
+    _this.notificationTemp = {};
 
     _this.loadEmpList = function () {
         var res = $http.get('order/all');

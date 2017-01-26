@@ -5,8 +5,11 @@
 
     <link rel="shortcut icon" href="resources/Letter-N-blue-icon.png" type="image/png"/>
     <link rel="stylesheet" type="text/css" href="resources/css2/bootstrap.min.ex.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css2/chosen.min.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/css2/chosen.boostrap.css"/>
     <script type="text/javascript" src="resources/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="resources/js/chosen.jquery.min_edited.js"></script>
 
     <script type="text/javascript" src="resources/js/lib/angular/angular.js"></script>
     <!--<script type="text/javascript" src="resources/js/lib/angular/angular.min.js"></script>-->
@@ -117,7 +120,7 @@
 
            <ul class="nav navbar-nav navbar-right">
                <li >
-                    <a href="/logout"  role="button"><span class="glyphicon glyphicon-log-in"></span> {{curUser.fullName}}</a>
+                    <a href="/logout"  role="button"><span class="glyphicon glyphicon-log-in" style="padding-right: 10px"></span>{{curUser.fullName}}</a>
                </li>
            </ul>
 
@@ -257,14 +260,17 @@
             </div>
             <div class="modal-body">
                 <div ng-controller = "fileUploadController">
-                    <label class="file-name-label" for="attach-project-file">
-                        <i id="remove-project-file" class="remove">x</i>
-                        <div class="filename" id="attached-project-file">Click to select a file</div>
-                    </label>
-                    <input id="attach-project-file" type="file" accept=".csv" file-model="myFile"/>
-                    <div>
-                        <button class="btn btn-primary btn-mini" ng-click="uploadFile('notebooks')">Import Notebooks</button>
-                        <button class="btn btn-primary btn-mini" ng-click="uploadFile('employees')">Import Employees</button>
+                    <div class="form-group form-control" style="height: 60px; padding: 2px 9px;">
+                        <label class="file-name-label" for="attach-project-file">
+                            <i id="remove-project-file" class="remove" title="Clear string">x</i>
+                            <div class="filename" id="attached-project-file">Click to select a file</div>
+                        </label>
+                        <input id="attach-project-file" style="margin-bottom: 20px" type="file"
+                               accept=".csv" file-model="myFile" />
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary btn-mini" ng-click="uploadFile('notebooks')" style="margin: 0px 10px;">Import Notebooks</button>
+                        <button class="btn btn-primary btn-mini" ng-click="uploadFile('employees')" style="margin: 0px 10px;">Import Employees</button>
                     </div>
                 </div>
             </div>

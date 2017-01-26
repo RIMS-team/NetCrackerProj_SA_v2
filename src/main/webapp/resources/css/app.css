@@ -270,9 +270,9 @@ button.btn.btn-tab-header.sort {
     color: #828f94;
     background: #fff;
     border-radius: 4px;
-    min-height: 50px;
-    max-width: 307px;
-    border: 2px dashed #e0dfd5;
+    /*min-height: 50px;*/
+    max-width: 700px;
+    /*border: 2px dashed #e0dfd5;*/
     position: relative;
 }
 [type="file"] {
@@ -285,18 +285,31 @@ button.btn.btn-tab-header.sort {
 }
 .remove {
     line-height: 1em;
-    font-size: 16px;
-    padding: 10px;
+    font-size: 20px;
+    /*padding: 10px;*/
     position: absolute;
     top: 0;
     right: 0;
     cursor: pointer;
     font-style: normal;
 }
+.remove:hover, .remove:focus {
+    color: #000;
+}
 .filename {
     font-size: 20px;
     line-height: 50px;
 }
 
+/*select with input*/
+select.form-control + .chosen-container .chosen-search input[type=text] {
+    border-radius: 4px;
+    width: 100%;
+}
+
+select.form-control + .chosen-container .chosen-search input[type=text]:focus {
+    color: #000000;
+}
+/*--------------*/
 
 

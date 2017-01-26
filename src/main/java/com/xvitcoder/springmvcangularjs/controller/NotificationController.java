@@ -45,8 +45,7 @@ public class NotificationController {
     @ResponseBody
     public List<Notification> getNotebooks(){
         logger.debug("Request URL: /notebook/all; Entering getNotebooks()");
-        logger.debug("Response: " + notificationService.findAll());
-        return notificationService.findAll();
+        return notificationService.findAllNotifi();
     }
 
     @RequestMapping("/allDefTemp")

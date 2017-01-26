@@ -19,6 +19,9 @@
                 $scope.emps = empList;
             });
         };
+        $scope.sendEmail = function (email) {
+            $http.post('mail/send/',email).success(function () {});
+        };
 
         $scope.removeEmp = function (id) {
             $http.delete('accesscards/remove/' + id).success(function () {
@@ -41,8 +44,58 @@
 
 
         $scope.fetchEmpsList();
+
+
+
+    _this.openEditor = function (templ) {
+        var editRec = {};
+        editRec.email=templ.eMail;
+        var uibModalInstance = $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'updateNotifTemplate.html',
+            controller: 'updateNotifTemplateController',
+            resolve: {
+                editRecord: function () {
+                    return editRec;
+                }
+            }
+        });
+
+        uibModalInstance.result.then(function (editRec) {
+            //modal ok
+            if (editRec) {
+                $scope.sendEmail(editRec);
+            }
+            else {
+                $scope.sendEmail(editRec);
+                // TODO: Call insert function()
+            }
+        }, function () {
+            // modal cancel
+        });
+    };
+
+    $scope.openUpdateEditor = function (templ) {
+        _this.openEditor(templ);
+    };
     });
 
+    app.controller('updateNotifTemplateController', ['$scope','$uibModalInstance', 'editRecord', function ($scope, uibModalInstance, editRec) {
+        $scope.editRecord = editRec;
+
+        $scope.ok = function () {
+            // if (validation)
+            uibModalInstance.close($scope.editRecord);
+            // else
+            //   show error msg
+        };
+
+        $scope.close = function () {
+            uibModalInstance.dismiss('cancel');
+        };
+    }]);
 
     app.directive("employeesList", function () {
         return {

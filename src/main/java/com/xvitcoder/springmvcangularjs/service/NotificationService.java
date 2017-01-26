@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface NotificationService {
     List<Notification> findAll();
+    List<Notification> findAllNotifi();
 }

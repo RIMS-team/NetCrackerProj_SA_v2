@@ -15,9 +15,19 @@
         ordNotifyService.loadNotifiTempList();
 
         $scope.pageSize = 11;
-        $scope.temp_1=ordNotifyService.findNotifiTemp1(1);
-        $scope.id=ordNotifyService.findNotifiTemp1(2);
-        $scope.num=ordNotifyService.findNotifiTemp1(3);
+
+        $scope.temp_1;
+        ordNotifyService.findNotifiTemp1(1).success(function () {
+            $scope.temp_1=ordNotifyService.getNotifi();
+        });
+        $scope.id;
+        ordNotifyService.findNotifiTemp1(2).success(function () {
+            $scope.id=ordNotifyService.getNotifi();
+        });
+        $scope.num;
+        ordNotifyService.findNotifiTemp1(3).success(function () {
+            $scope.num=ordNotifyService.getNotifi();
+        });
 
 
         ordNotifyService.loadUserList();
@@ -51,9 +61,12 @@
         _this.openEditor = function (templ) {
             var editRec = {};
             if (templ) {
-                editRec.notif_num = templ.id;
+                editRec.notif_num = templ.notifi_id;
                 editRec.user_id = ordNotifyService.getUserIdByOrderId(templ.order.id);
-                editRec.template = ordNotifyService.findNotifiTemp1(1);
+
+                ordNotifyService.findNotifiTemp1(templ.id).success(function () {
+                    editRec.template=ordNotifyService.getNotifi();
+                });
                 //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
 
@@ -126,6 +139,17 @@
         };
         $scope.openUpdateEditorDef = function () {
             _this.openEditorDef();
+        };
+
+        $scope.ok = function () {
+            // if (validation)
+            $scope.close();
+            // else
+            //   show error msg
+        };
+
+        $scope.close = function () {
+            $uibModal.dismiss('cancel');
         };
 
 

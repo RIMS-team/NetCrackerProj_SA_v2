@@ -63,6 +63,8 @@
         <td>{{emp.fullName}}</td>
         <td>{{emp.phoneNumber}}</td>
         <td>{{emp.eMail}}</td>
+        <td><button class="btn btn-primary" ng-click="openUpdateEditor(emp)">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></button></td>
     </tr>
     </tbody>
 </table>
@@ -73,7 +75,30 @@
             pagination-id="employee">
     </dir-pagination-controls>
 
+    <script type="text/ng-template" id="updateNotifTemplate.html">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="close()">&times;</button>
+            <h3 class="modal-title">Update Template</h3>
+        </div>
+        <div class="modal-body">
+            <div style="padding: 5px" ng-form="" name="addTemplForm">
 
+                <div class="form-group">
+                    <label for="email"> Email Employeer </label>
+                    <input id="email" name="email" class="form-control" ng-model="editRecord.email" >
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label for="tempText"> Temp Text </label>
+                    <textarea id="tempText" name="tempText" class="form-control" ng-model="editRecord.template" >
+                    </textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-mini "  ng-click="ok()" ng-disabled="addStatForm.$invalid" style="width: 80px; ">Send</button>
+                </div>
+            </div>
+        </div>
+    </script>
 </div>
 
 

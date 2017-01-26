@@ -18,6 +18,11 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationDao.findAll();
     }
 
+    @Override
+    public List<Notification> findAllNotifi() {
+        return notificationDao.findAllNotifi();
+    }
+
     public void setNotificationDao(JdbcNotificationDao notificationDao) {
         this.notificationDao = notificationDao;
     }

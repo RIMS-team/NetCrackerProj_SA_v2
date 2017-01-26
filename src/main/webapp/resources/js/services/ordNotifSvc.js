@@ -67,9 +67,12 @@ function ordNotifyService ($http) {
     }
 
     _this.findNotifiTemp1 = function(id) {
-        $http.get('notification/findNotifiById/'+id).success(function(notificationList){
+        return $http.get('notification/findNotifiById/'+id).success(function(notificationList){
             _this.notificationTemp = notificationList;
         });
+    };
+
+    _this.getNotifi = function () {
         return _this.notificationTemp.template;
     };
 

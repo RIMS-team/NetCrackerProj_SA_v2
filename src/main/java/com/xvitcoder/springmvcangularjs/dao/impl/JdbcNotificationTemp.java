@@ -42,10 +42,10 @@ public class JdbcNotificationTemp implements NotificationTempDao {
         ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
         NotificationTempDao notificationService=(NotificationTempDao) context.getBean("notificationTempDAO");
         //notificationService.registerNotifi();
-        List<NotificationTemp> list=notificationService.getAllDefTemp();
-        for(NotificationTemp mailInformation:list) {
-            System.out.println(mailInformation.toString());
-        }
+        NotificationTemp list=notificationService.findById(1,0);
+
+            System.out.println(list.toString());
+
     }
     private Logger logger = Logger.getLogger(JdbcOrder.class);
 
@@ -98,7 +98,7 @@ public class JdbcNotificationTemp implements NotificationTempDao {
             simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_notif_templ").withProcedureName("notif_templ_set");
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_notif_num",notificationTemp.getNotif_num());
-            map.put("p_user_id",notificationTemp.getUser_id());
+            map.put("p_user_id",notificationTemp.getUser_id()==0?null:notificationTemp.getUser_id());
             map.put("p_template",notificationTemp.getTemplate());
             simpleJdbcCall.execute(map);
             transactionManager.commit(status);

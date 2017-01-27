@@ -12,10 +12,10 @@
     app.controller("NotificationController", function ($scope, $http, $uibModal, ordNotifyService) {
         var _this = this;
 
-        ordNotifyService.loadNotifiTempList();
+        //ordNotifyService.loadNotifiTempList();
 
         $scope.pageSize = 11;
-
+        $scope.editRecord;
         $scope.temp_1;
         ordNotifyService.findNotifiTemp1(1).success(function () {
             $scope.temp_1=ordNotifyService.getNotifi();
@@ -38,7 +38,25 @@
             });
         };
 
+        $scope.submitUpdate = function(notifi) {
+            $scope.updateNotification(notifi);
+        };
 
+        $scope.updateNotification = function(notifi) {
+            $http.put('notification/update', notifi).success(function() {
+                ordNotifyService.findNotifiTemp1(1).success(function () {
+                    $scope.temp_1=ordNotifyService.getNotifi();
+                });
+                ordNotifyService.findNotifiTemp1(2).success(function () {
+                    $scope.id=ordNotifyService.getNotifi();
+                });
+                ordNotifyService.findNotifiTemp1(3).success(function () {
+                    $scope.num=ordNotifyService.getNotifi();
+                });
+            }).error(function() {
+                console.log("Error sending update request");
+            });
+        };
 
         $scope.fetchNotificationList();
 
@@ -60,13 +78,16 @@
 
         _this.openEditor = function (templ) {
             var editRec = {};
+            var template_1;
             if (templ) {
                 editRec.notif_num = templ.notifi_id;
                 editRec.user_id = ordNotifyService.getUserIdByOrderId(templ.order.id);
 
-                ordNotifyService.findNotifiTemp1(templ.id).success(function () {
-                    editRec.template=ordNotifyService.getNotifi();
+                ordNotifyService.findNotifiTemp1(templ.notifi_id).success(function () {
+                    $scope.edit=ordNotifyService.getNotifi();
                 });
+                editRec.template=$scope.edit;
+
                 //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
 
@@ -98,14 +119,10 @@
         };
 
         _this.openEditorDef = function () {
-                var template_1 = ordNotifyService.findNotifiTemp1(1);
-                var template_2 = ordNotifyService.findNotifiTemp1(2);
-                var template_3 = ordNotifyService.findNotifiTemp1(3);
                 var editRec={}
-                editRec.temp_1=template_1;
-                editRec.id=template_2;
-                editRec.num=template_3;
-                $scope.edit=editRec;
+                editRec.temp_1=$scope.temp_1;
+                editRec.id=$scope.id;
+                editRec.num=$scope.num;
 
             var uibModalInstance = $uibModal.open({
                 animation: true,
@@ -115,20 +132,14 @@
                 controller: 'updateNotifTemplateControllerTemp',
                 resolve: {
                     editRecord: function () {
-                        return $scope.edit;
+                        return editRec;
                     }
                 }
             });
 
             uibModalInstance.result.then(function (editRec) {
                 //modal ok
-                if (editRec) {
-                   // $scope.insertNewTemplete(editRec);
-                }
-                else {
-                    //$scope.insertNewTemplete(editRec);
-                    // TODO: Call insert function()
-                }
+                    $scope.updateNotification(editRec);
             }, function () {
                 // modal cancel
             });
@@ -140,18 +151,6 @@
         $scope.openUpdateEditorDef = function () {
             _this.openEditorDef();
         };
-
-        $scope.ok = function () {
-            // if (validation)
-            $scope.close();
-            // else
-            //   show error msg
-        };
-
-        $scope.close = function () {
-            $uibModal.dismiss('cancel');
-        };
-
 
     });
 

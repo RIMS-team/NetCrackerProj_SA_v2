@@ -29,8 +29,7 @@ public class OrderMapper implements RowMapper<OrderCursor> {
                 rs.getString("EMPLOYEE_FULL_NAME"),
                 rs.getString("EMPLOYEE_EMAIL"),
                 rs.getInt("USER_ID"),
-                rs.getString("USER_FULL_NAME"),
-                rs.getString("USER_ATTR_EMAIL")
+                rs.getString("USER_FULL_NAME")
         );
         return order;
     }

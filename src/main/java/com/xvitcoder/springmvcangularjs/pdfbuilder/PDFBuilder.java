@@ -113,27 +113,15 @@ public class PDFBuilder extends AbstractITextPdfView {
                 cell.setPhrase(new Phrase(notebook.getEmployeeName(),innerFont));
                 table.addCell(cell);
                 //9
-                cell.setPhrase(new Phrase(format.format(notebook.getOpenDate()),innerFont));
+                cell.setPhrase(new Phrase(notebook.getOpenDate() == null ? "" : format.format(notebook.getOpenDate()),innerFont));
                 table.addCell(cell);
                 //10
-                cell.setPhrase(new Phrase(format.format(notebook.getDueDate()),innerFont));
+                cell.setPhrase(new Phrase(notebook.getDueDate() == null ? "" : format.format(notebook.getDueDate()),innerFont));
                 table.addCell(cell);
                 //11
                 cell.setPhrase(new Phrase(notebook.getStatusName(),innerFont));
                 table.addCell(cell);
 
-
-//                table.addCell(String.valueOf(i));
-//                table.addCell(notebook.getName());
-//                table.addCell(notebook.getModel());
-//                table.addCell(notebook.getMemoryType());
-//                table.addCell(notebook.getSerialNumber());
-//                table.addCell(String.valueOf(notebook.getInventoryNum()));
-//                table.addCell(notebook.getLocation());
-//                table.addCell(notebook.getStatusName());
-//                table.addCell(notebook.getEmployeeName());
-//                table.addCell(notebook.getDueDate().toString());
-//                table.addCell(notebook.getOpenDate().toString());
                 i++;
             }
 
@@ -185,8 +173,8 @@ public class PDFBuilder extends AbstractITextPdfView {
                 table.addCell(i.toString());
                 table.addCell(card.getInventoryNum());
                 table.addCell(card.getEmployeeName());
-                table.addCell(format.format(card.getOpenDate()));
-                table.addCell(format.format(card.getDueDate()));
+                table.addCell(card.getOpenDate() == null ? "" : format.format(card.getOpenDate()));
+                table.addCell(card.getDueDate() == null ? "" : format.format(card.getDueDate()));
                 table.addCell(card.getStatusName());
                 i++;
             }

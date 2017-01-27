@@ -27,7 +27,7 @@ public class OrderController {
     @ResponseBody
     public List<OrderCursor> getOrders(){
         logger.debug("Request URL: /order/all; Entering getOrders()");
-        logger.debug("Response: " + orderService.findAll());
+//        logger.debug("Response: " + orderService.findAll());
         return orderService.findAll();
     }
 

@@ -1,5 +1,7 @@
 package com.xvitcoder.springmvcangularjs.model;
 
+import java.util.Date;
+
 /**
  * Created by Kristina on 23.11.2016.
  */
@@ -15,7 +17,7 @@ public class Notebook extends Inventory {
     public Notebook(){}
 
     public Notebook(int id, int statusId, String statusName, String name, String location, String memoryType,
-                    String model, String inventoryNum, String serialNumber) {
+                    String model, String inventoryNum, String serialNumber, String employeeName, Date openDate, Date dueDate) {
         this.id = id;
         this.statusId = statusId;
         this.statusName = statusName;
@@ -25,6 +27,9 @@ public class Notebook extends Inventory {
         this.model = model;
         this.inventoryNum = inventoryNum;
         this.serialNumber = serialNumber;
+        this.employeeName = employeeName;
+        this.openDate = openDate;
+        this.dueDate = dueDate;
     }
 
     public String getName() {

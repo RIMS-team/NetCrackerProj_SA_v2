@@ -1,5 +1,7 @@
 package com.xvitcoder.springmvcangularjs.model;
 
+import java.util.Date;
+
 /**
  * Created by Kristina on 23.11.2016.
  */
@@ -7,11 +9,14 @@ public class AccessCard extends Inventory {
 
     public AccessCard() {}
 
-    public AccessCard(int id, int statusId, String statusName, String inventoryNum) {
+    public AccessCard(int id, int statusId, String statusName, String inventoryNum, String employeeName, Date openDate, Date dueDate) {
         this.id = id;
         this.statusId = statusId;
         this.statusName = statusName;
         this.inventoryNum = inventoryNum;
+        this.employeeName = employeeName;
+        this.openDate = openDate;
+        this.dueDate = dueDate;
     }
 
     public String getInventoryNum() {

@@ -3,9 +3,11 @@ package com.xvitcoder.springmvcangularjs.controller;
 import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,9 @@ public class UserController {
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private UserService userService = (UserService) context.getBean("userServiceImpl");
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @RequestMapping("/all")
     @ResponseBody
     public List<User> getUsers(){
@@ -34,12 +39,14 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody void addUser(@RequestBody User user) {
         logger.debug("Request URL: /user/add; Entering addUser(user=" + user + ")");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.addUser(user);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public @ResponseBody void updateUser(@RequestBody User user) {
         logger.debug("Request URL: /user/update; Entering updateUser(user=" + user + ")");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
     }
 

@@ -22,7 +22,10 @@ public class NotebookMapper implements RowMapper<Notebook> {
                 rs.getString("MEM_TYPE"),
                 rs.getString("MODEL"),
                 rs.getString("INVENTORY_NUM"),
-                rs.getString("SERIAL_NUMBER")
+                rs.getString("SERIAL_NUMBER"),
+                rs.getString("EMPLOYEE_FULL_NAME"),
+                rs.getDate("OPEN_DATE"),
+                rs.getDate("DUE_DATE")
         );
         return notebook;
     }

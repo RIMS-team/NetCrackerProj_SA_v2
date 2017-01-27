@@ -10,9 +10,9 @@ class Inventory extends Entity {
     protected int statusId;
     protected String statusName;
     protected String inventoryNum;
-    protected String employeeName = "EMP NAME";
-    protected Date dueDate = new Date();
-    protected Date openDate = new Date();
+    protected String employeeName;
+    protected Date dueDate;
+    protected Date openDate;
 
     public Inventory() {
         //throw new IllegalArgumentException();

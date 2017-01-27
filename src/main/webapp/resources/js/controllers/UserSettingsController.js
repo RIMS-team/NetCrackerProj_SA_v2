@@ -14,6 +14,8 @@
 
     app.controller("UserSettingController", function ($scope, $http) {
 
+        $scope.success = false;
+
         $scope.getUser = function() {
             $http.get('userSetting/getAuthorizedUser').success(function(user) {
                 user.password = undefined;
@@ -26,8 +28,10 @@
             $http.put('user/update', updateUser).success(function() {
                 $scope.getUser();
                 $scope.settingsUpdate.$setPristine();
+                $scope.success = true;
             }).error(function() {
                 console.log("Error sending update request");
+                $scope.success = false;
             });
         };
 

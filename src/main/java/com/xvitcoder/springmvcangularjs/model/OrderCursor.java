@@ -36,7 +36,7 @@ public class OrderCursor extends Entity {
                        int inventoryId, String inventoryType, String inventoryNum,
                        String noteName, String noteModel, String noteMemory, String noteSerial,
                        int employeeId, String employeeFullName, String employeeEmail,
-                       int userId, String userFullName, String userEmail) {
+                       int userId, String userFullName) {
         this.id = id;
         this.rowNum = rowNum;
         this.date = date;
@@ -54,7 +54,6 @@ public class OrderCursor extends Entity {
         this.employeeEmail = employeeEmail;
         this.userId = userId;
         this.userFullName = userFullName;
-        this.userEmail = userEmail;
     }
 
     public long getRowNum() {

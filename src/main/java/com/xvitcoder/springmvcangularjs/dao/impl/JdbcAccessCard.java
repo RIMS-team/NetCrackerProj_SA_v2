@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.dao.impl;
 
+import com.xvitcoder.springmvcangularjs.model.OrderCursor;
 import org.apache.log4j.Logger;
 import com.xvitcoder.springmvcangularjs.dao.AccessCardDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.AccessCardMapper;
@@ -40,7 +41,7 @@ public class JdbcAccessCard implements AccessCardDao {
 
         cardSelectSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
         cardSelectSP.withCatalogName("DM_ACCESS_CARD");
-        cardSelectSP.withProcedureName("ACCESS_CARD_SELECT");
+        cardSelectSP.withProcedureName("ACCESS_CARD_SELECT_EXT");
         cardSelectSP.returningResultSet("P_OUT_CURSOR", new AccessCardMapper());
     }
 
@@ -104,30 +105,26 @@ public class JdbcAccessCard implements AccessCardDao {
     public List<AccessCard> findAll() {
         logger.debug("Entering findAll()");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-        String sql =
-                "SELECT CARD.OBJECT_ID AS OBJECT_ID " +
-                        ",ATTR_INVENTORY_NUM.VALUE AS INVENTORY_NUM " +
-                        ",ATTR_STATUS.VALUE  AS INV_STATUS_ID " +
-                        ",LIST_STATUS.NAME   AS INV_STATUS_NAME " +
-                        "FROM OBJECTS CARD, ATTRIBUTES ATTR_INVENTORY_NUM, ATTRIBUTES ATTR_STATUS, LISTTYPE LIST_STATUS " +
-                        "WHERE CARD.OBJECT_TYPE_ID = 6 /* CARD */ " +
-                        "AND CARD.OBJECT_ID = ATTR_INVENTORY_NUM.OBJECT_ID " +
-                        "AND CARD.OBJECT_ID = ATTR_STATUS.OBJECT_ID " +
-                        "AND ATTR_INVENTORY_NUM.ATTR_ID = 13 /* INVENTORY_NUM */ " +
-                        "AND ATTR_STATUS.ATTR_ID = 16 /* STATUS */ " +
-                        "AND ATTR_STATUS.VALUE = LIST_STATUS.ID ";
-        List <AccessCard> accessCards;
+        Map<String, Object> args = new HashMap<>(4);
+        Map<String, Object> result = new HashMap<>(1);
+        List<AccessCard> cards;
         try {
-            accessCards = jdbcTemplateObject.query(sql,
-                    new AccessCardMapper());
+            args.put("P_OBJECT_ID", null);
+            args.put("P_INV_STATUS_ID", null);
+            args.put("P_ROWNUM_FIRST", null);
+            args.put("P_ROWNUM_LAST", null);
+            result.put("P_OUT_CURSOR", "");
+            result = cardSelectSP.execute(args);
+            cards = (List<AccessCard>) result.get("P_OUT_CURSOR");
             transactionManager.commit(status);
-        } catch (DataAccessException e) {
+        }
+        catch (DataAccessException e) {
             logger.error("Error finding all access cards, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
-        logger.debug("Leaving findAll():" + accessCards);
-        return accessCards;
+        logger.debug("Leaving findAll():" + cards);
+        return cards;
     }
 
     @Override

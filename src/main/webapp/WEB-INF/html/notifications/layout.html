@@ -18,7 +18,7 @@
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
             </th>
-            <th style="text-align: center;">
+            <th style="text-align: center;" ng-hide="true">
                 <a class="thumbnail1" href="#">Order ID
                     <span>Search by Order ID
                     <input type="text" ng-model="ref.order.id" placeholder="Search"/></span></a>
@@ -52,32 +52,59 @@
             </th>
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">Due Date
-                    <span>Search by Due Date
-                    <input type="text" ng-model="ref.dueDate" placeholder="Search"/></span></a>
+                    <span>
+                        Search by Due Date
+                        <br/>
+                        From
+                        <input type="date" ng-model="from_date_due"/>
+                        To
+                        <input type="date" ng-model="to_date_due"/>
+                    </span></a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('dueDate')}" ng-click="sort('dueDate')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
             </th>
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">First Notify
-                    <span>Search by First Notify
-                    <input type="text" ng-model="ref.first" placeholder="Search"/></span></a>
+                    <span>
+                        Search by First Notify
+                        <br/>
+                        From
+                        <input type="date" ng-model="from_date_first"/>
+                        To
+                        <input type="date" ng-model="to_date_first"/>
+                    </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('first')}" ng-click="sort('first')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
             </th>
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">Second Notify
-                    <span>Search by Second Notify
-                    <input type="text" ng-model="ref.second" placeholder="Search"/></span></a>
+                    <span>
+                        Search by Second Notify
+                        <br/>
+                        From
+                        <input type="date" ng-model="from_date_second"/>
+                        To
+                        <input type="date" ng-model="to_date_second"/>
+                    </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('second')}" ng-click="sort('second')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
             </th>
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">Third Notify
-                    <span>Search by Third Notify
-                    <input type="text" ng-model="ref.third" placeholder="Search"/></span></a>
+                    <span>
+                        Search by Third Notify
+                        <br/>
+                        From
+                        <input type="date" ng-model="from_date_third"/>
+                        To
+                        <input type="date" ng-model="to_date_third"/>
+                    </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('third')}" ng-click="sort('third')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
@@ -85,16 +112,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | itemsPerPage:pageSize " pagination-id="notific">
+        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | dateRangeDue : from_date_due : to_date_due | dateRangeNotifFirst : from_date_first : to_date_first | dateRangeNotifSecond : from_date_second : to_date_second | dateRangeNotifThird : from_date_third : to_date_third | itemsPerPage:pageSize " pagination-id="notific">
             <td ng-hide="true">{{elem.notifi_id}}</td>
-            <td>{{elem.order.id}}</td>
+            <td ng-hide="true">{{elem.order.id}}</td>
             <td>{{elem.inv_type}}</td>
             <td>{{elem.inv_num}}</td>
             <td>{{elem.name}}</td>
-            <td>{{elem.dueDate}}</td>
-            <td><a ng-click="openUpdateEditor(elem)">{{elem.first}}</a></td>
-            <td><a ng-click="openUpdateEditor(elem)">{{elem.second}}</a></td>
-            <td><a ng-click="openUpdateEditor(elem)">{{elem.third}}</a></td>
+            <td>{{elem.dueDate|date:'dd.MM.yyyy'}}</td>
+            <td><a ng-click="openUpdateEditor(elem)">{{elem.first|date:'dd.MM.yyyy'}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem)">{{elem.second|date:'dd.MM.yyyy'}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem)">{{elem.third|date:'dd.MM.yyyy'}}</a></td>
         </tr>
         </tbody>
     </table>

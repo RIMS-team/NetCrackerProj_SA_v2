@@ -2,6 +2,7 @@ package com.xvitcoder.springmvcangularjs.service;
 
 
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.model.User;
 
@@ -14,7 +15,7 @@ public interface AccessCardService {
     List<AccessCard> findAll();
     AccessCard findByInventoryNum(int inventoryNum);
     void addAccessCard(AccessCard card);
-    void deleteCard(int id);
+    ErrorText deleteCard(int id);
     void updateCard(AccessCard card);
     List<AccessCard> findByStatus(int statusId);
 }

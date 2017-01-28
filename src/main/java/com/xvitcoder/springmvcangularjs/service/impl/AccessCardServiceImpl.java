@@ -3,6 +3,7 @@ package com.xvitcoder.springmvcangularjs.service.impl;
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcAccessCard;
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcNotebook;
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.service.AccessCardService;
 import com.xvitcoder.springmvcangularjs.service.NotebookService;
@@ -35,8 +36,8 @@ public class AccessCardServiceImpl implements AccessCardService {
     }
 
     @Override
-    public void deleteCard(int id) {
-            accessCardDao.deleteCard(id);
+    public ErrorText deleteCard(int id) {
+            return accessCardDao.deleteCard(id);
     }
 
     @Override

@@ -1,14 +1,19 @@
 package com.xvitcoder.springmvcangularjs.dao.impl;
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
+import com.xvitcoder.springmvcangularjs.service.AccessCardService;
 import org.apache.log4j.Logger;
 import com.xvitcoder.springmvcangularjs.dao.AccessCardDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.AccessCardMapper;
 import com.xvitcoder.springmvcangularjs.model.AccessCard;
 import oracle.jdbc.OracleTypes;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlInOutParameter;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -17,6 +22,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -26,6 +32,12 @@ import java.util.Map;
  * Created by Kristina on 05.12.2016.
  */
 public class JdbcAccessCard implements AccessCardDao {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+        AccessCardService accessCardService = (AccessCardService) context.getBean("accessCardServiceImpl");
+        accessCardService.deleteCard(1);
+    }
 
     private Logger logger = Logger.getLogger(JdbcAccessCard.class);
 
@@ -174,22 +186,28 @@ public class JdbcAccessCard implements AccessCardDao {
     }
 
     @Override
-    public void deleteCard(int id) {
+    public ErrorText deleteCard(int id) {
         logger.debug("Entering deleteCard(id="+ id + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         SimpleJdbcCall simpleJdbcCall=null;
+        Map map1;
         try {
-            simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_delete");
+            simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card")
+                    .withProcedureName("access_card_delete_ext")
+                    .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                    .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",id);
-            simpleJdbcCall.execute(map);
-            System.out.println("2ebhovbhwe bv");
+            map1=simpleJdbcCall.execute(map);
+            System.out.println((String)map1.get("p_err_msg"));
+            System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
             transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error deleting card, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(Integer.valueOf((String)map1.get("p_err_code")),(String)map1.get("p_err_msg"));
     }
 
 }

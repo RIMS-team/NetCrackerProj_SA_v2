@@ -49,12 +49,17 @@
         };
 
         $scope.removeCard = function (id) {
-            $http.delete('accesscards/remove/' + id).success(function () {
+            $http.delete('accesscards/remove/' + id).success(function (error) {
                 $scope.fetchCardsList();
                 $scope.editRecord.id = '';
                 $scope.editRecord.statusId = '';
                 $scope.editRecord.statusName = '';
                 $scope.editRecord.inventoryNum = '';
+                if(error.id_num == 0){
+                    alert('Complete!');
+                }else{
+                    alert(error.error_m);
+                }
             });
         };
 

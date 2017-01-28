@@ -5,30 +5,30 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
-    <property name="URL" value="jdbc:oracle:thin:@localhost:1521:XE" />
-    <property name="user" value="kurator2"/>
-    <property name="password" value="12345"/>
-    </bean>
+    <!--<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">-->
+    <!--<property name="URL" value="jdbc:oracle:thin:@localhost:1521:XE" />-->
+    <!--<property name="user" value="kurator2"/>-->
+    <!--<property name="password" value="12345"/>-->
+    <!--</bean>-->
 
     <!-- Tomcat JDBC connection pool -->
-    <!--<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">-->
-        <!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />-->
-        <!--<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />-->
-        <!--<property name="username" value="kurator2" />-->
-        <!--<property name="password" value="12345" />-->
-        <!--<property name="initialSize" value="5" />-->
-        <!--<property name="maxActive" value="5" />-->
-        <!--<property name="maxIdle" value="5" />-->
-        <!--<property name="minIdle" value="5" />-->
-        <!--<property name="maxWait" value="-1" />-->
-        <!--<property name="removeAbandoned" value="true"/>-->
-        <!--<property name="removeAbandonedTimeout" value="500" />-->
-        <!--<property name="testOnBorrow" value="true" />-->
-        <!--<property name="validationQuery" value="select 1 from dual" />-->
-        <!--<property name="validationQueryTimeout" value="10" />-->
-        <!--<property name="validationInterval" value="10000" />-->
-    <!--</bean>-->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+        <property name="username" value="kurator2" />
+        <property name="password" value="12345" />
+        <property name="initialSize" value="5" />
+        <property name="maxActive" value="5" />
+        <property name="maxIdle" value="5" />
+        <property name="minIdle" value="5" />
+        <property name="maxWait" value="-1" />
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="500" />
+        <property name="testOnBorrow" value="true" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="validationQueryTimeout" value="10" />
+        <property name="validationInterval" value="10000" />
+    </bean>
 
     <bean id="transactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

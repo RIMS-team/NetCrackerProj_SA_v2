@@ -15,12 +15,15 @@
         var _this = this;
         $scope.pageSize = 11;
 
-        invStatusService.loadList()
-            .success(function(InvStatusList){
+        _this.loadList = function() {
+            invStatusService.loadList()
+                .success(function (InvStatusList) {
+                    $scope.invStats = invStatusService.getList();
+                }).error(function () {
                 $scope.invStats = invStatusService.getList();
-            }).error(function () {
-                $scope.invStats = invStatusService.getList();
-        });
+            });
+        };
+        _this.loadList();
 
         $scope.sort = function (keyname) {
             $scope.sortKey=keyname;
@@ -32,16 +35,22 @@
         }
 
         $scope.addNewStatus = function (editRec) {
-            $http.post('invstats/add', editRec).success(function () {
-                $scope.invStats = invStatusService.getList();
+            $http.post('invstats/add', editRec).success(function (error) {
+                _this.loadList();
+                if(error.id_num != 0) {
+                    alert(error.error_m);
+                }
             }).error(function () {
                 console.log("Error sending insert request!");
             });
         };
 
         $scope.updateStatus = function (editRec) {
-            $http.put('invstats/update', editRec).success(function () {
-                $scope.invStats = invStatusService.getList();
+            $http.put('invstats/update', editRec).success(function (error) {
+                _this.loadList();
+                if(error.id_num != 0) {
+                    alert(error.error_m);
+                }
             }).error(function () {
                 console.log("Error sending update request!");
             });

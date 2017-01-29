@@ -2,18 +2,24 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 
 import com.xvitcoder.springmvcangularjs.dao.InventStatusDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.InventStatusMapper;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.InventStatus;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
+import java.sql.Types;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by dell on 08-Dec-16.
@@ -83,35 +89,76 @@ public class JdbcInventStatus implements InventStatusDao {
     }
 
     @Override
-    public void addStatus(InventStatus inventStatus) {
+    public ErrorText addStatus(InventStatus inventStatus) {
         logger.debug("Entering addStatus(" + inventStatus + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        SimpleJdbcCall simpleJdbcCall;
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
-            String sql = "INSERT INTO LISTTYPE(CODE,NAME,ATTRTYPE_CODE) VALUES (?,?,'INV_STATUS')";
-            jdbcTemplateObject.update(sql,inventStatus.getCode(),inventStatus.getName());
-            transactionManager.commit(status);
-        } catch (DataAccessException ex) {
-            logger.error("Error inserting inventStatus, rolling back", ex);
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_inv_status")
+                    .withProcedureName("inv_status_insert_ext")
+                    .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                    .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
+            Map<String ,Object> map=new HashMap<String ,Object>();
+            map.put("p_id",null);
+            map.put("p_code",inventStatus.getCode());
+            map.put("p_name", inventStatus.getName());
+            map.put("p_comments", null);
+            map1=simpleJdbcCall.execute(map);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
+        } catch (DataAccessException e) {
+            logger.error("Error inserting inventStatus", e);
             transactionManager.rollback(status);
-            throw ex;
+            throw e;
         }
-        logger.debug("Leaving addStatus(" + inventStatus + ")");
+        return new ErrorText(errCode, errMsg);
     }
 
     @Override
-    public void updateStatus(InventStatus inventStatus) {
+    public ErrorText updateStatus(InventStatus inventStatus) {
         logger.debug("Entering updateStatus(" + inventStatus + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        SimpleJdbcCall simpleJdbcCall;
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
-            String sql = "UPDATE LISTTYPE SET CODE = ?, NAME = ? WHERE ATTRTYPE_CODE = 'INV_STATUS' AND ID = ?";
-            jdbcTemplateObject.update(sql,inventStatus.getCode(),inventStatus.getName(),inventStatus.getId());
-            transactionManager.commit(status);
-        } catch (DataAccessException ex) {
-            logger.debug("Error updating inventStatus, rolling back", ex);
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_inv_status")
+                    .withProcedureName("inv_status_update_ext")
+                    .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                    .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
+            Map<String ,Object> map=new HashMap<String ,Object>();
+            map.put("p_id",inventStatus.getId());
+            map.put("p_code",inventStatus.getCode());
+            map.put("p_name", inventStatus.getName());
+            map.put("p_comments", null);
+            map1=simpleJdbcCall.execute(map);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
+        } catch (DataAccessException e) {
+            logger.error("Error updating inventStatus", e);
             transactionManager.rollback(status);
-            throw ex;
+            throw e;
         }
-        logger.debug("Leaving updateStatus(" + inventStatus + ")");
+        return new ErrorText(errCode, errMsg);
     }
 
 }

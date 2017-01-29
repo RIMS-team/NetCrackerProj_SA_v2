@@ -63,23 +63,38 @@ public class JdbcAccessCard implements AccessCardDao {
     }
 
     @Override
-    public void insert(AccessCard accessCard) {
+    public ErrorText insert(AccessCard accessCard) {
         logger.debug("Entering insert(accessCard=" + accessCard + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         SimpleJdbcCall simpleJdbcCall;
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
-            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_insert");
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card")
+                    .withProcedureName("access_card_insert_ext")
+                    .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                    .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",null);
             map.put("p_inventory_num",accessCard.getInventoryNum());
             map.put("p_inv_status_id", accessCard.getStatusId());
-            simpleJdbcCall.execute(map);
-            transactionManager.commit(status);
+            map1=simpleJdbcCall.execute(map);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
         } catch (DataAccessException e) {
             logger.error("Error inserting access card", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(errCode, errMsg);
     }
 
     @Override
@@ -140,23 +155,38 @@ public class JdbcAccessCard implements AccessCardDao {
     }
 
     @Override
-    public void update(AccessCard card) {
+    public ErrorText update(AccessCard card) {
         logger.debug("Entering update(card=" + card + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         SimpleJdbcCall simpleJdbcCall;
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
-            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card").withProcedureName("access_card_update");
+            simpleJdbcCall=new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card")
+                    .withProcedureName("access_card_update_ext")
+                    .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                    .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",card.getId());
             map.put("p_inventory_num",card.getInventoryNum());
             map.put("p_inv_status_id",card.getStatusId());
-            simpleJdbcCall.execute(map);
-            transactionManager.commit(status);
+            map1=simpleJdbcCall.execute(map);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
         } catch (DataAccessException e) {
             logger.error("Error updating card, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(errCode, errMsg);
     }
 
     @Override
@@ -191,6 +221,8 @@ public class JdbcAccessCard implements AccessCardDao {
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         SimpleJdbcCall simpleJdbcCall=null;
         Map map1;
+        int errCode;
+        String errMsg;
         try {
             simpleJdbcCall = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_access_card")
                     .withProcedureName("access_card_delete_ext")
@@ -199,15 +231,21 @@ public class JdbcAccessCard implements AccessCardDao {
             Map<String ,Object> map=new HashMap<String ,Object>();
             map.put("p_object_id",id);
             map1=simpleJdbcCall.execute(map);
-            System.out.println((String)map1.get("p_err_msg"));
-            System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
-            transactionManager.commit(status);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
         } catch (DataAccessException e) {
             logger.error("Error deleting card, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
-        return new ErrorText(Integer.valueOf((String)map1.get("p_err_code")),(String)map1.get("p_err_msg"));
+        return new ErrorText(errCode, errMsg);
     }
 
 }

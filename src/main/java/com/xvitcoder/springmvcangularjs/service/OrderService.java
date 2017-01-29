@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.service;
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface OrderService {
     List<OrderCursor> findAll();
     OrderCursor findById(int id);
-    void updateOrder(OrderCursor order);
-    void addOrder(OrderCursor order);
-    void deleteOrder(int id);
+    ErrorText updateOrder(OrderCursor order);
+    ErrorText addOrder(OrderCursor order);
+    ErrorText deleteOrder(int id);
 }

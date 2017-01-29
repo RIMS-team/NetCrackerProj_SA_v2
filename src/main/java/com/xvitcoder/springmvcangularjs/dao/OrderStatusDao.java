@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.dao;
 
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderStatus;
 import org.springframework.core.annotation.Order;
 
@@ -12,6 +13,6 @@ import java.util.List;
 public interface OrderStatusDao {
     List<OrderStatus> findAll();
     OrderStatus findById(int id);
-    void addStatus(OrderStatus status);
-    void updateStatus(OrderStatus status);
+    ErrorText addStatus(OrderStatus status);
+    ErrorText updateStatus(OrderStatus status);
 }

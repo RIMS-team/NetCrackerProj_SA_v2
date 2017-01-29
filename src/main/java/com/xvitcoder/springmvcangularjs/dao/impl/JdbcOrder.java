@@ -2,6 +2,7 @@ package com.xvitcoder.springmvcangularjs.dao.impl;
 
 import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderMapper;
 import com.xvitcoder.springmvcangularjs.dao.OrderDAO;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -13,6 +14,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
+import java.sql.Types;
 import java.util.*;
 
 /**
@@ -46,19 +48,27 @@ public class JdbcOrder implements OrderDAO {
 
         orderUpdateSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
         orderUpdateSP.withCatalogName("DM_ORDER");
-        orderUpdateSP.withProcedureName("ORDER_UPDATE");
+        orderUpdateSP.withProcedureName("ORDER_UPDATE_EXT");
+        orderUpdateSP.declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR));
+        orderUpdateSP.declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
 
         orderInsertSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
         orderInsertSP.withCatalogName("DM_ORDER");
-        orderInsertSP.withProcedureName("ORDER_INSERT");
+        orderInsertSP.withProcedureName("ORDER_INSERT_EXT");
+        orderInsertSP.declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR));
+        orderInsertSP.declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
 
         orderDeleteSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
         orderDeleteSP.withCatalogName("DM_ORDER");
-        orderDeleteSP.withProcedureName("ORDER_DELETE");
+        orderDeleteSP.withProcedureName("ORDER_DELETE_EXT");
+        orderDeleteSP.declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR));
+        orderDeleteSP.declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
 
         cardUpdateSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
         cardUpdateSP.withCatalogName("DM_ACCESS_CARD");
-        cardUpdateSP.withProcedureName("ACCESS_CARD_UPDATE");
+        cardUpdateSP.withProcedureName("ACCESS_CARD_UPDATE_EXT");
+        cardUpdateSP.declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR));
+        cardUpdateSP.declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -100,10 +110,13 @@ public class JdbcOrder implements OrderDAO {
     }
 
     @Override
-    public void updateOrder(OrderCursor order) {
+    public ErrorText updateOrder(OrderCursor order) {
         logger.debug("Entering JdbcOrder.updateOrder(order=" + order + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(6);
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
             args.put("P_OBJECT_ID", order.getId());
             args.put("P_INVENTORY_ID", order.getInventoryId());
@@ -112,21 +125,33 @@ public class JdbcOrder implements OrderDAO {
             args.put("P_ORD_STATUS_ID", order.getStatusId());
             args.put("P_DATE", order.getDate());
 
-            orderUpdateSP.execute(args);
-            transactionManager.commit(status);
+            map1=orderUpdateSP.execute(args);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
         }
         catch (DataAccessException e) {
             logger.error("Error updating order, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(errCode, errMsg);
     }
 
     @Override
-    public void addOrder(OrderCursor order) {
+    public ErrorText addOrder(OrderCursor order) {
         logger.debug("Entering JdbcOrder.insertOrder(order=" + order + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(6);
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
             args.put("P_OBJECT_ID", null);
             args.put("P_INVENTORY_ID", order.getInventoryId());
@@ -136,40 +161,67 @@ public class JdbcOrder implements OrderDAO {
             args.put("P_DATE", order.getDate());
 
             orderInsertSP.execute(args);
+            map1=orderInsertSP.execute(args);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                args.put("P_OBJECT_ID", order.getInventoryId());
+                args.put("P_INVENTORY_NUM", order.getInventoryNum());
+                args.put("P_INV_STATUS_ID", 1); // IN_USE (Используется)
 
-            args.put("P_OBJECT_ID", order.getInventoryId());
-            args.put("P_INVENTORY_NUM", order.getInventoryNum());
-            args.put("P_INV_STATUS_ID", 1); // IN_USE (Используется)
-
-            cardUpdateSP.execute(args);
-
-            transactionManager.commit(status);
-
+                map1=cardUpdateSP.execute(args);
+                errCode = Integer.valueOf((String)map1.get("p_err_code"));
+                errMsg= (String)map1.get("p_err_msg");
+                if (errCode != 0) {
+                    System.out.println((String)map1.get("p_err_msg"));
+                    System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                    transactionManager.rollback(status);
+                } else {
+                    transactionManager.commit(status);
+                }
+            }
 //            accessCardService.updateCard(new AccessCard
 //                    (order.getInventoryId(), 1, "Используется", order.getInventoryNum()));
         }
         catch (DataAccessException e) {
             logger.error("Error adding new order, rolling back", e);
-//            transactionManager.rollback(status);
+            transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(errCode, errMsg);
     }
 
     @Override
-    public void deleteOrder(int id) {
+    public ErrorText deleteOrder(int id) {
         logger.debug("Entering JdbcOrder.deleteOrder(orderId=" + id + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(1);
+        Map map1;
+        int errCode;
+        String errMsg;
         try {
             args.put("P_OBJECT_ID", id);
-            orderDeleteSP.execute(args);
-            transactionManager.commit(status);
+            map1=orderDeleteSP.execute(args);
+            errCode = Integer.valueOf((String)map1.get("p_err_code"));
+            errMsg= (String)map1.get("p_err_msg");
+            if (errCode != 0) {
+                System.out.println((String)map1.get("p_err_msg"));
+                System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                transactionManager.rollback(status);
+            } else {
+                transactionManager.commit(status);
+            }
         }
         catch (DataAccessException e) {
             logger.error("Error deleting order, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(errCode, errMsg);
     }
 
 }

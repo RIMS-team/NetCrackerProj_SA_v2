@@ -45,16 +45,16 @@ public class AccessCardController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addAccessCard(@RequestBody AccessCard card) {
+    public @ResponseBody ErrorText addAccessCard(@RequestBody AccessCard card) {
         logger.debug("Request URL: /accesscards/add; Entering addAccessCard(card=" + card + ")");
         System.out.println(card.toString());
-        accessCardService.addAccessCard(card);
+        return accessCardService.addAccessCard(card);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody void updateCard(@RequestBody AccessCard card) {
+    public @ResponseBody ErrorText updateCard(@RequestBody AccessCard card) {
         logger.debug("Request URL: /accesscards/update; Entering updateCard(card=" + card + ")");
-        accessCardService.updateCard(card);
+        return accessCardService.updateCard(card);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)

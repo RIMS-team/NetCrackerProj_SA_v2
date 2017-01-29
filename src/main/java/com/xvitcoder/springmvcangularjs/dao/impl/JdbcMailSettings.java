@@ -57,7 +57,7 @@ public class JdbcMailSettings implements MailSettingsDao{
          String port;
          String from;
         MailSettings mailSettings;
-        String res = "p_value";
+        String res = "P_VALUE";
         String p_group = "p_group";
         String email = "email";
         String p_code = "p_code";

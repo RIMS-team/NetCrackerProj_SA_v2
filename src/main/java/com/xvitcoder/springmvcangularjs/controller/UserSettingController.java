@@ -25,7 +25,6 @@ public class UserSettingController {
 
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private UserService userService = (UserService) context.getBean("userServiceImpl");
-    private MailSettingsService mailSettingsService = (MailSettingsService) context.getBean("mailSettingsService");
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,19 +41,6 @@ public class UserSettingController {
         logger.debug("Request URL: /user/update; Entering updateUser(user=" + user + ")");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
-    }
-
-    @RequestMapping("/getMailSettings")
-    public @ResponseBody
-    MailSettings getMailSettings() {
-        logger.debug("Request URL: /userSetting/getMailSettings; Entering getMailSettings()");
-        return mailSettingsService.getMailSettings();
-    }
-
-    @RequestMapping(value = "/updateMailSettings", method = RequestMethod.PUT)
-    public @ResponseBody void updateMailSettings(@RequestBody MailSettings mailSettings) {
-        logger.debug("Request URL: /userSetting/updateMailSettings; Entering updateMailSettings(mailSettings =" + mailSettings + ")");
-        mailSettingsService.updateMailSettings(mailSettings);
     }
 
     @RequestMapping("/layout")

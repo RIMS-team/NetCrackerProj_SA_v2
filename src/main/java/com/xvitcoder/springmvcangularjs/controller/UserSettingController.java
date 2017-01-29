@@ -1,7 +1,9 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.model.Admin;
+import com.xvitcoder.springmvcangularjs.model.MailSettings;
 import com.xvitcoder.springmvcangularjs.model.User;
+import com.xvitcoder.springmvcangularjs.service.MailSettingsService;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class UserSettingController {
 
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private UserService userService = (UserService) context.getBean("userServiceImpl");
+    private MailSettingsService mailSettingsService = (MailSettingsService) context.getBean("mailSettingsService");
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,6 +44,18 @@ public class UserSettingController {
         userService.updateUser(user);
     }
 
+    @RequestMapping("/getMailSettings")
+    public @ResponseBody
+    MailSettings getMailSettings() {
+        logger.debug("Request URL: /userSetting/getMailSettings; Entering getMailSettings()");
+        return mailSettingsService.getMailSettings();
+    }
+
+    @RequestMapping(value = "/updateMailSettings", method = RequestMethod.PUT)
+    public @ResponseBody void updateMailSettings(@RequestBody MailSettings mailSettings) {
+        logger.debug("Request URL: /userSetting/updateMailSettings; Entering updateMailSettings(mailSettings =" + mailSettings + ")");
+        mailSettingsService.updateMailSettings(mailSettings);
+    }
 
     @RequestMapping("/layout")
     public String getUsersSettingsPartialPage() {

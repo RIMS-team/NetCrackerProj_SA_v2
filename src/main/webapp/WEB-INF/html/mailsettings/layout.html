@@ -1,0 +1,33 @@
+<div ng-controller="MailSettingsController as formController" style="width:90%; margin-bottom: 50px; margin-left:auto; margin-right:auto;">
+    <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="success == true">
+        Settings successfully changed.
+    </div>
+    <h1>Settings</h1>
+    <form name="settingsUpdate" ng-submit="updateMailSettings(mailSettings)" class="form-horizontal">
+        <div class="form-group" >
+            <label for="settings-host">HOST:</label>
+            <input name="host" type="text" style="margin-bottom: 10px" placeholder="Host" class="form-control col-xs-4" id="settings-host" ng-model="mailSettings.host" ng-minlength="6" required="required"/>
+        </div>
+        <div class="form-group" >
+            <label for="settings-socketFactoryPort">SocketFactoryPort:</label>
+            <input name="socketFactoryPort" type="text" placeholder="socketFactoryPort" class="form-control col-xs-4" id="settings-socketFactoryPort"  ng-model="mailSettings.socketFactoryPort" required="required"/>
+        </div>
+        <div class="form-group" >
+            <label for="settings-socketFactoryClass">SocketFactoryClass:</label>
+            <input name="socketFactoryClass" type="text" class="form-control" id="settings-socketFactoryClass" placeholder="socketFactoryClass" ng-model="mailSettings.socketFactoryClass"  required="required"/>
+        </div>
+        <div class="form-group" >
+            <label for="settings-auth">Auth:</label>
+            <input name="auth" type="text" class="form-control" id="settings-auth" placeholder="auth"  ng-model="mailSettings.auth" required="required"/>
+        </div>
+        <div class="form-group" >
+            <label for="settings-port">Port:</label>
+            <input name="port" type="text" class="form-control" id="settings-port" placeholder="port" ng-model="mailSettings.port" required="required"/>
+        </div>
+        <div class="form-group" >
+            <label for="settings-from">Email From:</label>
+            <input name="from" type="email" class="form-control" id="settings-from" placeholder="from" ng-model="mailSettings.from" unique-settings-email="" required="required"/>
+        </div>
+        <button type="submit" style="float:right;" class="btn btn-primary" >Change</button>
+    </form>
+</div>

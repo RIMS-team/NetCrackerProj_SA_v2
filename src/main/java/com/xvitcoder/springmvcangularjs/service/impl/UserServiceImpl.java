@@ -3,6 +3,7 @@ package com.xvitcoder.springmvcangularjs.service.impl;
 
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcUser;
 import com.xvitcoder.springmvcangularjs.model.Admin;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 
@@ -34,17 +35,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
-        userDao.addUser(user);
+    public ErrorText addUser(User user) {
+        return userDao.addUser(user);
     }
 
     @Override
-    public void deleteUser(int id) {
-        userDao.deleteUser(id);
+    public ErrorText deleteUser(int id) {
+        return userDao.deleteUser(id);
     }
 
     @Override
-    public void updateUser(User user) {
-        userDao.updateUser(user);
+    public ErrorText updateUser(User user) {
+        return userDao.updateUser(user);
     }
 }

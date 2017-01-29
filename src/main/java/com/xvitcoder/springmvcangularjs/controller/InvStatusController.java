@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcInventStatus;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.InventStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -28,13 +29,14 @@ public class InvStatusController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addStatus(@RequestBody InventStatus inventStatus) {
-        inventStatusDao.addStatus(inventStatus);
+    public @ResponseBody
+    ErrorText addStatus(@RequestBody InventStatus inventStatus) {
+        return inventStatusDao.addStatus(inventStatus);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public @ResponseBody void updateStatus(@RequestBody InventStatus inventStatus) {
-        inventStatusDao.updateStatus(inventStatus);
+    public @ResponseBody ErrorText updateStatus(@RequestBody InventStatus inventStatus) {
+        return inventStatusDao.updateStatus(inventStatus);
     }
 
     @RequestMapping("/layout")

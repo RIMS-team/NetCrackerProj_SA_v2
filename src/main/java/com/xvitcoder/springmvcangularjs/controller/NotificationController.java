@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
+import com.xvitcoder.springmvcangularjs.mail.Templates;
 import com.xvitcoder.springmvcangularjs.model.Notebook;
 import com.xvitcoder.springmvcangularjs.model.Notification;
 import com.xvitcoder.springmvcangularjs.model.NotificationTemp;
@@ -52,7 +53,6 @@ public class NotificationController {
     @ResponseBody
     public List<NotificationTemp> getAllDefTemp(){
         logger.debug("Request URL: /notebook/all; Entering getNotebooks()");
-        logger.debug("Response: " + notificationService.findAll());
         List<NotificationTemp> temps=notificationTempService.getAllDefTemp();
         System.out.println(temps.get(1).toString());
         return temps;
@@ -67,6 +67,14 @@ public class NotificationController {
     public String getOrdersPartialPage() {
         logger.debug("Request URL: /order/layout; Entering getOrdersPartialPage()");
         return "notifications/layout";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public @ResponseBody void updateUser(@RequestBody Templates user) {
+        System.out.println(user.toString());
+        notificationTempService.insertNotifiTemp(new NotificationTemp(1,0,user.getTemp_1()));
+        notificationTempService.insertNotifiTemp(new NotificationTemp(2,0,user.getId()));
+        notificationTempService.insertNotifiTemp(new NotificationTemp(3,0,user.getNum()));
     }
 
     @RequestMapping("/findNotifiById/{id}")

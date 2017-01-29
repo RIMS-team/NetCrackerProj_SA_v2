@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcOrderStatus;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -28,13 +29,14 @@ public class OrdStatusController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addStatus(@RequestBody OrderStatus orderStatus) {
-        orderStatusDao.addStatus(orderStatus);
+    public @ResponseBody
+    ErrorText addStatus(@RequestBody OrderStatus orderStatus) {
+        return orderStatusDao.addStatus(orderStatus);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public @ResponseBody void updateStatus(@RequestBody OrderStatus orderStatus) {
-        orderStatusDao.updateStatus(orderStatus);
+    public @ResponseBody ErrorText updateStatus(@RequestBody OrderStatus orderStatus) {
+        return orderStatusDao.updateStatus(orderStatus);
     }
 
     @RequestMapping("/layout")

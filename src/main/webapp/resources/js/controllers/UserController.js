@@ -35,12 +35,15 @@
 
         $scope.addNewUser = function(user) {
             $('#addUser').find('input').val('');
-            $http.post('user/add', user).success(function() {
+            $http.post('user/add', user).success(function(error) {
                 $scope.fetchUserList();
                 $scope.user.fullName = '';
                 $scope.user.eMail = '';
                 $scope.user.phoneNumber = '';
                 $scope.user.password = '';
+                if(error.id_num != 0){
+                    alert(error.error_m);
+                }
             }).error(function() {
                 console.log("Error sending insert request");
             });
@@ -48,20 +51,26 @@
 
         $scope.updateUser = function(user) {
             console.log(user);
-            $http.put('user/update', user).success(function() {
+            $http.put('user/update', user).success(function(error) {
                 $scope.fetchUserList();
                 $scope.user.fullName = '';
                 $scope.user.eMail = '';
                 $scope.user.phoneNumber = '';
                 $scope.user.password = '';
+                if(error.id_num != 0){
+                    alert(error.error_m);
+                }
             }).error(function() {
                 console.log("Error sending update request");
             });
         };
 
         $scope.removeUser = function(id) {
-            $http.delete('user/remove/' + id).success(function() {
+            $http.delete('user/remove/' + id).success(function(error) {
                 $scope.fetchUserList();
+                if(error.id_num != 0){
+                    alert(error.error_m);
+                }
             });
         };
 

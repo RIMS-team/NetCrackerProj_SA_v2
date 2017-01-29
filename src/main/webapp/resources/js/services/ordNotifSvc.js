@@ -14,6 +14,7 @@ function ordNotifyService ($http) {
     _this.orders = [];
     _this.notificationTemps = [];
     _this.notificationTemp = {};
+    _this.notificationTemp1 = {};
 
     _this.loadEmpList = function () {
         var res = $http.get('order/all');
@@ -23,14 +24,14 @@ function ordNotifyService ($http) {
             console.log("Error geting orders");
         });
     };
-    _this.loadNotifiTempList = function () {
-        var res = $http.get('notification/allDefTemp');
-        res.success(function(notifiTempList){
-            _this.notificationTemps = notifiTempList;
-        }).error(function () {
-            console.log("Error geting orders");
-        });
-    };
+    // _this.loadNotifiTempList = function () {
+    //     var res = $http.get('notification/allDefTemp');
+    //     res.success(function(notifiTempList){
+    //         _this.notificationTemps = notifiTempList;
+    //     }).error(function () {
+    //         console.log("Error geting orders");
+    //     });
+    // };
 
     _this.getNotifiTempById = function (Id) {
         var temp = '';
@@ -71,6 +72,7 @@ function ordNotifyService ($http) {
             _this.notificationTemp = notificationList;
         });
     };
+
 
     _this.getNotifi = function () {
         return _this.notificationTemp.template;

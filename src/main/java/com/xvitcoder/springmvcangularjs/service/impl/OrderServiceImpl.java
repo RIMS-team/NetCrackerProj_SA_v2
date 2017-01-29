@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.service.impl;
 
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcOrder;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
 import com.xvitcoder.springmvcangularjs.service.OrderService;
 
@@ -27,18 +28,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(OrderCursor order) {
-        orderDao.updateOrder(order);
+    public ErrorText updateOrder(OrderCursor order) {
+        return orderDao.updateOrder(order);
     }
 
     @Override
-    public void addOrder(OrderCursor order) {
-        orderDao.addOrder(order);
+    public ErrorText addOrder(OrderCursor order) {
+        return orderDao.addOrder(order);
     }
 
     @Override
-    public void deleteOrder(int id) {
-        orderDao.deleteOrder(id);
+    public ErrorText deleteOrder(int id) {
+        return orderDao.deleteOrder(id);
     }
 }
 

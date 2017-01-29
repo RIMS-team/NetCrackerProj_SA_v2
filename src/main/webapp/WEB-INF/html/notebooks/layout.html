@@ -86,7 +86,14 @@
 
         <th style="text-align: center;">
             <a class="thumbnail1" href="#">Open Date
-                <span>Search by Open Date<input type="text" ng-model="ref.openDate" placeholder="Search"/></span></a>
+                <span>
+                    Search by Open Date
+                    <br/>
+                    From
+                    <input type="date" ng-model="from_date_open"/>
+                    To
+                    <input type="date" ng-model="to_date_open"/>
+                </span></a>
             <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('openDate')}" ng-click="sort('openDate')" style="float: right;">
                 <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </button>
@@ -94,7 +101,15 @@
 
         <th style="text-align: center;">
             <a class="thumbnail1" href="#">Due Date
-                <span>Search by Due Date<input type="text" ng-model="ref.dueDate" placeholder="Search"/></span></a>
+                <span>
+                    Search by Due Date
+                    <br/>
+                    From
+                    <input type="date" ng-model="from_date_due"/>
+                    To
+                    <input type="date" ng-model="to_date_due"/>
+                </span>
+            </a>
             <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('dueDate')}" ng-click="sort('dueDate')" style="float: right;">
                 <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
             </button>
@@ -115,7 +130,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter: ref) | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize" pagination-id="notebook" >
+    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: pageSize" pagination-id="notebook" >
         <td ng-hide="true">{{elem.id}}</td>
         <td>{{elem.name}}</td>
         <td>{{elem.model}}</td>
@@ -124,8 +139,8 @@
         <td>{{elem.inventoryNum}}</td>
         <td>{{elem.location}}</td>
         <td>{{elem.employeeName}}</td>
-        <td>{{elem.openDate}}</td>
-        <td>{{elem.dueDate}}</td>
+        <td>{{elem.openDate|date:'dd.MM.yyyy'}}</td>
+        <td>{{elem.dueDate|date:'dd.MM.yyyy'}}</td>
         <td>{{elem.statusName}}</td>
     </tr>
     </tbody>

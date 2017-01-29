@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.dao;
 
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.User;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface UserDAO {
     List<User> findAll();
     User findByEmail(String email);
-    void addUser(User user);
-    void deleteUser(int id);
-    void updateUser(User user);
+    ErrorText addUser(User user);
+    ErrorText deleteUser(int id);
+    ErrorText updateUser(User user);
 }

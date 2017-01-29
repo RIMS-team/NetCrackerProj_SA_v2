@@ -2,10 +2,7 @@ package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.dao.JdbcEmployeeDao;
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcAccessCard;
-import com.xvitcoder.springmvcangularjs.model.AccessCard;
-import com.xvitcoder.springmvcangularjs.model.Employee;
-import com.xvitcoder.springmvcangularjs.model.Notebook;
-import com.xvitcoder.springmvcangularjs.model.User;
+import com.xvitcoder.springmvcangularjs.model.*;
 import com.xvitcoder.springmvcangularjs.service.AccessCardService;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
@@ -48,22 +45,22 @@ public class AccessCardController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addAccessCard(@RequestBody AccessCard card) {
+    public @ResponseBody ErrorText addAccessCard(@RequestBody AccessCard card) {
         logger.debug("Request URL: /accesscards/add; Entering addAccessCard(card=" + card + ")");
         System.out.println(card.toString());
-        accessCardService.addAccessCard(card);
+        return accessCardService.addAccessCard(card);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody void updateCard(@RequestBody AccessCard card) {
+    public @ResponseBody ErrorText updateCard(@RequestBody AccessCard card) {
         logger.debug("Request URL: /accesscards/update; Entering updateCard(card=" + card + ")");
-        accessCardService.updateCard(card);
+        return accessCardService.updateCard(card);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody void removeCard(@PathVariable int id) {
+    public @ResponseBody ErrorText removeCard(@PathVariable int id) {
         logger.debug("Request URL: /accesscards/remove/" + id + "; Entering removeCard(id=" + id + ")");
-        accessCardService.deleteCard(id);
+        return accessCardService.deleteCard(id);
     }
 
     @RequestMapping("/layout")

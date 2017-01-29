@@ -15,12 +15,15 @@
         var _this = this;
         $scope.pageSize = 11;
 
-        ordStatusService.loadList()
-            .success(function(OrdStatusList){
+        _this.loadList = function(){
+            ordStatusService.loadList()
+                .success(function (OrdStatusList) {
+                    $scope.ordStats = ordStatusService.getList();
+                }).error(function () {
                 $scope.ordStats = ordStatusService.getList();
-            }).error(function () {
-                $scope.ordStats = ordStatusService.getList();
-        });
+            });
+        };
+        _this.loadList();
 
         $scope.sort = function (keyname) {
             $scope.sortKey=keyname;
@@ -33,16 +36,22 @@
 
 
         $scope.addNewStatus = function (editRec) {
-            $http.post('ordstats/add', editRec).success(function () {
-                $scope.ordStats = ordStatusService.getList();
+            $http.post('ordstats/add', editRec).success(function (error) {
+                _this.loadList();
+                if(error.id_num != 0) {
+                    alert(error.error_m);
+                }
             }).error(function () {
                 console.log("Error sending insert request!");
             });
         };
 
         $scope.updateStatus = function (editRec) {
-            $http.put('ordstats/update', editRec).success(function () {
-                $scope.ordStats = ordStatusService.getList();
+            $http.put('ordstats/update', editRec).success(function (error) {
+                _this.loadList();
+                if(error.id_num != 0) {
+                    alert(error.error_m);
+                }
             }).error(function () {
                 console.log("Error sending update request!");
             });

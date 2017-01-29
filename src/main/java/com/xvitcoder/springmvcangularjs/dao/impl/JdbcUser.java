@@ -4,6 +4,7 @@ import com.xvitcoder.springmvcangularjs.dao.Mappers.AdminMapper;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.UserMapper;
 import com.xvitcoder.springmvcangularjs.dao.UserDAO;
 import com.xvitcoder.springmvcangularjs.model.Admin;
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.User;
 import oracle.jdbc.OracleTypes;
 import org.apache.log4j.Logger;
@@ -22,6 +23,7 @@ import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -42,9 +44,15 @@ public class JdbcUser implements UserDAO {
 
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
-        insertUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_insert");
-        updateUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_update");
-        deleteUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_delete");
+        insertUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_insert_ext")
+                .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
+        updateUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_update_ext")
+                .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
+        deleteUser = new SimpleJdbcCall(jdbcTemplateObject).withCatalogName("dm_user").withProcedureName("user_delete_ext")
+                .declareParameters(new SqlOutParameter("p_err_code", Types.VARCHAR))
+                .declareParameters(new SqlOutParameter("p_err_msg", Types.VARCHAR));
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -111,9 +119,10 @@ public class JdbcUser implements UserDAO {
     }
 
     @Override
-    public void addUser(User user) {
+    public ErrorText addUser(User user) {
         logger.debug("Entering addUser(user=" + user + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        Map error;
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",null);
@@ -121,35 +130,41 @@ public class JdbcUser implements UserDAO {
             args.put("p_phone_number",user.getPhoneNumber());
             args.put("p_email",user.geteMail());
             args.put("p_password",user.getPassword());
-            insertUser.execute(args);
+            error = insertUser.execute(args);
+            System.out.println((String)error.get("p_err_msg"));
+            System.out.println((String)error.get("p_err_code"));
             transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error inserting user, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(Integer.valueOf((String)error.get("p_err_code")),(String)error.get("p_err_msg"));
     }
 
     @Override
-    public void deleteUser(int id) {
+    public ErrorText deleteUser(int id) {
         logger.debug("Entering deleteUser(id=" + id + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        Map error;
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",id);
-            deleteUser.execute(args);
+            error = deleteUser.execute(args);
             transactionManager.commit(status);
         } catch (DataAccessException e) {
             logger.error("Error deleting user, rolling back", e);
             transactionManager.rollback(status);
             throw e;
         }
+        return new ErrorText(Integer.valueOf((String)error.get("p_err_code")),(String)error.get("p_err_msg"));
     }
 
     @Override
-    public void updateUser(User user) {
+    public ErrorText updateUser(User user) {
         logger.debug("Entering updateUser(user=" + user + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        Map error;
         try {
             Map<String, Object> args = new HashMap<>();
             args.put("p_object_id",user.getId());
@@ -157,12 +172,14 @@ public class JdbcUser implements UserDAO {
             args.put("p_phone_number",user.getPhoneNumber());
             args.put("p_email",user.geteMail());
             args.put("p_password",user.getPassword());
-            updateUser.execute(args);
+            error = updateUser.execute(args);
             transactionManager.commit(status);
         } catch (DataAccessException ex) {
             logger.error("Error updating user, rolling back", ex);
             transactionManager.rollback(status);
+            throw ex;
         }
+        return new ErrorText(Integer.valueOf((String)error.get("p_err_code")),(String)error.get("p_err_msg"));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.User;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
@@ -25,8 +26,7 @@ public class UserController {
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private UserService userService = (UserService) context.getBean("userServiceImpl");
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @RequestMapping("/all")
     @ResponseBody
@@ -37,23 +37,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addUser(@RequestBody User user) {
+    public @ResponseBody ErrorText addUser(@RequestBody User user) {
         logger.debug("Request URL: /user/add; Entering addUser(user=" + user + ")");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.addUser(user);
+        return userService.addUser(user);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public @ResponseBody void updateUser(@RequestBody User user) {
+    public @ResponseBody ErrorText updateUser(@RequestBody User user) {
         logger.debug("Request URL: /user/update; Entering updateUser(user=" + user + ")");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.updateUser(user);
+        return userService.updateUser(user);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody void removeUser(@PathVariable("id") int id) {
+    public @ResponseBody ErrorText removeUser(@PathVariable("id") int id) {
         logger.debug("Request URL: /user/remove/" + id + "; Entering removeUser(id=" + id + ")");
-        userService.deleteUser(id);
+        return userService.deleteUser(id);
     }
 
     @RequestMapping("/layout")

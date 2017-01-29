@@ -58,7 +58,9 @@
             <th style="text-align: center;   display:none;">
                 <a class="thumbnail1" href="#">Inventory ID
                     <span>Search by Inventory ID
-                            <input type="text" ng-model="ref.inventoryId" placeholder="Search"/></span></a>
+                            <input type="text" ng-model="ref.inventoryId" placeholder="Search"/>
+                    </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inventoryId')}" ng-click="sort('inventoryId')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
@@ -74,7 +76,12 @@
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">Inventory num
                     <span>Search by Inventory num
-                            <input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
+                        <input type="text" ng-model="ref.inventoryNum" placeholder="Search" list="order-inventoryNum"/>
+                        <datalist id="order-inventoryNum">
+                            <option ng-repeat="inventoryNum in ordInventoryNums" value="{{inventoryNum.inventoryNum }}">{{inventoryNum.inventoryNum }}</option>
+                        </datalist>
+                    </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inventoryNum')}" ng-click="sort('inventoryNum')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>

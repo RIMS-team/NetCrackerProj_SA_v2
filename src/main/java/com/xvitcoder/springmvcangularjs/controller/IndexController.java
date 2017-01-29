@@ -13,7 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,8 +34,7 @@ public class IndexController {
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private UserService userService = (UserService) context.getBean("userServiceImpl");
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @RequestMapping
     public String getIndexPage() {
@@ -53,6 +56,38 @@ public class IndexController {
         userService.updateUser(user);
         return "123456";
     }
+
+    @RequestMapping("/restore")
+    public String goRestorePassword () {
+        return "restore";
+    }
+
+
+    private String generateRandomPassword() {
+        String letters = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789+@";
+        Random RANDOM = new SecureRandom();
+        StringBuilder pw = new StringBuilder();
+        for (int i = 0; i < 12; i++) {
+            int index = (int)(RANDOM.nextDouble() * letters.length());
+            pw.append(letters.substring(index, index + 1));
+        }
+        return pw.toString();
+    }
+
+    @RequestMapping("/newpass")
+    public String generateNewPass (@RequestParam("email") String email) {
+        EmailSender emailSender = new EmailSender();
+        User user = userService.findByEmail(email);
+        if (user != null) {
+            String newPass = generateRandomPassword();
+            user.setPassword(passwordEncoder.encode(newPass));
+            userService.updateUser(user);
+            emailSender.sendMessage("v.karpov2018@yandex.ru","q1w2e3r4t1",email,"Greetings! Your password has been reset to '" + newPass + "'");
+        }
+        return "redirect:/login?newpass=true";
+    }
+
+
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void doSomething() {

@@ -19,6 +19,6 @@ public class MailController {
         logger.debug("Request URL: /send; Entering sendEmail(String email,String template)");
         System.out.println(email.getEmail()+" "+email.getTemplate());
         EmailSender emailSender=new EmailSender();
-        emailSender.sendMessage("v.karpov2018@yandex.ru","q1w2e3r4t1",email.getEmail(),email.getTemplate());
+        emailSender.sendMessage("seyone@mail.ru","djk.wbzhfpevf13",email.getEmail(),email.getTemplate());
     }
 }

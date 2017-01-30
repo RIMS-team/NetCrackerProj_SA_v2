@@ -160,7 +160,6 @@ public class JdbcOrder implements OrderDAO {
             args.put("P_ORD_STATUS_ID", order.getStatusId());
             args.put("P_DATE", order.getDate());
 
-            orderInsertSP.execute(args);
             map1=orderInsertSP.execute(args);
             errCode = Integer.valueOf((String)map1.get("p_err_code"));
             errMsg= (String)map1.get("p_err_msg");

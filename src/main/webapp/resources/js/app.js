@@ -37,7 +37,7 @@
             }
             $element.find("#tabHeader_" + name + " a").click();
 
-            store.recalcTabContentHeight();
+            // store.recalcTabContentHeight();
         };
 
         store.removeTab = function (name) {
@@ -60,7 +60,7 @@
                 previous.firstChild.click();
             }
 
-            store.recalcTabContentHeight();
+            // store.recalcTabContentHeight();
         };
 
         store.recalcTabContentHeight = function () {

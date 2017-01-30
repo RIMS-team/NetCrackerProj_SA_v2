@@ -15,10 +15,37 @@ AppFilters.filter('dateRangeOpen', function() {
         var filtered = [];
         var from_date = Date.parse(fromDate);
         var to_date = Date.parse(toDate);
+        var openDate;
         if ((!isNaN(from_date)) && (!isNaN(to_date))) {
             angular.forEach(items, function(item) {
-                if(Date.parse(item.openDate) >= from_date && Date.parse(item.openDate) <= to_date) {
-                    filtered.push(item);
+                if (item.openDate !== null) {
+                    openDate = new Date(item.openDate);
+                    openDate.setHours(0, 0, 0, 0);
+                    if (Date.parse(openDate) >= from_date && Date.parse(openDate) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.openDate !== null) {
+                    openDate = new Date(item.openDate);
+                    openDate.setHours(0, 0, 0, 0);
+                    if (Date.parse(openDate) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.openDate !== null) {
+                    openDate = new Date(item.openDate);
+                    openDate.setHours(0, 0, 0, 0);
+                    if(Date.parse(openDate) <= to_date) {
+                        filtered.push(item);
+                    }
                 }
             });
             return filtered;
@@ -32,10 +59,37 @@ AppFilters.filter('dateRangeDue', function() {
         var filtered = [];
         var from_date = Date.parse(fromDate);
         var to_date = Date.parse(toDate);
+        var dueDate;
         if ((!isNaN(from_date)) && (!isNaN(to_date))) {
             angular.forEach(items, function(item) {
-                if(Date.parse(item.dueDate) >= from_date && Date.parse(item.dueDate) <= to_date) {
-                    filtered.push(item);
+                if (item.dueDate !== null) {
+                    dueDate = new Date(item.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    if(Date.parse(dueDate) >= from_date && Date.parse(dueDate) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.dueDate !== null) {
+                    dueDate = new Date(item.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    if(Date.parse(dueDate) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.dueDate !== null) {
+                    dueDate = new Date(item.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    if(Date.parse(dueDate) <= to_date) {
+                        filtered.push(item);
+                    }
                 }
             });
             return filtered;
@@ -49,10 +103,37 @@ AppFilters.filter('dateRange', function() {
         var filtered = [];
         var from_date = Date.parse(fromDate);
         var to_date = Date.parse(toDate);
+        var date;
         if ((!isNaN(from_date)) && (!isNaN(to_date))) {
             angular.forEach(items, function(item) {
-                if(Date.parse(item.date) >= from_date && Date.parse(item.date) <= to_date) {
-                    filtered.push(item);
+                if (item.date !== null) {
+                    date = new Date(item.date);
+                    date.setHours(0, 0, 0, 0);
+                    if(Date.parse(date) >= from_date && Date.parse(date) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.date !== null) {
+                    date = new Date(item.date);
+                    date.setHours(0, 0, 0, 0);
+                    if(Date.parse(date) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.date !== null) {
+                    date = new Date(item.date);
+                    date.setHours(0, 0, 0, 0);
+                    if(Date.parse(date) <= to_date) {
+                        filtered.push(item);
+                    }
                 }
             });
             return filtered;
@@ -66,10 +147,37 @@ AppFilters.filter('dateRangeNotifFirst', function() {
         var filtered = [];
         var from_date = Date.parse(fromDate);
         var to_date = Date.parse(toDate);
+        var first;
         if ((!isNaN(from_date)) && (!isNaN(to_date))) {
             angular.forEach(items, function(item) {
-                if(Date.parse(item.first) >= from_date && Date.parse(item.first) <= to_date) {
-                    filtered.push(item);
+                if (item.first !== null) {
+                    first = new Date(item.first);
+                    first.setHours(0, 0, 0, 0);
+                    if(Date.parse(first) >= from_date && Date.parse(first) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.first !== null) {
+                    first = new Date(item.first);
+                    first.setHours(0, 0, 0, 0);
+                    if(Date.parse(first) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.first !== null) {
+                    first = new Date(item.first);
+                    first.setHours(0, 0, 0, 0);
+                    if(Date.parse(first) <= to_date) {
+                        filtered.push(item);
+                    }
                 }
             });
             return filtered;
@@ -83,10 +191,37 @@ AppFilters.filter('dateRangeNotifSecond', function() {
         var filtered = [];
         var from_date = Date.parse(fromDate);
         var to_date = Date.parse(toDate);
+        var second;
         if ((!isNaN(from_date)) && (!isNaN(to_date))) {
             angular.forEach(items, function(item) {
-                if(Date.parse(item.second) >= from_date && Date.parse(item.second) <= to_date) {
-                    filtered.push(item);
+                if (item.second !== null) {
+                    second = new Date(item.second);
+                    second.setHours(0, 0, 0, 0);
+                    if(Date.parse(second) >= from_date && Date.parse(second) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.second !== null) {
+                    second = new Date(item.second);
+                    second.setHours(0, 0, 0, 0);
+                    if(Date.parse(second) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.second !== null) {
+                    second = new Date(item.second);
+                    second.setHours(0, 0, 0, 0);
+                    if(Date.parse(second) <= to_date) {
+                        filtered.push(item);
+                    }
                 }
             });
             return filtered;
@@ -100,10 +235,37 @@ AppFilters.filter('dateRangeNotifThird', function() {
         var filtered = [];
         var from_date = Date.parse(fromDate);
         var to_date = Date.parse(toDate);
+        var third;
         if ((!isNaN(from_date)) && (!isNaN(to_date))) {
             angular.forEach(items, function(item) {
-                if(Date.parse(item.third) >= from_date && Date.parse(item.third) <= to_date) {
-                    filtered.push(item);
+                if (item.third !== null) {
+                    third = new Date(item.third);
+                    third.setHours(0, 0, 0, 0);
+                    if (Date.parse(third) >= from_date && Date.parse(third) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.third !== null) {
+                    third = new Date(item.third);
+                    third.setHours(0, 0, 0, 0);
+                    if(Date.parse(third) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.third !== null) {
+                    third = new Date(item.third);
+                    third.setHours(0, 0, 0, 0);
+                    if(Date.parse(third) <= to_date) {
+                        filtered.push(item);
+                    }
                 }
             });
             return filtered;

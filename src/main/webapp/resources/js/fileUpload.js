@@ -55,16 +55,18 @@ myApp.directive('fileModel', ['$parse', function ($parse) {
 }]);
 
 myApp.service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(file, uploadUrl){
+    this.uploadFileToUrl = function(scope, file, uploadUrl){
         var fd = new FormData();
         fd.append('file', file);
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-            .success(function(){
+            .success(function(data){
+                scope.data = data;
             })
-            .error(function(){
+            .error(function(data){
+                scope.data = 'Please choose the CSV-file.';
             });
     }
 }]);
@@ -76,7 +78,7 @@ myApp.controller('fileUploadController', ['$scope', 'fileUpload', function($scop
         console.log('file is ' );
         console.dir(file);
         var uploadUrl = "/import-csv/" + type;
-        fileUpload.uploadFileToUrl(file, uploadUrl);
+        fileUpload.uploadFileToUrl($scope, file, uploadUrl);
     };
 
 }]);

@@ -31,18 +31,18 @@ public class AccessCardServiceImpl implements AccessCardService {
     }
 
     @Override
-    public void addAccessCard(AccessCard card) {
-        accessCardDao.insert(card);
+    public ErrorText addAccessCard(AccessCard card) {
+        return accessCardDao.insert(card);
     }
 
     @Override
     public ErrorText deleteCard(int id) {
-            return accessCardDao.deleteCard(id);
+        return accessCardDao.deleteCard(id);
     }
 
     @Override
-    public void updateCard(AccessCard card) {
-        accessCardDao.update(card);
+    public ErrorText updateCard(AccessCard card) {
+        return accessCardDao.update(card);
     }
 
     @Override

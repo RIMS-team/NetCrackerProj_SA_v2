@@ -15,5 +15,6 @@
     <import resource="Spring-FileUploader.xml" />
     <import resource="Spring-Notification.xml" />
     <import resource="Spring-Notification-Temp.xml" />
+    <import resource="Spring-MailSettings.xml" />
 
 </beans>

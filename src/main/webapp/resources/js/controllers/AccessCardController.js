@@ -32,8 +32,11 @@
         $scope.addNewCard = function (editRec) {
             editRec.statusId = editRec.selectedStatus.id;
             console.log(editRec);
-            $http.post('accesscards/add', editRec).success(function () {
+            $http.post('accesscards/add', editRec).success(function (error) {
                 $scope.fetchCardsList();
+                if(error.id_num != 0) {
+                    alert(error.error_m);
+                }
             }).error(function () {
                 console.log("Error sending insert request!");
             });
@@ -41,8 +44,11 @@
 
         $scope.updateCard = function (editRec) {
             editRec.statusId = editRec.selectedStatus.id;
-            $http.post('accesscards/update', editRec).success(function () {
+            $http.post('accesscards/update', editRec).success(function (error) {
                 $scope.fetchCardsList();
+                if(error.id_num != 0) {
+                    alert(error.error_m);
+                }
             }).error(function () {
                 console.log("Error sending update request!");
             });
@@ -55,9 +61,7 @@
                 $scope.editRecord.statusId = '';
                 $scope.editRecord.statusName = '';
                 $scope.editRecord.inventoryNum = '';
-                if(error.id_num == 0){
-                    alert('Complete!');
-                }else{
+                if(error.id_num != 0) {
                     alert(error.error_m);
                 }
             });

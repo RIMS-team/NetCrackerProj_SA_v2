@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface AccessCardDao {
     ErrorText deleteCard(int id);
-    void insert(AccessCard accessCard);
+    ErrorText insert(AccessCard accessCard);
     AccessCard findByInventoryNum(int cardId);
     List<AccessCard> findAll();
-    void update(AccessCard card);
+    ErrorText update(AccessCard card);
     List<AccessCard> findByStatus(int statusId);
 
 }

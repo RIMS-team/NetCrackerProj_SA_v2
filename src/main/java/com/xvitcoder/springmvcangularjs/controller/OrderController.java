@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;
 import com.xvitcoder.springmvcangularjs.service.OrderService;
 import com.xvitcoder.springmvcangularjs.service.impl.OrderServiceImpl;
@@ -32,22 +33,22 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public @ResponseBody void addOrder(@RequestBody OrderCursor order) {
+    public @ResponseBody ErrorText addOrder(@RequestBody OrderCursor order) {
         logger.debug("Request URL: /order/add; Entering addOrder(order=" + order + ")");
         System.out.println(order.toString());
-        orderService.addOrder(order);
+        return orderService.addOrder(order);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody void updateOrder(@RequestBody OrderCursor order) {
+    public @ResponseBody ErrorText updateOrder(@RequestBody OrderCursor order) {
         logger.debug("Request URL: /order/update; Entering updateOrder(order=" + order + ")");
-        orderService.updateOrder(order);
+        return orderService.updateOrder(order);
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody void removeOrder(@PathVariable int id) {
+    public @ResponseBody ErrorText removeOrder(@PathVariable int id) {
         logger.debug("Request URL: /order/remove/" + id + "; Entering removeOrder(id=" + id + ")");
-        orderService.deleteOrder(id);
+        return orderService.deleteOrder(id);
     }
 
     @RequestMapping("/layout")

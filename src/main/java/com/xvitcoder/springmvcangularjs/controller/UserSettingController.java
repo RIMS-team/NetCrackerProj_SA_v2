@@ -1,7 +1,9 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
 import com.xvitcoder.springmvcangularjs.model.Admin;
+import com.xvitcoder.springmvcangularjs.model.MailSettings;
 import com.xvitcoder.springmvcangularjs.model.User;
+import com.xvitcoder.springmvcangularjs.service.MailSettingsService;
 import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,6 @@ public class UserSettingController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
     }
-
 
     @RequestMapping("/layout")
     public String getUsersSettingsPartialPage() {

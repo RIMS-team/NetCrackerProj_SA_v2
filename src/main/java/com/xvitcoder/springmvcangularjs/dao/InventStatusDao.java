@@ -1,5 +1,6 @@
 package com.xvitcoder.springmvcangularjs.dao;
 
+import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.InventStatus;
 
 import java.util.List;
@@ -10,6 +11,6 @@ import java.util.List;
 public interface InventStatusDao {
     List<InventStatus> findAll();
     InventStatus findById(int id);
-    void addStatus(InventStatus status);
-    void updateStatus(InventStatus status);
+    ErrorText addStatus(InventStatus status);
+    ErrorText updateStatus(InventStatus status);
 }

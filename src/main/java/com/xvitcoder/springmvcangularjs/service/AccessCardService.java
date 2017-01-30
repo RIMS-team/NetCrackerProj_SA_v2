@@ -14,8 +14,8 @@ import java.util.List;
 public interface AccessCardService {
     List<AccessCard> findAll();
     AccessCard findByInventoryNum(int inventoryNum);
-    void addAccessCard(AccessCard card);
+    ErrorText addAccessCard(AccessCard card);
     ErrorText deleteCard(int id);
-    void updateCard(AccessCard card);
+    ErrorText updateCard(AccessCard card);
     List<AccessCard> findByStatus(int statusId);
 }

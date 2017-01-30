@@ -94,7 +94,7 @@
         </thead>
 
         <tbody>
-            <tr dir-paginate="card in filteredCards = ( cards | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: pageSize " pagination-id="card">
+            <tr dir-paginate="card in filteredCards = ( cards | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: pageSize " pagination-id="card">
                 <td ng-hide="true">{{card.id}}</td>
                 <td>{{card.inventoryNum}}</td>
                 <td>{{card.employeeName}}</td>

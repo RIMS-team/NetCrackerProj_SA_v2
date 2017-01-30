@@ -156,7 +156,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRange : from_date : to_date | itemsPerPage: pageSize " pagination-id="order">
+        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter : ref : startsWith | dateRange : from_date : to_date | itemsPerPage: pageSize " pagination-id="order">
             <td ng-hide="true">{{order.id}}</td>
             <td>{{order.date|date:'dd.MM.yyyy'}}</td>
             <td style="display:none">{{order.statusId}}</td>

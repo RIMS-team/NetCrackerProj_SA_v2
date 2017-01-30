@@ -69,13 +69,18 @@
 
 
         $scope.sort = function (keyname) {
-            $scope.sortKey=keyname;
+            $scope.sortKey = keyname;
             $scope.reverse = !$scope.reverse;
         };
 
         $scope.isSortKey = function(keyname) {
             return $scope.sortKey == keyname;
-        }
+        };
+
+        $scope.startsWith = function (actual, expected) {
+            var lowerStr = (actual + "").toLowerCase();
+            return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
 
         $scope.fetchCardsList();
 

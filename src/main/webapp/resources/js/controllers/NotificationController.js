@@ -98,7 +98,12 @@
 
         $scope.isSortKey = function(keyname) {
             return $scope.sortKey == keyname;
-        }
+        };
+
+        $scope.startsWith = function (actual, expected) {
+            var lowerStr = (actual + "").toLowerCase();
+            return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
 
         _this.openEditor = function (templ,temp_id) {
             var editRec = {};

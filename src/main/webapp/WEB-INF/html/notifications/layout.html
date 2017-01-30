@@ -112,7 +112,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter: ref | dateRangeDue : from_date_due : to_date_due | dateRangeNotifFirst : from_date_first : to_date_first | dateRangeNotifSecond : from_date_second : to_date_second | dateRangeNotifThird : from_date_third : to_date_third | itemsPerPage:pageSize " pagination-id="notific">
+        <tr dir-paginate="elem in notifications | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeDue : from_date_due : to_date_due | dateRangeNotifFirst : from_date_first : to_date_first | dateRangeNotifSecond : from_date_second : to_date_second | dateRangeNotifThird : from_date_third : to_date_third | itemsPerPage:pageSize " pagination-id="notific">
             <td ng-hide="true">{{elem.notifi_id}}</td>
             <td ng-hide="true">{{elem.order.id}}</td>
             <td>{{elem.inv_type}}</td>

@@ -119,9 +119,9 @@
             <td>{{elem.inv_num}}</td>
             <td>{{elem.name}}</td>
             <td>{{elem.dueDate|date:'dd.MM.yyyy'}}</td>
-            <td><a ng-click="openUpdateEditor(elem)">{{elem.first|date:'dd.MM.yyyy'}}</a></td>
-            <td><a ng-click="openUpdateEditor(elem)">{{elem.second|date:'dd.MM.yyyy'}}</a></td>
-            <td><a ng-click="openUpdateEditor(elem)">{{elem.third|date:'dd.MM.yyyy'}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem,1)">{{elem.first|date:'dd.MM.yyyy'}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem,2)">{{elem.second|date:'dd.MM.yyyy'}}</a></td>
+            <td><a ng-click="openUpdateEditor(elem,3)">{{elem.third|date:'dd.MM.yyyy'}}</a></td>
         </tr>
         </tbody>
     </table>

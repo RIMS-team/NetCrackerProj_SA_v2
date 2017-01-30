@@ -77,8 +77,10 @@ public class NotificationController {
         notificationTempService.insertNotifiTemp(new NotificationTemp(3,0,user.getNum()));
     }
 
-    @RequestMapping("/findNotifiById/{id}")
-    public @ResponseBody NotificationTemp getNotifiTemp(@PathVariable("id") int id){
-        return notificationTempService.selectNotifiTemp(id,0);
+    @RequestMapping(value = "/findNotifiById", method = RequestMethod.POST)
+    public @ResponseBody NotificationTemp getNotifiTemp(@RequestBody NotificationTemp notificationTemp){
+        System.out.println(notificationTemp.toString());
+        System.out.println(notificationTempService.selectNotifiTemp(notificationTemp.getNotif_num(),notificationTemp.getUser_id()));
+        return notificationTempService.selectNotifiTemp(notificationTemp.getNotif_num(),notificationTemp.getUser_id());
     }
 }

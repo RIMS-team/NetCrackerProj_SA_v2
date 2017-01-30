@@ -16,18 +16,24 @@
 
         $scope.pageSize = 11;
         $scope.editRecord;
-        $scope.temp_1;
-        ordNotifyService.findNotifiTemp1(1).success(function () {
-            $scope.temp_1=ordNotifyService.getNotifi();
-        });
-        $scope.id;
-        ordNotifyService.findNotifiTemp1(2).success(function () {
-            $scope.id=ordNotifyService.getNotifi();
-        });
-        $scope.num;
-        ordNotifyService.findNotifiTemp1(3).success(function () {
-            $scope.num=ordNotifyService.getNotifi();
-        });
+        // var settings={}
+        // settings.notif_num=1;
+        // settings.user_id=0;
+        // settings.template='';
+        // $scope.temp_1;
+        // ordNotifyService.findNotifiTemp1(settings).success(function () {
+        //     $scope.temp_1=ordNotifyService.getNotifi();
+        // });
+        // $scope.id;
+        // settings.notif_num=2;
+        // ordNotifyService.findNotifiTemp1(settings).success(function () {
+        //     $scope.id=ordNotifyService.getNotifi();
+        // });
+        // $scope.num;
+        // settings.notif_num=3;
+        // ordNotifyService.findNotifiTemp1(settings).success(function () {
+        //     $scope.num=ordNotifyService.getNotifi();
+        // });
 
 
         ordNotifyService.loadUserList();
@@ -44,15 +50,30 @@
 
         $scope.updateNotification = function(notifi) {
             $http.put('notification/update', notifi).success(function() {
-                ordNotifyService.findNotifiTemp1(1).success(function () {
-                    $scope.temp_1=ordNotifyService.getNotifi();
+                var editRec={}
+                var settings1={}
+                settings1.notif_num=1;
+                settings1.user_id=0;
+                settings1.template='';
+                var settings2={}
+                settings2.notif_num=2;
+                settings2.user_id=0;
+                settings2.template='';
+                var settings3={}
+                settings3.notif_num=3;
+                settings3.user_id=0;
+                settings3.template='';
+                ordNotifyService.findNotifiTemp1(settings1).success(function () {
+                    editRec.temp_1=ordNotifyService.getNotifi();
                 });
-                ordNotifyService.findNotifiTemp1(2).success(function () {
-                    $scope.id=ordNotifyService.getNotifi();
+                ordNotifyService.findNotifiTemp1(settings2).success(function () {
+                    editRec.id=ordNotifyService.getNotifi();
                 });
-                ordNotifyService.findNotifiTemp1(3).success(function () {
-                    $scope.num=ordNotifyService.getNotifi();
+                ordNotifyService.findNotifiTemp1(settings3).success(function () {
+                    editRec.num=ordNotifyService.getNotifi();
                 });
+                $scope.editRecord=editRec;
+
             }).error(function() {
                 console.log("Error sending update request");
             });
@@ -76,18 +97,18 @@
             return $scope.sortKey == keyname;
         }
 
-        _this.openEditor = function (templ) {
+        _this.openEditor = function (templ,temp_id) {
             var editRec = {};
-            var template_1;
+            var settings = {};
             if (templ) {
-                editRec.notif_num = templ.notifi_id;
-                editRec.user_id = ordNotifyService.getUserIdByOrderId(templ.order.id);
-
-                ordNotifyService.findNotifiTemp1(templ.notifi_id).success(function () {
-                    $scope.edit=ordNotifyService.getNotifi();
+                editRec.notif_num = temp_id;
+                editRec.user_id = ordNotifyService.getEmployeeIdByOrderId(templ.order.id);
+                settings.notif_num=editRec.notif_num;
+                settings.user_id=editRec.user_id;
+                settings.template='';
+                ordNotifyService.findNotifiTemp1(settings).success(function () {
+                    editRec.template =ordNotifyService.getNotifi();
                 });
-                editRec.template=$scope.edit;
-
                 //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
 
@@ -119,10 +140,29 @@
         };
 
         _this.openEditorDef = function () {
-                var editRec={}
-                editRec.temp_1=$scope.temp_1;
-                editRec.id=$scope.id;
-                editRec.num=$scope.num;
+            var editRec={}
+            var settings1={}
+            settings1.notif_num=1;
+            settings1.user_id=0;
+            settings1.template='';
+            var settings2={}
+            settings2.notif_num=2;
+            settings2.user_id=0;
+            settings2.template='';
+            var settings3={}
+            settings3.notif_num=3;
+            settings3.user_id=0;
+            settings3.template='';
+            ordNotifyService.findNotifiTemp1(settings1).success(function () {
+                editRec.temp_1=ordNotifyService.getNotifi();
+            });
+            ordNotifyService.findNotifiTemp1(settings2).success(function () {
+                editRec.id=ordNotifyService.getNotifi();
+            });
+            ordNotifyService.findNotifiTemp1(settings3).success(function () {
+                editRec.num=ordNotifyService.getNotifi();
+            });
+
 
             var uibModalInstance = $uibModal.open({
                 animation: true,
@@ -145,8 +185,8 @@
             });
         };
 
-        $scope.openUpdateEditor = function (templ) {
-            _this.openEditor(templ);
+        $scope.openUpdateEditor = function (templ,temp_id) {
+            _this.openEditor(templ,temp_id);
         };
         $scope.openUpdateEditorDef = function () {
             _this.openEditorDef();

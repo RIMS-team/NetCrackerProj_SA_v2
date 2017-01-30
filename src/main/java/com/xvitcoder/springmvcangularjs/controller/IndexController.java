@@ -33,6 +33,8 @@ public class IndexController {
 
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private UserService userService = (UserService) context.getBean("userServiceImpl");
+    private EmailSender emailSender = (EmailSender) context.getBean("mailImpl");
+
 
     @Autowired private PasswordEncoder passwordEncoder;
 
@@ -91,7 +93,7 @@ public class IndexController {
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void doSomething() {
-        MulltyMailer mulltyMailer = new MulltyMailer(new EmailSender());
+        MulltyMailer mulltyMailer = new MulltyMailer(emailSender);
         Thread thread = new Thread(mulltyMailer);
         thread.start();
     }

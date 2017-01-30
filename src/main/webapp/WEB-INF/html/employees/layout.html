@@ -4,7 +4,6 @@
     No employees found
 </div>
 
-
 <table class="table table-bordered table-striped"  ng-show="emps.length > 0">
     <thead>
     <tr>
@@ -88,6 +87,21 @@
                     <input id="email" name="email" class="form-control" ng-model="editRecord.email" >
                     </input>
                 </div>
+
+
+                <label>
+                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.temp_1"/>
+                    Template 1
+                </label><br/>
+                <label>
+                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.id"/>
+                    Template 2
+                </label><br/>
+                <label>
+                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.num"/>
+                    Template 3
+                </label><br/>
+
                 <div class="form-group">
                     <label for="tempText"> Temp Text </label>
                     <textarea id="tempText" name="tempText" class="form-control" ng-model="editRecord.template" >
@@ -99,6 +113,8 @@
             </div>
         </div>
     </script>
+
+
 </div>
 
 

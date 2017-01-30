@@ -76,7 +76,7 @@ public class JdbcNotificationTemp implements NotificationTempDao {
         NotificationTemp notificationTemp1;
         try {
 
-            SqlParameterSource in = new MapSqlParameterSource().addValue("p_notif_num", notifi_num).addValue("p_user_id", null);
+            SqlParameterSource in = new MapSqlParameterSource().addValue("p_notif_num", notifi_num).addValue("p_user_id",user_id);
             notificationTemp=notificationTempCall.executeFunction(String.class,in);
             notificationTemp1=new NotificationTemp(notifi_num,user_id,notificationTemp);
             transactionManager.commit(status);

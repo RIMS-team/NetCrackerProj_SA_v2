@@ -67,7 +67,7 @@ public class EmailSender {
             Message message=new MimeMessage(session);
             message.setFrom(new InternetAddress("v.karpov2018@yandex.ru"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(whoCheck));
-            message.setSubject("Netckraker");
+            message.setSubject("Netcracker");
             message.setText(mess);
 
             Transport.send(message);

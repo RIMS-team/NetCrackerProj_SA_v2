@@ -132,8 +132,28 @@ public class JdbcOrder implements OrderDAO {
                 System.out.println((String)map1.get("p_err_msg"));
                 System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
                 transactionManager.rollback(status);
-            } else {
-                transactionManager.commit(status);
+            }
+            else {
+                if (order.getStatusId() == 8) { // Closed (Закрыт)
+                    args.put("P_OBJECT_ID", order.getInventoryId());
+                    args.put("P_INVENTORY_NUM", order.getInventoryNum());
+                    args.put("P_INV_STATUS_ID", 2); // IN_STOCK (На складе)
+
+                    map1 = cardUpdateSP.execute(args);
+                    errCode = Integer.valueOf((String) map1.get("p_err_code"));
+                    errMsg = (String) map1.get("p_err_msg");
+
+                    if (errCode != 0) {
+                        System.out.println((String) map1.get("p_err_msg"));
+                        System.out.println(Integer.valueOf((String) map1.get("p_err_code")));
+                        transactionManager.rollback(status);
+                    } else {
+                        transactionManager.commit(status);
+                    }
+                }
+                else {
+                    transactionManager.commit(status);
+                }
             }
         }
         catch (DataAccessException e) {

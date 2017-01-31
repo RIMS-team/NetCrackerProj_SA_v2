@@ -29,6 +29,10 @@ public class OrderCursor extends Entity {
     protected String userFullName;
     protected String userEmail;
 
+    protected Date createDate;
+    protected int editorId;
+    protected String editorFullName;
+
     public OrderCursor() {
     }
 
@@ -36,7 +40,8 @@ public class OrderCursor extends Entity {
                        int inventoryId, String inventoryType, String inventoryNum,
                        String noteName, String noteModel, String noteMemory, String noteSerial,
                        int employeeId, String employeeFullName, String employeeEmail,
-                       int userId, String userFullName) {
+                       int userId, String userFullName,
+                       Date createDate, int editorId, String editorFullName) {
         this.id = id;
         this.rowNum = rowNum;
         this.date = date;
@@ -54,6 +59,10 @@ public class OrderCursor extends Entity {
         this.employeeEmail = employeeEmail;
         this.userId = userId;
         this.userFullName = userFullName;
+        this.createDate = createDate;
+        this.editorId = editorId;
+        this.editorFullName = editorFullName;
+
     }
 
     public long getRowNum() {
@@ -184,12 +193,36 @@ public class OrderCursor extends Entity {
         this.userFullName = userFullName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+//    public String getUserEmail() {
+//        return userEmail;
+//    }
+//
+//    public void setUserEmail(String userEmail) {
+//        this.userEmail = userEmail;
+//    }
+
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public int getEditorId() {
+        return editorId;
+    }
+
+    public void setEditorId(int editorId) {
+        this.editorId = editorId;
+    }
+
+    public String getEditorFullName() {
+        return editorFullName;
+    }
+
+    public void setEditorFullName(String editorFullName) {
+        this.editorFullName = editorFullName;
     }
 
     @Override
@@ -200,7 +233,7 @@ public class OrderCursor extends Entity {
         sb.append(", statusName='").append(statusName).append('\'');
         sb.append(", inventoryId=").append(inventoryId);
         sb.append(", inventoryType='").append(inventoryType).append('\'');
-        sb.append(", inventoryNum=").append(inventoryNum);
+        sb.append(", inventoryNum='").append(inventoryNum).append('\'');
         sb.append(", noteName='").append(noteName).append('\'');
         sb.append(", noteModel='").append(noteModel).append('\'');
         sb.append(", noteMemory='").append(noteMemory).append('\'');
@@ -211,6 +244,9 @@ public class OrderCursor extends Entity {
         sb.append(", userId=").append(userId);
         sb.append(", userFullName='").append(userFullName).append('\'');
         sb.append(", userEmail='").append(userEmail).append('\'');
+        sb.append(", createDate=").append(createDate);
+        sb.append(", editorId=").append(editorId);
+        sb.append(", editorFullName='").append(editorFullName).append('\'');
         sb.append('}');
         return sb.toString();
     }

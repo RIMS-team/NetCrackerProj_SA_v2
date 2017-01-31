@@ -5,6 +5,6 @@ package com.xvitcoder.springmvcangularjs.service;
  */
 public interface ImportService {
 
-    void fileProcessing(String filePath, String type);
+    String fileProcessing(String filePath, int id, String type);
 
 }

@@ -1,10 +1,8 @@
 package com.xvitcoder.springmvcangularjs.controller;
 
-import com.xvitcoder.springmvcangularjs.dao.JdbcEmployeeDao;
 import com.xvitcoder.springmvcangularjs.dao.impl.JdbcAccessCard;
 import com.xvitcoder.springmvcangularjs.model.*;
 import com.xvitcoder.springmvcangularjs.service.AccessCardService;
-import com.xvitcoder.springmvcangularjs.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.smartcardio.Card;
 import java.util.List;
 
 /**

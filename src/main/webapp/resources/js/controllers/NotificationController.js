@@ -14,8 +14,10 @@
 
         //ordNotifyService.loadNotifiTempList();
 
-        $scope.pageSize = 11;
+        $scope.pageSize;
         $scope.editRecord;
+        $scope.names = [5,10,25,50,100];
+        $scope.selectedName=5;
         // var settings={}
         // settings.notif_num=1;
         // settings.user_id=0;
@@ -64,13 +66,16 @@
                 settings3.user_id=0;
                 settings3.template='';
                 ordNotifyService.findNotifiTemp1(settings1).success(function () {
-                    editRec.temp_1=ordNotifyService.getNotifi();
+                    editRec.temp_1='Dear !name! , '+ordNotifyService.getNotifi()+
+                        ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
                 });
                 ordNotifyService.findNotifiTemp1(settings2).success(function () {
-                    editRec.id=ordNotifyService.getNotifi();
+                    editRec.id='Dear !name! , '+ordNotifyService.getNotifi()+
+                        ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
                 });
                 ordNotifyService.findNotifiTemp1(settings3).success(function () {
-                    editRec.num=ordNotifyService.getNotifi();
+                    editRec.num='Dear !name! , '+ordNotifyService.getNotifi()+
+                        ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
                 });
                 $scope.editRecord=editRec;
 
@@ -95,7 +100,12 @@
 
         $scope.isSortKey = function(keyname) {
             return $scope.sortKey == keyname;
-        }
+        };
+
+        $scope.startsWith = function (actual, expected) {
+            var lowerStr = (actual + "").toLowerCase();
+            return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
 
         _this.openEditor = function (templ,temp_id) {
             var editRec = {};
@@ -103,11 +113,16 @@
             if (templ) {
                 editRec.notif_num = temp_id;
                 editRec.user_id = ordNotifyService.getEmployeeIdByOrderId(templ.order.id);
+                editRec.name =templ.name;
+                editRec.inv_num = templ.inv_num;
+                editRec.inv_type = templ.inv_type;
+                editRec.dueDate = templ.dueDate;
                 settings.notif_num=editRec.notif_num;
                 settings.user_id=editRec.user_id;
                 settings.template='';
                 ordNotifyService.findNotifiTemp1(settings).success(function () {
-                    editRec.template =ordNotifyService.getNotifi();
+                    editRec.template ='Dear '+templ.name+', '+ordNotifyService.getNotifi()+' inventory: '+
+                        templ.inv_num+' '+templ.inv_type+' date: '+templ.dueDate;
                 });
                 //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
@@ -154,13 +169,16 @@
             settings3.user_id=0;
             settings3.template='';
             ordNotifyService.findNotifiTemp1(settings1).success(function () {
-                editRec.temp_1=ordNotifyService.getNotifi();
+                editRec.temp_1='Dear !name! , '+ordNotifyService.getNotifi()+
+                    ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
             });
             ordNotifyService.findNotifiTemp1(settings2).success(function () {
-                editRec.id=ordNotifyService.getNotifi();
+                editRec.id='Dear !name! , '+ordNotifyService.getNotifi()+
+                    ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
             });
             ordNotifyService.findNotifiTemp1(settings3).success(function () {
-                editRec.num=ordNotifyService.getNotifi();
+                editRec.num='Dear !name! , '+ordNotifyService.getNotifi()+
+                    ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
             });
 
 

@@ -4,6 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="csvImportService" class="com.xvitcoder.springmvcangularjs.service.impl.CSVImportService">
+        <property name="importDao" ref="importDao"/>
+    </bean>
+
+    <bean id="importDao" class="com.xvitcoder.springmvcangularjs.dao.impl.JdbcImport">
         <property name="dataSource" ref="dataSource" />
         <property name="transactionManager" ref="transactionManager" />
     </bean>

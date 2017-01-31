@@ -14,8 +14,10 @@
     <script type="text/javascript" src="resources/js/lib/angular/angular.js"></script>
     <!--<script type="text/javascript" src="resources/js/lib/angular/angular.min.js"></script>-->
     <script type="text/javascript" src="resources/js/lib/angular/angular-sanitize.min.js"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.4.0.js"></script>
 
+    <!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.4.0.js"></script>-->
+    <!--<script type="text/javascript" src="resources/js/ui-bootstrap-tpls-2.4.0.js"></script>-->
+    <script type="text/javascript" src="resources/js/ui-bootstrap-tpls-2.4.0.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="resources/css/app.css"/>
     <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
@@ -46,6 +48,9 @@
     <script type="text/javascript" src="resources/js/services/getAuthorizedUserSvc.js"></script>
 
     <script type="text/javascript" src="resources/js/dirPagination.js"></script>
+
+    <script type="text/javascript" src='resources/js/lib/nprogress.js'></script>
+    <link rel='stylesheet' type="text/css" href='resources/css2/nprogress.css'/>
 </head>
 <body ng-controller="MainController as mainCtrl">
 <nav class="navbar navbar-default navbar-fixed">
@@ -118,13 +123,13 @@
                     </ul>
                 </li>
 
-           </ul>
+            </ul>
 
-           <ul class="nav navbar-nav navbar-right">
-               <li >
+            <ul class="nav navbar-nav navbar-right">
+                <li >
                     <a href="/logout"  role="button"><span class="glyphicon glyphicon-log-in" style="padding-right: 10px"></span>{{curUser.fullName}}</a>
-               </li>
-           </ul>
+                </li>
+            </ul>
 
 
         </div>
@@ -276,7 +281,9 @@
                     </div>
                     <div>
                         <label>Upload logs:</label>
-                        <p>{{data}}</p>
+                        <div id="import-logs">
+                            <p ng-repeat="value in data track by $index">{{value}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -288,4 +295,3 @@
 </body>
 
 </html>
-

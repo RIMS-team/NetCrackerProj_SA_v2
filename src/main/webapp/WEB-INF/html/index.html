@@ -276,8 +276,8 @@
                                accept=".csv" file-model="myFile" />
                     </div>
                     <div style="text-align: center;">
-                        <button class="btn btn-primary btn-mini" ng-click="uploadFile('notebooks')" style="margin: 0px 10px;">Import Notebooks</button>
-                        <button class="btn btn-primary btn-mini" ng-click="uploadFile('employees')" style="margin: 0px 10px;">Import Employees</button>
+                        <button class="btn btn-primary btn-mini" ng-click="uploadFile(curUser.id, 'notebooks')" style="margin: 0px 10px;">Import Notebooks</button>
+                        <button class="btn btn-primary btn-mini" ng-click="uploadFile(curUser.id, 'employees')" style="margin: 0px 10px;">Import Employees</button>
                     </div>
                     <div>
                         <label>Upload logs:</label>

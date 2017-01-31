@@ -3,6 +3,8 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="users.length == 0">
     No users found
 </div>
+    <select ng-model="selectedName" ng-options="item for item in names">
+    </select>
     <div class="form-group">
         <button id="addUserForm-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -25,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter : test : startsWith | itemsPerPage: pageSize " pagination-id="user">
+    <tr dir-paginate="user in users | orderBy:sortKey:reverse | filter: test | itemsPerPage: selectedName " pagination-id="user">
         <td style="display:none">{{user.id}}</td>
         <td>{{user.fullName}}</td>
         <td>{{user.phoneNumber}}</td>
@@ -38,7 +40,6 @@
     </tbody>
 </table>
     <dir-pagination-controls style="float: right;"
-            max-size="7"
             direction-links="true"
             boundary-links="true"
             pagination-id="user">

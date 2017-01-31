@@ -142,7 +142,6 @@ public class JdbcInventStatus implements InventStatusDao {
             map.put("p_id",inventStatus.getId());
             map.put("p_code",inventStatus.getCode());
             map.put("p_name", inventStatus.getName());
-            map.put("p_comments", null);
             map1=simpleJdbcCall.execute(map);
             errCode = Integer.valueOf((String)map1.get("p_err_code"));
             errMsg= (String)map1.get("p_err_msg");

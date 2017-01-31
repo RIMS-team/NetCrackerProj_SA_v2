@@ -4,6 +4,8 @@
         No cards found
     </div>
 
+    <select ng-model="selectedName" ng-options="item for item in names">
+    </select>
     <div class="row">
         <div class="col-md-4">
             <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="openInsertEditor()" style="margin-bottom: 10px" title="Add new card">
@@ -101,7 +103,7 @@
         </thead>
 
         <tbody>
-            <tr dir-paginate="card in filteredCards = ( cards | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: pageSize " pagination-id="card">
+            <tr dir-paginate="card in filteredCards = ( cards | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: selectedName " pagination-id="card">
                 <td ng-hide="true">{{card.id}}</td>
                 <td>{{card.inventoryNum}}</td>
                 <td>{{card.employeeName}}</td>
@@ -117,7 +119,6 @@
 
     </table>
     <dir-pagination-controls
-            max-size="7"
             direction-links="true"
             boundary-links="true"
             pagination-id="card">

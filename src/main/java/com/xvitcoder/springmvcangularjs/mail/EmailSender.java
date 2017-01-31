@@ -1,7 +1,10 @@
 package com.xvitcoder.springmvcangularjs.mail;
 
 import com.xvitcoder.springmvcangularjs.dao.NotificationTempDao;
+import com.xvitcoder.springmvcangularjs.model.Mail;
 import com.xvitcoder.springmvcangularjs.model.MailInformation;
+import com.xvitcoder.springmvcangularjs.model.MailSettings;
+import com.xvitcoder.springmvcangularjs.service.MailSettingsService;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,40 +24,36 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailSender {
 
-//    public static void main(String[] args) {
-//        EmailSender emailSender=new EmailSender();
-//        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-//        NotificationTempDao notificationService=(NotificationTempDao) context.getBean("notificationTempDAO");
-//        Thread thread=new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-//                NotificationTempDao notificationService=(NotificationTempDao) context.getBean("notificationTempDAO");
-//                notificationService.updateStatus();
-//            }
-//        });
-//        thread.start();
-//        List<MailInformation> list=notificationService.getCursor(0,3,7);
-//        StringBuilder stringBuilder=new StringBuilder();
-//        for(MailInformation mailInformation:list) {
-//            //emailSender.sendMessage("v.karpov2018@yandex.ru","q1w2e3r4t1",mailInformation.getEMPLOYEE_EMAIL(),mailInformation.getNOTIFICATION_TEMPLATE());
-//            stringBuilder.append(mailInformation.getORDER_ID()+",");
-//        }
-//        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));
-//        System.out.println(stringBuilder.toString());
-//        notificationService.registerNotifi(stringBuilder.toString(),0,3,7);
-//    }
+
+
+
+    public Properties getMailProperty(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+        MailSettingsService mailSettingsService = (MailSettingsService) context.getBean("mailSettingsService");
+        MailSettings mailSettings=mailSettingsService.getMailSettings();
+        Properties properties=new Properties();
+        properties.put("mail.smtp.host",mailSettings.getHost());
+        properties.put("mail.smtp.socketFactory.port",mailSettings.getSocketFactoryPort());
+        properties.put("mail.smtp.socketFactory.class",mailSettings.getSocketFactoryClass());
+        properties.put("mail.smtp.auth",mailSettings.getAuth());
+        properties.put("mail.smtp.port",mailSettings.getPort());
+        return properties;
+    }
+
+    public Mail getMailTo(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+        MailSettingsService mailSettingsService = (MailSettingsService) context.getBean("mailSettingsService");
+        MailSettings mailSettings=mailSettingsService.getMailSettings();
+        Mail mail=new Mail(mailSettings.getFrom(),mailSettings.getPassword());
+        return mail;
+    }
+
 
     private Logger logger = Logger.getLogger(EmailSender.class);
 
     public void sendMessage(final String whoSend, final String password, String whoCheck,String mess){
         logger.debug("Entering sendMessage(whoSend=" + whoSend + ", password=" + password + ", whoCheck=" + whoCheck + ")");
-        Properties properties=new Properties();
-        properties.put("mail.smtp.host","smtp.yandex.ru");
-        properties.put("mail.smtp.socketFactory.port","465");
-        properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth","true");
-        properties.put("mail.smtp.port","465");
+        Properties properties=getMailProperty();
 
         Session session=Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
             protected PasswordAuthentication getPasswordAuthentication(){

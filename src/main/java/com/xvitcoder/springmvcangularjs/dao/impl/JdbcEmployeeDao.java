@@ -110,6 +110,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
                     "AND EMP.OBJECT_ID = ?";
             employee = jdbcTemplateObject.queryForObject(sql,
                     new Object[]{employeeId}, new EmployeeMapper());
+            transactionManager.commit(status);
         }catch (DataAccessException e) {
             System.out.println("Error in select record, rolling back");
             transactionManager.rollback(status);
@@ -146,6 +147,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
         try {
             employees = jdbcTemplateObject.query(sql,
                     new EmployeeMapper());
+            transactionManager.commit(status);
         }catch (DataAccessException e) {
             System.out.println("Error in select record, rolling back");
             transactionManager.rollback(status);

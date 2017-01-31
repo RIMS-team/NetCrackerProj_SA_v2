@@ -9,7 +9,9 @@
 
     app.controller("UserController", function ($scope, $http) {
 
-        $scope.pageSize = 11;
+        $scope.pageSize=5;
+        $scope.names = [5,10,25,50,100];
+        $scope.selectedName=5;
 
         $scope.submitAddUserForm = function(user) {
             var sendUser = {fullName : user.fullName, eMail : user.eMail, phoneNumber : user.phoneNumber, password : user.password};

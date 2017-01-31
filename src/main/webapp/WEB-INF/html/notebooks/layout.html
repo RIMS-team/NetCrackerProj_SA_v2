@@ -3,6 +3,8 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="notebook.length == 0">
     No notebooks found
 </div>
+    <select ng-model="selectedName" ng-options="item for item in names">
+    </select>
 
     <a class="btn btn-default btn-top-grid" ng-click="printNotebooks(filteredNotebook)" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
         <span class="glyphicon glyphicon-floppy-disk" style="padding: 7px 9px;"></span></a>
@@ -130,7 +132,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter : ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: pageSize" pagination-id="notebook" >
+    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: selectedName" pagination-id="notebook" >
         <td ng-hide="true">{{elem.id}}</td>
         <td>{{elem.name}}</td>
         <td>{{elem.model}}</td>
@@ -146,7 +148,6 @@
     </tbody>
 </table>
     <dir-pagination-controls
-            max-size="7"
             direction-links="true"
             boundary-links="true"
             pagination-id="notebook">

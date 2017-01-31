@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MailSettingsController {
     private Logger logger = Logger.getLogger(UserController.class);
 
+
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private MailSettingsService mailSettingsService = (MailSettingsService) context.getBean("mailSettingsService");
 

@@ -13,6 +13,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class JdbcMailSettings implements MailSettingsDao{
          String auth;
          String port;
          String from;
+         String password;
         MailSettings mailSettings;
         String res = "P_VALUE";
         String p_group = "p_group";
@@ -76,8 +78,10 @@ public class JdbcMailSettings implements MailSettingsDao{
             port = (String) getMailSettings.execute(in).get(res);
             in = new MapSqlParameterSource().addValue(p_group, email).addValue(p_code, "from");
             from = (String) getMailSettings.execute(in).get(res);
-
-            mailSettings = new MailSettings(host, socketFactoryPort, socketFactoryClass, auth, port, from);
+            in = new MapSqlParameterSource().addValue(p_group, email).addValue(p_code, "password");
+            password = (String) getMailSettings.execute(in).get(res);
+            MailSettings mailSettings1=new MailSettings(host, socketFactoryPort, socketFactoryClass, auth, port, from,password);
+            mailSettings =mailSettings1;
             transactionManager.commit(status);
         }
         catch (DataAccessException e) {
@@ -100,6 +104,7 @@ public class JdbcMailSettings implements MailSettingsDao{
         String p_code = "p_code";
 
         try {
+
         map.put(p_group, email);
         map.put(p_code, "mail.smtp.host");
         map.put(p_value, mailSettings.getHost());
@@ -129,6 +134,11 @@ public class JdbcMailSettings implements MailSettingsDao{
         map.put(p_code, "from");
         map.put(p_value, mailSettings.getFrom());
         updateMailSettings.execute(map);
+
+            map.put(p_group, email);
+            map.put(p_code, "password");
+            map.put(p_value, mailSettings.getPassword());
+            updateMailSettings.execute(map);
 
         transactionManager.commit(status);
         } catch (DataAccessException e) {

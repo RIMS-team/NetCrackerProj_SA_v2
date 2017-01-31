@@ -84,7 +84,7 @@ public class IndexController {
             String newPass = generateRandomPassword();
             user.setPassword(passwordEncoder.encode(newPass));
             userService.updateUser(user);
-            emailSender.sendMessage("v.karpov2018@yandex.ru","q1w2e3r4t1",email,"Greetings! Your password has been reset to '" + newPass + "'");
+            emailSender.sendMessage(emailSender.getMailTo().getEmail(),"q1w2e3r4t1",email,"Greetings! Your password has been reset to '" + newPass + "'");
         }
         return "redirect:/login?newpass=true";
     }

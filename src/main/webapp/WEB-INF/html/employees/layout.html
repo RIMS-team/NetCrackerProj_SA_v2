@@ -4,6 +4,9 @@
     No employees found
 </div>
 
+    <select ng-model="selectedName" ng-options="item for item in names">
+    </select>
+
 <table class="table table-bordered table-striped"  ng-show="emps.length > 0">
     <thead>
     <tr>
@@ -57,7 +60,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="employee">
+    <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: ref | itemsPerPage: selectedName " pagination-id="employee">
         <td ng-hide="true">{{emp.id}}</td>
         <td>{{emp.fullName}}</td>
         <td>{{emp.phoneNumber}}</td>
@@ -68,7 +71,6 @@
     </tbody>
 </table>
     <dir-pagination-controls
-            max-size="7"
             direction-links="true"
             boundary-links="true"
             pagination-id="employee">

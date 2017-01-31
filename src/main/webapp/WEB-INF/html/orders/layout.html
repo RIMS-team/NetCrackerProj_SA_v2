@@ -5,6 +5,8 @@
         No orders found
     </div>
 
+    <select ng-model="selectedName" ng-options="item for item in names">
+    </select>
     <div class="row">
         <div class="col-md-4">
             <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="openInsertEditor()" style="margin-bottom: 10px" title="Add new Card Order">
@@ -156,7 +158,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRange : from_date : to_date | itemsPerPage: pageSize " pagination-id="order">
+        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRange : from_date : to_date | itemsPerPage: selectedName " pagination-id="order">
             <td ng-hide="true">{{order.id}}</td>
             <td>{{order.date|date:'dd.MM.yyyy'}}</td>
             <td style="display:none">{{order.statusId}}</td>
@@ -183,7 +185,6 @@
     </table>
 
     <dir-pagination-controls
-        max-size="7"
         direction-links="true"
         boundary-links="true"
         pagination-id="order">

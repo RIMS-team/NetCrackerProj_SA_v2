@@ -87,15 +87,15 @@
         settings3.template='';
         ordNotifyService.findNotifiTemp1(settings1).success(function () {
             editRec.temp_1=ordNotifyService.getNotifi();
-            editRec.old_template = editRec.temp_1;
+            editRec.temp_1_def = editRec.temp_1;
         });
         ordNotifyService.findNotifiTemp1(settings2).success(function () {
             editRec.id=ordNotifyService.getNotifi();
-            editRec.old_template = editRec.id;
+            editRec.id_def = editRec.id;
         });
         ordNotifyService.findNotifiTemp1(settings3).success(function () {
             editRec.num=ordNotifyService.getNotifi();
-            editRec.old_template = editRec.num;
+            editRec.num_def = editRec.num;
         });
         ordNotifyService.findNotifiTemp1(settings1).success(function () {
             editRec.template=ordNotifyService.getNotifi();
@@ -156,12 +156,57 @@
         $scope.updateText = function (order, editRecord) {
             console.log(order);
             console.log(editRecord);
-            editRecord.template = editRecord.old_template;
+            editRecord.template = editRecord.temp_1;
             editRecord.template = editRecord.template.replace("|NAME|", editRecord.employeeName);
             editRecord.template = editRecord.template.replace("|INVENTORY_TYPE|", order.inventoryType);
             editRecord.template = editRecord.template.replace("|INVENTORY_NUM|", order.inventoryNum);
+            editRecord.template = editRecord.template.replace("|DUE_DATE|", order.date);
+            $scope.editRecord.temp_1 = editRecord.template;
             $scope.editRecord.template = editRecord.template;
         };
+
+        $scope.updateText1 = function (order, editRecord) {
+            console.log(order);
+            console.log(editRecord);
+            editRecord.template = editRecord.temp_1;
+            editRecord.template = editRecord.template.replace("|NAME|", editRecord.employeeName);
+            editRecord.template = editRecord.template.replace("|INVENTORY_TYPE|", order.inventoryType);
+            editRecord.template = editRecord.template.replace("|INVENTORY_NUM|", order.inventoryNum);
+            editRecord.template = editRecord.template.replace("|DUE_DATE|", order.date);
+            $scope.editRecord.num = editRecord.num_def;
+            $scope.editRecord.id = editRecord.id_def;
+            $scope.editRecord.temp_1 = editRecord.template;
+            $scope.editRecord.template = editRecord.template;
+        };
+
+        $scope.updateText2 = function (order, editRecord) {
+            console.log(order);
+            console.log(editRecord);
+            editRecord.template = editRecord.id;
+            editRecord.template = editRecord.template.replace("|NAME|", editRecord.employeeName);
+            editRecord.template = editRecord.template.replace("|INVENTORY_TYPE|", order.inventoryType);
+            editRecord.template = editRecord.template.replace("|INVENTORY_NUM|", order.inventoryNum);
+            editRecord.template = editRecord.template.replace("|DUE_DATE|", order.date);
+            $scope.editRecord.temp_1 = editRecord.temp_1_def;
+            $scope.editRecord.num = editRecord.num_def;
+            $scope.editRecord.id = editRecord.template;
+            $scope.editRecord.template = editRecord.template;
+        };
+
+        $scope.updateText3 = function (order, editRecord) {
+            console.log(order);
+            console.log(editRecord);
+            editRecord.template = editRecord.num;
+            editRecord.template = editRecord.template.replace("|NAME|", editRecord.employeeName);
+            editRecord.template = editRecord.template.replace("|INVENTORY_TYPE|", order.inventoryType);
+            editRecord.template = editRecord.template.replace("|INVENTORY_NUM|", order.inventoryNum);
+            editRecord.template = editRecord.template.replace("|DUE_DATE|", order.date);
+            $scope.editRecord.temp_1 = editRecord.temp_1_def;
+            $scope.editRecord.id = editRecord.id_def;
+            $scope.editRecord.num = editRecord.template;
+            $scope.editRecord.template = editRecord.template;
+        };
+
 
 
         $scope.ok = function () {

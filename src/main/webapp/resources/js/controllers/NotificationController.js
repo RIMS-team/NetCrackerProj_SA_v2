@@ -66,16 +66,13 @@
                 settings3.user_id=0;
                 settings3.template='';
                 ordNotifyService.findNotifiTemp1(settings1).success(function () {
-                    editRec.temp_1='Dear !name! , '+ordNotifyService.getNotifi()+
-                        ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
+                    editRec.temp_1=ordNotifyService.getNotifi();
                 });
                 ordNotifyService.findNotifiTemp1(settings2).success(function () {
-                    editRec.id='Dear !name! , '+ordNotifyService.getNotifi()+
-                        ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
+                    editRec.id=ordNotifyService.getNotifi();
                 });
                 ordNotifyService.findNotifiTemp1(settings3).success(function () {
-                    editRec.num='Dear !name! , '+ordNotifyService.getNotifi()+
-                        ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
+                    editRec.num=ordNotifyService.getNotifi();
                 });
                 $scope.editRecord=editRec;
 
@@ -121,9 +118,14 @@
                 settings.user_id=editRec.user_id;
                 settings.template='';
                 ordNotifyService.findNotifiTemp1(settings).success(function () {
-                    editRec.template ='Dear '+templ.name+', '+ordNotifyService.getNotifi()+' inventory: '+
-                        templ.inv_num+' '+templ.inv_type+' date: '+templ.dueDate;
+                    editRec.template =ordNotifyService.getNotifi();
+                    editRec.template = editRec.template.replace("|NAME|", editRec.name);
+                    editRec.template = editRec.template.replace("|INVENTORY_TYPE|", editRec.inv_num);
+                    editRec.template = editRec.template.replace("|INVENTORY_NUM|", editRec.inv_type);
+                    editRec.template = editRec.template.replace("|DUE_DATE|", editRec.dueDate);
                 });
+
+
                 //alert(ordNotifyService.getEmployeeIdByOrderId(templ.order.id));
             }
 
@@ -136,7 +138,8 @@
                 resolve: {
                     editRecord: function () {
                         return editRec;
-                    }
+                    },
+                    scope : $scope
                 }
             });
 
@@ -169,16 +172,13 @@
             settings3.user_id=0;
             settings3.template='';
             ordNotifyService.findNotifiTemp1(settings1).success(function () {
-                editRec.temp_1='Dear !name! , '+ordNotifyService.getNotifi()+
-                    ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
+                editRec.temp_1=ordNotifyService.getNotifi();
             });
             ordNotifyService.findNotifiTemp1(settings2).success(function () {
-                editRec.id='Dear !name! , '+ordNotifyService.getNotifi()+
-                    ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
+                editRec.id=ordNotifyService.getNotifi();
             });
             ordNotifyService.findNotifiTemp1(settings3).success(function () {
-                editRec.num='Dear !name! , '+ordNotifyService.getNotifi()+
-                    ' inventory: !number inventory!  !type inventory! date: !dd/mm/yy!';
+                editRec.num=ordNotifyService.getNotifi();
             });
 
 
@@ -237,6 +237,7 @@
 
     app.controller('updateNotifTemplateControllerTemp', ['$scope','$uibModalInstance', 'editRecord', function ($scope, uibModalInstance, editRec) {
         $scope.editRecord = editRec;
+
 
         $scope.ok = function () {
             // if (validation)

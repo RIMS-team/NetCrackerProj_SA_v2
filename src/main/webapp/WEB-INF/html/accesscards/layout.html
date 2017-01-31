@@ -30,7 +30,14 @@
 
                 <th style="text-align: center;">
                     <a class="thumbnail1" href="#">Inventory number
-                        <span>Search by Inv number<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>
+                        <span>
+                            Search by Inv number
+                            <input type="text" ng-model="ref.inventoryNum" placeholder="Search"/>
+                            <datalist id="order-inventoryNum">
+                                <option ng-repeat="card in cards" value="{{card.inventoryNum }}">{{card.inventoryNum }}</option>
+                            </datalist>
+                        </span>
+                    </a>
                     <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inventoryNum')}" ng-click="sort('inventoryNum')" style="float: right;">
                         <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </button>

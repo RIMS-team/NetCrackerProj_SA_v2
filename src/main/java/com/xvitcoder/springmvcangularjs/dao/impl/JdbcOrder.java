@@ -1,6 +1,7 @@
 package com.xvitcoder.springmvcangularjs.dao.impl;
 
 import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderMapper;
+import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderMiniMapper;
 import com.xvitcoder.springmvcangularjs.dao.OrderDAO;
 import com.xvitcoder.springmvcangularjs.model.ErrorText;
 import com.xvitcoder.springmvcangularjs.model.OrderCursor;

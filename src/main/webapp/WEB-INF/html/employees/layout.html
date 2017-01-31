@@ -74,7 +74,7 @@
             pagination-id="employee">
     </dir-pagination-controls>
 
-    <script type="text/ng-template" id="updateNotifTemplate.html">
+    <script type="text/ng-template" id="sendNotifTemplate.html">
         <div class="modal-header">
             <button type="button" class="close" ng-click="close()">&times;</button>
             <h3 class="modal-title">Update Template</h3>
@@ -83,11 +83,16 @@
             <div style="padding: 5px" ng-form="" name="addTemplForm">
 
                 <div class="form-group">
-                    <label for="email"> Email Employeer </label>
+                    <label for="email"> Email Employee </label>
                     <input id="email" name="email" class="form-control" ng-model="editRecord.email" >
                     </input>
                 </div>
 
+                <div class="form-group">
+                    <label for="order"> Select Order </label>
+                    <select id="order" class="form-control" ng-model="currentOrder" ng-options="order.inventoryNum for order in orders" ng-change="updateText(currentOrder,editRecord)">
+                    </select>
+                </div>
 
                 <label>
                     <input type="radio" ng-model="editRecord.template" ng-value="editRecord.temp_1"/>

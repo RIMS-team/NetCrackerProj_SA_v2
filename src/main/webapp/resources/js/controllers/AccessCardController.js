@@ -14,7 +14,9 @@
 
         $scope.editRecord = {};
         $scope.invStatuses = [];
-        $scope.pageSize = 11;
+        $scope.pageSize=5;
+        $scope.names = [5,10,25,50,100];
+        $scope.selectedName=5;
 
         $scope.fetchCardsList = function () {
             $http.get('accesscards/accesscardlist.json').success(function (cardList) {

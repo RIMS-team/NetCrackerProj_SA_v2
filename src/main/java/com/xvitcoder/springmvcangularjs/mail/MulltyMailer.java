@@ -36,7 +36,7 @@ public class MulltyMailer implements Runnable {
         List<MailInformation> list=notificationService.getCursor(0,3,7);
         StringBuilder stringBuilder=new StringBuilder();
         for(MailInformation mailInformation:list) {
-            emailSender.sendMessage("v.karpov2018@yandex.ru","q1w2e3r4t1",mailInformation.getEMPLOYEE_EMAIL(),mailInformation.getNOTIFICATION_TEMPLATE());
+            emailSender.sendMessage(emailSender.getMailTo().getEmail(),emailSender.getMailTo().getPassword(),mailInformation.getEMPLOYEE_EMAIL(),mailInformation.getNOTIFICATION_TEMPLATE());
             stringBuilder.append(mailInformation.getORDER_ID()+",");
         }
         stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));

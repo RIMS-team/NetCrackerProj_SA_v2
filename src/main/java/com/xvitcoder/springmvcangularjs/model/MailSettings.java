@@ -11,17 +11,19 @@ public class MailSettings {
     private String auth;
     private String port;
     private String from;
+    private String password;
 
 
     public MailSettings(){}
 
-    public MailSettings(String host, String socketFactoryPort, String socketFactoryClass, String auth, String port, String from) {
+    public MailSettings(String host, String socketFactoryPort, String socketFactoryClass, String auth, String port, String from, String password) {
         this.host = host;
         this.socketFactoryPort = socketFactoryPort;
         this.socketFactoryClass = socketFactoryClass;
         this.auth = auth;
         this.port = port;
         this.from = from;
+        this.password = password;
     }
 
     public String getHost() {
@@ -70,6 +72,14 @@ public class MailSettings {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

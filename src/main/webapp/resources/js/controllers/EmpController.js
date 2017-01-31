@@ -12,7 +12,9 @@
 
     app.controller("EmpController", function ($scope, $http, $uibModal,ordNotifyService) {
         var _this = this;
-        $scope.pageSize = 11;
+        $scope.pageSize=5;
+        $scope.names = [5,10,25,50,100];
+        $scope.selectedName=5;
 
         // $scope.loadNotifiTempList();
         //
@@ -73,16 +75,16 @@
         settings3.user_id=0;
         settings3.template='';
         ordNotifyService.findNotifiTemp1(settings1).success(function () {
-            editRec.temp_1=ordNotifyService.getNotifi();
+            editRec.temp_1='Dear '+templ.fullName+' '+ordNotifyService.getNotifi();
         });
         ordNotifyService.findNotifiTemp1(settings2).success(function () {
-            editRec.id=ordNotifyService.getNotifi();
+            editRec.id='Dear '+templ.fullName+' '+ordNotifyService.getNotifi();
         });
         ordNotifyService.findNotifiTemp1(settings3).success(function () {
-            editRec.num=ordNotifyService.getNotifi();
+            editRec.num='Dear '+templ.fullName+' '+ordNotifyService.getNotifi();
         });
         ordNotifyService.findNotifiTemp1(settings1).success(function () {
-            editRec.template=ordNotifyService.getNotifi();
+            editRec.template='Dear '+templ.fullName+' '+ordNotifyService.getNotifi();
         });
         $scope.editRecord=editRec;
 

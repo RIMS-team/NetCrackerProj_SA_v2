@@ -8,19 +8,14 @@
     ]);
 
 
-
     app.controller("MainController", function ($rootScope, $scope, $compile, $element, $timeout, $http, $uibModal, $filter, getAuthorizedUserService) {
         var store = this;
-
-
 
         $scope.curUser = {};
         getAuthorizedUserService.loadAuthorizedUser().success(function () {
            $scope.curUser = getAuthorizedUserService.getAuthorizedUser();
         });
 
-
-        /* tabs */
         store.addTab = function (name, caption, directive) {
             if ($element.find("#tabHeader_" + name).length === 0) {
                 var headerHtml = '<li id="tabHeader_' + name + '"><a href="#tabContent_' + name + '" data-toggle="tab">' + caption +
@@ -36,8 +31,6 @@
                 $compile(bodyElement)($scope);
             }
             $element.find("#tabHeader_" + name + " a").click();
-
-            store.recalcTabContentHeight();
         };
 
         store.removeTab = function (name) {
@@ -59,15 +52,7 @@
             if (isCurrentActive) {
                 previous.firstChild.click();
             }
-
-            store.recalcTabContentHeight();
         };
-
-        store.recalcTabContentHeight = function () {
-            var tabHeight = $element.find("#pageTab")[0].scrollHeight;
-            $element.find("#pageTabContent").css("height", "calc(100% - " + tabHeight + 60 + "px)");
-        };
-
 
     });
 

@@ -33,12 +33,12 @@
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">OpenDate
                     <span>
-                        Search by Date
+                        Search by Open Date
                         <br/>
                         From
-                        <input type="date" ng-model="from_open_date"/>
+                        <input type="date" ng-model="from_date_create"/>
                         To
-                        <input type="date" ng-model="to_open_date"/>
+                        <input type="date" ng-model="to_date_create"/>
                     </span>
                 </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('openDate')}" ng-click="sort('openDate')" style="float: right;">
@@ -48,7 +48,7 @@
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">DueDate
                     <span>
-                        Search by Date
+                        Search by Due Date
                         <br/>
                         From
                         <input type="date" ng-model="from_date"/>
@@ -189,10 +189,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRange : from_date : to_date | itemsPerPage: selectedName " pagination-id="order">
+        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRange : from_date : to_date | dateRangeCreate : from_date_create : to_date_create| itemsPerPage: selectedName " pagination-id="order">
             <td ng-hide="true">{{order.id}}</td>
-            <td>{{order.createDate|date:'dd.MM.yy'}}</td>
-            <td>{{order.date|date:'dd.MM.yy'}}</td>
+            <td>{{order.createDate|date:'dd.MM.yyyy'}}</td>
+            <td>{{order.date|date:'dd.MM.yyyy'}}</td>
             <td style="display:none">{{order.statusId}}</td>
             <td>{{order.statusName}}</td>
             <td style="display:none">{{order.inventoryId}}</td>

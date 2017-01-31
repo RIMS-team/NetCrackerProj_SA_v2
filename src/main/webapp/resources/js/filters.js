@@ -273,3 +273,47 @@ AppFilters.filter('dateRangeNotifThird', function() {
         return items;
     };
 });
+
+AppFilters.filter('dateRangeCreate', function() {
+    return function( items, fromDate, toDate ) {
+        var filtered = [];
+        var from_date = Date.parse(fromDate);
+        var to_date = Date.parse(toDate);
+        var createDate;
+        if ((!isNaN(from_date)) && (!isNaN(to_date))) {
+            angular.forEach(items, function(item) {
+                if (item.createDate !== null) {
+                    createDate = new Date(item.createDate);
+                    createDate.setHours(0, 0, 0, 0);
+                    if (Date.parse(createDate) >= from_date && Date.parse(createDate) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(from_date)) {
+            angular.forEach(items, function(item) {
+                if (item.createDate !== null) {
+                    createDate = new Date(item.createDate);
+                    createDate.setHours(0, 0, 0, 0);
+                    if(Date.parse(createDate) >= from_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        } else if (!isNaN(to_date)) {
+            angular.forEach(items, function(item) {
+                if (item.third !== null) {
+                    createDate = new Date(item.createDate);
+                    createDate.setHours(0, 0, 0, 0);
+                    if(Date.parse(createDate) <= to_date) {
+                        filtered.push(item);
+                    }
+                }
+            });
+            return filtered;
+        }
+        return items;
+    };
+});

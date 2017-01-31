@@ -33,7 +33,8 @@ public class OrderCursor extends Entity {
     protected int editorId;
     protected String editorFullName;
 
-    public OrderCursor() {
+    public OrderCursor() {}
+
     public OrderCursor(int id, Date date, String inventoryType, String inventoryNum) {
         this.id = id;
         this.date = date;
@@ -67,7 +68,6 @@ public class OrderCursor extends Entity {
         this.createDate = createDate;
         this.editorId = editorId;
         this.editorFullName = editorFullName;
-
     }
 
     public long getRowNum() {

@@ -142,7 +142,6 @@ public class JdbcOrderStatus implements OrderStatusDao {
             map.put("p_id",orderStatus.getId());
             map.put("p_code",orderStatus.getCode());
             map.put("p_name", orderStatus.getName());
-            map.put("p_comments", null);
             map1=simpleJdbcCall.execute(map);
             errCode = Integer.valueOf((String)map1.get("p_err_code"));
             errMsg= (String)map1.get("p_err_msg");

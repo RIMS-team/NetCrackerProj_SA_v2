@@ -24,11 +24,11 @@ public class FileUploadController {
     private ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
     private ImportService importService = (ImportService) context.getBean("csvImportService");
 
-    @RequestMapping(value = "/import-csv/{type}", method = RequestMethod.POST)
+    @RequestMapping(value = "/import-csv/{id}/{type}", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<String> importCSV(@RequestParam("file") MultipartFile file, @PathVariable String type) {
+    ResponseEntity<String> importCSV(@RequestParam("file") MultipartFile file, @PathVariable int id, @PathVariable String type) {
         logger.debug("Request URL: /import-csv-emp; Entering importCSVEmp(file=" + file.getOriginalFilename()
-                + ", type=" + type + ")");
+                + ", id=" + id + ", type=" + type + ")");
 
         if(!file.isEmpty()) {
             try {
@@ -52,11 +52,10 @@ public class FileUploadController {
                         + serverFile.getAbsolutePath());
                 logger.debug("You successfully uploaded file=" + file.getOriginalFilename());
 
-                importService.fileProcessing(serverFile.getAbsolutePath(), type);
-                return new ResponseEntity<>("You successfully uploaded file=" + file.getOriginalFilename(), HttpStatus.OK);
+                return new ResponseEntity<>(importService.fileProcessing(serverFile.getAbsolutePath(), id, type), HttpStatus.OK);
             } catch (Exception e) {
                 logger.debug("Failed to upload " + file.getOriginalFilename(), e);
-                return new ResponseEntity<>("Failed to upload " + file.getOriginalFilename(), HttpStatus.OK);
+                return new ResponseEntity<>("Failed to upload "   + file.getOriginalFilename(), HttpStatus.OK);
             }
         } else {
             logger.debug("Failed to upload " + file.getOriginalFilename()

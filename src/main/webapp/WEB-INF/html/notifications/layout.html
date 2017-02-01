@@ -4,8 +4,8 @@
         No notifications found
     </div>
 
-    <select ng-model="selectedName" ng-options="item for item in names">
-    </select>
+    <!--<select ng-model="selectedName" ng-options="item for item in names">-->
+    <!--</select>-->
     <div class="form-group">
     <button class="btn btn-primary updateUserButton  btn-top-grid" ng-click="openUpdateEditorDef(elem)"
             style="width: initial; padding: 0px 10px; margin-bottom: auto;">
@@ -130,11 +130,18 @@
         </tr>
         </tbody>
     </table>
-    <dir-pagination-controls
+
+    <div style="padding-bottom: 35px;">
+        <dir-pagination-controls style="float: left;"
             direction-links="true"
             boundary-links="true"
+            auto-hide = "false"
             pagination-id="notific">
-    </dir-pagination-controls>
+        </dir-pagination-controls>
+        <select ng-model="selectedName" ng-options="item for item in names" class="form-control" style="float: left; width: 100px; margin: -11px 10px;">
+        </select>
+    </div>
+
 
     <script type="text/ng-template" id="updateNotifTemplate.html">
         <div class="modal-header">

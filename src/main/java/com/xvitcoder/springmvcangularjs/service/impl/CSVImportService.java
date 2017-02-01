@@ -1,13 +1,13 @@
 package com.xvitcoder.springmvcangularjs.service.impl;
 
+import com.xvitcoder.springmvcangularjs.dao.ImportDao;
+import com.xvitcoder.springmvcangularjs.dao.impl.JdbcAccessCard;
+import com.xvitcoder.springmvcangularjs.dao.impl.JdbcImport;
 import com.xvitcoder.springmvcangularjs.service.ImportService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -15,6 +15,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -27,32 +29,21 @@ public class CSVImportService implements ImportService {
 
     private Logger logger = Logger.getLogger(CSVImportService.class);
 
-    private JdbcTemplate jdbcTemplateObject;
-    private SimpleJdbcCall processData;
-    private PlatformTransactionManager transactionManager;
+    private ImportDao importDao;
 
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+    public void setImportDao(ImportDao importDao) {
+        this.importDao = importDao;
     }
 
-    public void setTransactionManager(PlatformTransactionManager transactionManager) {
-        Locale.setDefault(Locale.ENGLISH);
-        this.transactionManager = transactionManager;
-    }
-
-    public void fileProcessing(String filePath, String type) {
-        logger.debug("Entering fileProcessing()");
-        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+    public String fileProcessing(String filePath, int userId, String type) {
+        logger.debug("Entering fileProcessing(filePath=" + filePath + ", userId=" + userId + ", type=" + type + ")");
         String ctlFile;
-        String procedureName;
         if("notebooks".equals(type)) {
             ctlFile = "C:/SQLLOADER_RIMS/GOODS.ctl";
-            procedureName = "sdb_data_processing";
         } else if ("employees".equals(type)) {
             ctlFile = "C:/SQLLOADER_RIMS/Users.ctl";
-            procedureName = "sdb_emp_data_processing";
         } else {
-            return;
+            return "Not valid entity type";
         }
 
         StringBuilder stringBuilder = new StringBuilder("sqlldr control=")
@@ -67,20 +58,10 @@ public class CSVImportService implements ImportService {
         try {
             logger.debug("Executing command " + stringBuilder);
             Runtime.getRuntime().exec(stringBuilder.toString());
-            try {
-                logger.info("entered try with procedure call");
-                processData = new SimpleJdbcCall(jdbcTemplateObject).withProcedureName(procedureName);
-                Map<String, Object> args = new HashMap<>();
-                args.put("user_id", "1");
-                processData.execute(args);
-                transactionManager.commit(status);
-            } catch (DataAccessException e) {
-                logger.error("Error processing data", e);
-                throw e;
-            }
-            logger.debug("Leaving fileProcessing()");
+            return importDao.processData(userId, type);
         } catch (IOException e){
             logger.error("Error executing command", e);
+            return "Error executing command";
         }
     }
 

@@ -17,7 +17,7 @@
         $scope.pageSize;
         $scope.editRecord;
         $scope.names = [5,10,25,50,100];
-        $scope.selectedName=5;
+        $scope.selectedName=10;
         // var settings={}
         // settings.notif_num=1;
         // settings.user_id=0;

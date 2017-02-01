@@ -4,8 +4,8 @@
     No employees found
 </div>
 
-    <select ng-model="selectedName" ng-options="item for item in names">
-    </select>
+    <!--<select ng-model="selectedName" ng-options="item for item in names">-->
+    <!--</select>-->
 
 <table class="table table-bordered table-striped"  ng-show="emps.length > 0">
     <thead>
@@ -70,11 +70,17 @@
     </tr>
     </tbody>
 </table>
-    <dir-pagination-controls
+
+    <div style="padding-bottom: 35px;">
+        <dir-pagination-controls style="float: left;"
             direction-links="true"
             boundary-links="true"
+            auto-hide = "false"
             pagination-id="employee">
-    </dir-pagination-controls>
+        </dir-pagination-controls>
+        <select ng-model="selectedName" ng-options="item for item in names" class="form-control" style="float: left; width: 100px; margin: -11px 10px;">
+        </select>
+    </div>
 
     <script type="text/ng-template" id="sendNotifTemplate.html">
         <div class="modal-header">

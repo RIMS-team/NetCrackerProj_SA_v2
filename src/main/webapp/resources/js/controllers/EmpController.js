@@ -12,9 +12,9 @@
 
     app.controller("EmpController", function ($scope, $http, $uibModal, ordNotifyService) {
         var _this = this;
-        $scope.pageSize=5;
+        //$scope.pageSize=5;
         $scope.names = [5,10,25,50,100];
-        $scope.selectedName=5;
+        $scope.selectedName=10;
 
         // $scope.loadNotifiTempList();
         //

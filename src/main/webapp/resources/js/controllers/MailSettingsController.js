@@ -17,7 +17,7 @@
         };
 
         $scope.updateMailSettings = function(mailSettings) {
-            var updateMailSettings = {host : mailSettings.host, socketFactoryPort : mailSettings.socketFactoryPort, socketFactoryClass : mailSettings.socketFactoryClass, auth : mailSettings.auth, port : mailSettings.port, from : mailSettings.from};
+            var updateMailSettings = {host : mailSettings.host, socketFactoryPort : mailSettings.socketFactoryPort, socketFactoryClass : mailSettings.socketFactoryClass, auth : mailSettings.auth, port : mailSettings.port, from : mailSettings.from,password: mailSettings.password};
             $http.put('mailsettings/updateMailSettings', updateMailSettings).success(function() {
                 $scope.getMailSettings();
                 $scope.success = true;

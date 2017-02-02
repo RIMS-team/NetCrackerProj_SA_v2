@@ -13,5 +13,5 @@ public interface OrderService {
     OrderCursor findById(int id);
     ErrorText updateOrder(OrderCursor order);
     ErrorText addOrder(OrderCursor order);
-    ErrorText deleteOrder(int id);
+    ErrorText deleteOrder(OrderCursor order);
 }

@@ -45,10 +45,15 @@ public class OrderController {
         return orderService.updateOrder(order);
     }
 
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody ErrorText removeOrder(@PathVariable int id) {
-        logger.debug("Request URL: /order/remove/" + id + "; Entering removeOrder(id=" + id + ")");
-        return orderService.deleteOrder(id);
+//    @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
+//    public @ResponseBody ErrorText removeOrder(@PathVariable int id) {
+//        logger.debug("Request URL: /order/remove/" + id + "; Entering removeOrder(id=" + id + ")");
+//        return orderService.deleteOrder(id);
+//    }
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public @ResponseBody ErrorText removeOrder(@RequestBody OrderCursor order) {
+        logger.debug("Request URL: /order/remove; Entering removeOrder(order=" + order + ")");
+        return orderService.deleteOrder(order);
     }
 
     @RequestMapping("/layout")

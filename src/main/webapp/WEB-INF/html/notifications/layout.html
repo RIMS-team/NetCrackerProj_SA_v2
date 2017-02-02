@@ -6,6 +6,11 @@
 
     <select ng-model="selectedName" ng-options="item for item in names">
     </select>
+
+    <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="fetchNotificationList()" style="margin-bottom: 10px" title="Refresh">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+    </button>
+
     <div class="form-group">
     <button class="btn btn-primary updateUserButton  btn-top-grid" ng-click="openUpdateEditorDef(elem)"
             style="width: initial; padding: 0px 10px; margin-bottom: auto;">
@@ -34,15 +39,35 @@
             <th style="text-align: center;">
                 <a class="thumbnail1" href="#">Inventory Type
                     <span>Search by Inventory Type
-                    <input type="text" ng-model="ref.inv_type" placeholder="Search"/></span></a>
+                        <!--<input type="text" ng-model="ref.inv_type" placeholder="Search"/>-->
+                        <select ng-model = "ref.inv_type">
+                                <option value=""></option>
+                                <option value = "Card">Card</option>
+                                <option value = "Notebook">Notebook</option>
+                        </select>
+                    </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inv_type')}" ng-click="sort('inv_type')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>
             </th>
-            <th style="text-align: center;">
-                <a class="thumbnail1" href="#">Inventory Number
-                    <span>Search by Inventory Number
-                    <input type="text" ng-model="ref.inv_num" placeholder="Search"/></span></a>
+            <!--<th style="text-align: center;">-->
+                <!--<a class="thumbnail1" href="#">Inventory Number-->
+                    <!--<span>Search by Inventory Number-->
+                    <!--<input type="text" ng-model="ref.inv_num" placeholder="Search"/></span></a>-->
+                <!--<button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inv_num')}" ng-click="sort('inv_num')" style="float: right;">-->
+                    <!--<span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+                <!--</button>-->
+            <!--</th>-->
+            <th style="text-align: center; vertical-align: top;">
+                <a class="thumbnail1" href="#">Inventory number
+                    <span>Search by Inventory num
+                            <input type="text" ng-model="ref.inv_num" placeholder="Search" list="notif-inventoryNum"/>
+                            <datalist id="notif-inventoryNum">
+                                <option ng-repeat="invNum in notifications" value="{{invNum.inv_num }}">{{invNum.inv_num }}</option>
+                            </datalist>
+                        </span>
+                </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inv_num')}" ng-click="sort('inv_num')" style="float: right;">
                     <span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </button>

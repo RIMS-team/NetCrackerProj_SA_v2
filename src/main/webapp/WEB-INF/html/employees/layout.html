@@ -60,7 +60,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: ref | itemsPerPage: selectedName " pagination-id="employee">
+    <tr dir-paginate="emp in emps | orderBy:sortKey:reverse | filter: ref : startsWith | itemsPerPage: selectedName " pagination-id="employee">
         <td ng-hide="true">{{emp.id}}</td>
         <td>{{emp.fullName}}</td>
         <td>{{emp.phoneNumber}}</td>

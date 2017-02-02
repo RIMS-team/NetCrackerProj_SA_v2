@@ -80,7 +80,7 @@
                         <li><a href="help.html" target="_blank">Help</a></li>
                         <!--<li role="separator" class="divider"></li>-->
                         <li><a href="#" ng-click="mainCtrl.addTab('usersettings', 'Usersettings', 'user-setting')">User's Settings</a></li>
-                        <li><a href="#" ng-click="mainCtrl.addTab('mailsettings', 'Mailsettings', 'mail-settings')">Mail Settings</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" ng-click="mainCtrl.addTab('mailsettings', 'Mailsettings', 'mail-settings')">Mail Settings</a></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 </li>

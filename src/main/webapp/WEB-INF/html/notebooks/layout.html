@@ -132,7 +132,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter: ref | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: selectedName" pagination-id="notebook" >
+    <tr dir-paginate="elem in filteredNotebook = (notebook | orderBy:sortKey:reverse | filter: ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due ) | orderBy:sortKey:reverse | filter: ref : startsWith | dateRangeOpen : from_date_open : to_date_open | dateRangeDue : from_date_due : to_date_due | itemsPerPage: selectedName" pagination-id="notebook" >
         <td ng-hide="true">{{elem.id}}</td>
         <td>{{elem.name}}</td>
         <td>{{elem.model}}</td>

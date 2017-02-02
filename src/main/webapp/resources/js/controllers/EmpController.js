@@ -156,6 +156,7 @@
         $scope.updateText = function (order, editRecord) {
             console.log(order);
             console.log(editRecord);
+            $scope.editRecord.temp_1 = editRecord.temp_1_def;
             editRecord.template = editRecord.temp_1;
             editRecord.template = editRecord.template.replace("|NAME|", editRecord.employeeName);
             editRecord.template = editRecord.template.replace("|INVENTORY_TYPE|", order.inventoryType);

@@ -45,6 +45,7 @@ public class EmailSender {
         MailSettingsService mailSettingsService = (MailSettingsService) context.getBean("mailSettingsService");
         MailSettings mailSettings=mailSettingsService.getMailSettings();
         Mail mail=new Mail(mailSettings.getFrom(),mailSettings.getPassword());
+        System.out.println(mail.toString());
         return mail;
     }
 
@@ -54,6 +55,9 @@ public class EmailSender {
     public void sendMessage(final String whoSend, final String password, String whoCheck,String mess){
         logger.debug("Entering sendMessage(whoSend=" + whoSend + ", password=" + password + ", whoCheck=" + whoCheck + ")");
         Properties properties=getMailProperty();
+        System.out.println(properties);
+        System.out.println(whoSend);
+        System.out.println(password);
 
         Session session=Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
             protected PasswordAuthentication getPasswordAuthentication(){
@@ -64,7 +68,7 @@ public class EmailSender {
 
         try {
             Message message=new MimeMessage(session);
-            message.setFrom(new InternetAddress("v.karpov2018@yandex.ru"));
+            message.setFrom(new InternetAddress(whoSend));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(whoCheck));
             message.setSubject("Netcracker");
             message.setText(mess);

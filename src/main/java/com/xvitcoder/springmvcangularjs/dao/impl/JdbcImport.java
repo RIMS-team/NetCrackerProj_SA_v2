@@ -46,7 +46,7 @@ public class JdbcImport implements ImportDao {
         } else if ("employees".equals(type)) {
             procedureName = "sdb_emp_data_processing";
         } else {
-            return "Not valid entity type";
+            return "! Not valid entity type";
         }
 
         processData = new SimpleJdbcCall(jdbcTemplateObject).withProcedureName(procedureName);
@@ -55,7 +55,11 @@ public class JdbcImport implements ImportDao {
         Map result = processData.execute(args);
 
         transactionManager.commit(status);
-        return (String) result.get("LOGS");
+        String logs = (String) result.get("LOGS");
+        if(logs == null) {
+            logs = "! File contains not valid data";
+        }
+        return logs;
     }
 
 }

@@ -38,8 +38,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ErrorText deleteOrder(int id) {
-        return orderDao.deleteOrder(id);
+    public ErrorText deleteOrder(OrderCursor order) {
+        return orderDao.deleteOrder(order);
     }
 
 }

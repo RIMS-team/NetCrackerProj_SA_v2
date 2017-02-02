@@ -11,6 +11,10 @@
             <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="openInsertEditor()" style="margin-bottom: 10px" title="Add new card">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
+
+            <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="fetchCardsList()" style="margin-bottom: 10px" title="Refresh">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
         </div>
         <div class="col-md-4 col-md-offset-4">
             <a class="btn btn-default btn-top-grid" ng-click="printCards(filteredCards)" target="_blank" style="float: right; margin-bottom: 10px;" title="PDF report">
@@ -30,12 +34,18 @@
                     </button>
                 </th>
 
-                <th style="text-align: center;">
+                <!--<th style="text-align: center;">-->
+                    <!--<a class="thumbnail1" href="#">Inventory number-->
+                        <!--<span>Search by Inv number<input type="text" ng-model="ref.inventoryNum" placeholder="Search"/></span></a>-->
+                    <!--<button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('inventoryNum')}" ng-click="sort('inventoryNum')" style="float: right;">-->
+                        <!--<span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>-->
+                    <!--</button>-->
+                <!--</th>-->
+                <th style="text-align: center; vertical-align: top;">
                     <a class="thumbnail1" href="#">Inventory number
-                        <span>
-                            Search by Inv number
-                            <input type="text" ng-model="ref.inventoryNum" placeholder="Search"/>
-                            <datalist id="order-inventoryNum">
+                        <span>Search by Inventory number
+                            <input type="text" ng-model="ref.inventoryNum" placeholder="Search" list="card-inventoryNum"/>
+                            <datalist id="card-inventoryNum">
                                 <option ng-repeat="card in cards" value="{{card.inventoryNum }}">{{card.inventoryNum }}</option>
                             </datalist>
                         </span>

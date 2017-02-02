@@ -43,7 +43,7 @@ public class CSVImportService implements ImportService {
         } else if ("employees".equals(type)) {
             ctlFile = "C:/SQLLOADER_RIMS/Users.ctl";
         } else {
-            return "Not valid entity type";
+            return "! Not valid entity type";
         }
 
         StringBuilder stringBuilder = new StringBuilder("sqlldr control=")
@@ -61,7 +61,7 @@ public class CSVImportService implements ImportService {
             return importDao.processData(userId, type);
         } catch (IOException e){
             logger.error("Error executing command", e);
-            return "Error executing command";
+            return "! Error executing command";
         }
     }
 

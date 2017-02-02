@@ -117,9 +117,21 @@ public class JdbcOrder implements OrderDAO {
         Map map1;
         int errCode;
         String errMsg;
+
+        int invId;
+        String invNum;
+        if (order.getInventoryIdNew() == 0) {
+            invId = order.getInventoryId();
+            invNum = order.getInventoryNum();
+        }
+        else {
+            invId = order.getInventoryIdNew();
+            invNum = order.getInventoryNumNew();
+        }
+
         try {
             args.put("P_OBJECT_ID", order.getId());
-            args.put("P_INVENTORY_ID", order.getInventoryId());
+            args.put("P_INVENTORY_ID", invId);
             args.put("P_EMPLOYEE_ID", order.getEmployeeId());
             args.put("P_USER_ID", order.getUserId());
             args.put("P_ORD_STATUS_ID", order.getStatusId());
@@ -135,6 +147,27 @@ public class JdbcOrder implements OrderDAO {
             }
             else {
                 if (order.getStatusId() == 8) { // Closed (Закрыт)
+                    // card -> to stock
+                    args.put("P_OBJECT_ID", invId);
+                    args.put("P_INVENTORY_NUM", invNum);
+                    args.put("P_INV_STATUS_ID", 2); // IN_STOCK (На складе)
+
+                    map1 = cardUpdateSP.execute(args);
+                    errCode = Integer.valueOf((String) map1.get("p_err_code"));
+                    errMsg = (String) map1.get("p_err_msg");
+
+                    if (errCode != 0) {
+                        System.out.println((String) map1.get("p_err_msg"));
+                        System.out.println(Integer.valueOf((String) map1.get("p_err_code")));
+                        transactionManager.rollback(status);
+                    }
+//                    else {
+//                        transactionManager.commit(status);
+//                    }
+                }
+
+                if (order.getInventoryIdNew() != 0 && errCode == 0) {
+                    // old card -> to stock
                     args.put("P_OBJECT_ID", order.getInventoryId());
                     args.put("P_INVENTORY_NUM", order.getInventoryNum());
                     args.put("P_INV_STATUS_ID", 2); // IN_STOCK (На складе)
@@ -147,11 +180,33 @@ public class JdbcOrder implements OrderDAO {
                         System.out.println((String) map1.get("p_err_msg"));
                         System.out.println(Integer.valueOf((String) map1.get("p_err_code")));
                         transactionManager.rollback(status);
-                    } else {
-                        transactionManager.commit(status);
                     }
+//                    else {
+//                        transactionManager.commit(status);
+//                    }
                 }
-                else {
+
+                if (order.getInventoryIdNew() != 0 && order.getStatusId() != 8 && errCode == 0) {
+                    // new card -> in use
+                    args.put("P_OBJECT_ID", order.getInventoryIdNew());
+                    args.put("P_INVENTORY_NUM", order.getInventoryNumNew());
+                    args.put("P_INV_STATUS_ID", 1); // IN_USE (Используется)
+
+                    map1 = cardUpdateSP.execute(args);
+                    errCode = Integer.valueOf((String) map1.get("p_err_code"));
+                    errMsg = (String) map1.get("p_err_msg");
+
+                    if (errCode != 0) {
+                        System.out.println((String) map1.get("p_err_msg"));
+                        System.out.println(Integer.valueOf((String) map1.get("p_err_code")));
+                        transactionManager.rollback(status);
+                    }
+//                    else {
+//                        transactionManager.commit(status);
+//                    }
+                }
+
+                if (errCode == 0) {
                     transactionManager.commit(status);
                 }
             }
@@ -215,15 +270,15 @@ public class JdbcOrder implements OrderDAO {
     }
 
     @Override
-    public ErrorText deleteOrder(int id) {
-        logger.debug("Entering JdbcOrder.deleteOrder(orderId=" + id + ")");
+    public ErrorText deleteOrder(OrderCursor order) {
+        logger.debug("Entering JdbcOrder.deleteOrder(order=" + order + ")");
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         Map<String, Object> args = new HashMap<>(1);
         Map map1;
         int errCode;
         String errMsg;
         try {
-            args.put("P_OBJECT_ID", id);
+            args.put("P_OBJECT_ID", order.getId());
             map1=orderDeleteSP.execute(args);
             errCode = Integer.valueOf((String)map1.get("p_err_code"));
             errMsg= (String)map1.get("p_err_msg");
@@ -231,8 +286,24 @@ public class JdbcOrder implements OrderDAO {
                 System.out.println((String)map1.get("p_err_msg"));
                 System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
                 transactionManager.rollback(status);
+//            } else {
+//                transactionManager.commit(status);
+//            }
             } else {
-                transactionManager.commit(status);
+                args.put("P_OBJECT_ID", order.getInventoryId());
+                args.put("P_INVENTORY_NUM", order.getInventoryNum());
+                args.put("P_INV_STATUS_ID", 2); // IN_STOCK (На складе)
+
+                map1=cardUpdateSP.execute(args);
+                errCode = Integer.valueOf((String)map1.get("p_err_code"));
+                errMsg= (String)map1.get("p_err_msg");
+                if (errCode != 0) {
+                    System.out.println((String)map1.get("p_err_msg"));
+                    System.out.println(Integer.valueOf((String)map1.get("p_err_code")));
+                    transactionManager.rollback(status);
+                } else {
+                    transactionManager.commit(status);
+                }
             }
         }
         catch (DataAccessException e) {

@@ -33,7 +33,12 @@ public class OrderCursor extends Entity {
     protected int editorId;
     protected String editorFullName;
 
-    public OrderCursor() {}
+    protected int inventoryIdNew;
+    protected String inventoryNumNew;
+
+    public OrderCursor() {
+
+    }
 
     public OrderCursor(int id, Date date, String inventoryType, String inventoryNum) {
         this.id = id;
@@ -228,6 +233,22 @@ public class OrderCursor extends Entity {
 
     public void setEditorFullName(String editorFullName) {
         this.editorFullName = editorFullName;
+    }
+
+    public int getInventoryIdNew() {
+        return inventoryIdNew;
+    }
+
+    public void setInventoryIdNew(int inventoryIdNew) {
+        this.inventoryIdNew = inventoryIdNew;
+    }
+
+    public String getInventoryNumNew() {
+        return inventoryNumNew;
+    }
+
+    public void setInventoryNumNew(String inventoryNumNew) {
+        this.inventoryNumNew = inventoryNumNew;
     }
 
     @Override

@@ -47,7 +47,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr dir-paginate="item in invStats | orderBy:sortKey:reverse | filter: ref | itemsPerPage: pageSize " pagination-id="invStats">
+    <tr dir-paginate="item in invStats | orderBy:sortKey:reverse | filter : ref : startsWith | itemsPerPage: pageSize " pagination-id="invStats">
         <td ng-hide="true">{{item.id}}</td>
         <td>{{item.name}}</td>
         <td>{{item.code}}</td>

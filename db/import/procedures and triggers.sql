@@ -1,10 +1,12 @@
 -- procedure
-create or replace procedure sdb_data_processing(user_id in number) as
+create or replace procedure sdb_data_processing(user_id in number, logs out varchar2) as
   v_notebook_id number(30);
   v_inv_status_id number(30);
   v_employee_id number(30);
-  v_null varchar(30) := null;
+  v_null varchar2(5) := null;
+  v_splitter varchar2(5) := '|';
 begin -- begin sdb_data_processing
+  logs := '';
   FOR item IN (
     SELECT Name, In_Use_by,	Inv_Status,	Location,	Memory_Type,
                 Model,	Employee,	Inventory_Num,	Serial_Number
@@ -20,12 +22,14 @@ begin -- begin sdb_data_processing
            AND INVENTORY_NUM_ATTR.VALUE = item.INVENTORY_NUM;
       DM_NOTEBOOK.NOTEBOOK_UPDATE(v_notebook_id, item.name, item.location, item.memory_type,
             item.model, item.inventory_num, item.serial_number, v_inv_status_id);
+      logs := logs || 'Updated notebook with inventory number = ' || item.inventory_num || v_splitter;
     EXCEPTION -- if not found then insert
       WHEN no_data_found THEN
         v_notebook_id := null;
-        DM_NOTEBOOK.notebook_insert(v_notebook_id, item.name, item.location, 
+        DM_NOTEBOOK.notebook_insert(v_notebook_id, item.name, item.location,
         item.memory_type, item.model, item.inventory_num,
-        item.serial_number, v_inv_status_id); 
+        item.serial_number, v_inv_status_id);
+        logs := logs || 'Added notebook with inventory number = ' || item.inventory_num || v_splitter;
     END; -- insert or update notebook
     BEGIN -- if employee is not null
       IF item.inv_status = 'IN_USE' THEN
@@ -34,15 +38,17 @@ begin -- begin sdb_data_processing
            WHERE EMP.OBJECT_ID = FNAME_ATTR.OBJECT_ID
              AND FNAME_ATTR.ATTR_ID = 1/*FULL_NAME*/
              AND FNAME_ATTR.VALUE = item.Employee;
-     dm_order.order_insert(v_null, v_notebook_id, v_employee_id,
+      dm_order.order_insert(v_null, v_notebook_id, v_employee_id,
         user_id, v_null, TO_DATE(item.In_Use_by, 'dd/mm/yyyy'));
       END IF;
-      EXCEPTION -- if not found 
+      EXCEPTION -- if not found
       WHEN no_data_found THEN
-      NULL;
+        logs := logs || 'Unable to create order for ' || item.Employee || ' - employee does not exists' || v_splitter;
     END; -- if employee is not null
   END LOOP;
-  delete from sdb_orders where is_valid = 1;
+  BEGIN
+    execute immediate 'truncate table sdb_orders';
+  END;
 end; -- end sdb_data_processing
 /
 
@@ -63,10 +69,12 @@ END;
 /
 
 -- procedure
-create or replace procedure sdb_emp_data_processing(user_id in number) as
+create or replace procedure sdb_emp_data_processing(user_id in number default 1, logs out varchar2) as
   v_employee_id number(30);
   v_null varchar(30) := null;
+  v_splitter varchar2(5) := '|';
 begin -- begin sdb_data_processing
+  logs := '';
   FOR item IN (
     SELECT Name, Email
         FROM sdb_users WHERE Is_Valid = 1
@@ -80,13 +88,17 @@ begin -- begin sdb_data_processing
            AND FNAME_ATTR.ATTR_ID = 1 /* FULL_NAME */
            AND FNAME_ATTR.VALUE = item.NAME;
       DM_EMPLOYEE.EMPLOYEE_UPDATE(v_employee_id, ITEM.NAME, v_null, item.email);
+      logs := logs || 'Updated employee ' || item.name || v_splitter;
     EXCEPTION -- if not found then insert
       WHEN no_data_found THEN
         v_employee_id := null;
-        DM_EMPLOYEE.EMPLOYEE_insert(v_employee_id, item.name, v_null, item.email); 
+        DM_EMPLOYEE.EMPLOYEE_insert(v_employee_id, item.name, v_null, item.email);
+        logs := logs || 'Added employee ' || item.name || v_splitter;
     END; -- insert or update notebook
   END LOOP;
-  delete from sdb_users where is_valid = 1;
+  BEGIN
+    execute immediate 'truncate table sdb_users';
+  END;
 end; -- end sdb_data_processing
 /
 

@@ -4,7 +4,8 @@
 $(document).ready(function () {
     var $attach = $('#attach-project-file'),
         $remove = $('#remove-project-file'),
-        $name = $('#attached-project-file');
+        $name = $('#attached-project-file'),
+        $logs = $('#import-logs');
 
     $remove.hide();
 
@@ -29,10 +30,16 @@ $(document).ready(function () {
         e.preventDefault();
         e.stopPropagation();
 
+        NProgress.remove();
+
         $attach
             .val('')
             .change();
     });
+
+    $logs.animate({
+        scrollTop: $logs[ 0].scrollHeight
+    }, 'slow');
 
 });
 
@@ -63,22 +70,24 @@ myApp.service('fileUpload', ['$http', function ($http) {
             headers: {'Content-Type': undefined}
         })
             .success(function(data){
-                scope.data = data;
+                scope.data = data.split('|');
             })
             .error(function(data){
-                scope.data = 'Please choose the CSV-file.';
+                scope.data = ['Please choose the CSV-file.'];
             });
     }
 }]);
 
 myApp.controller('fileUploadController', ['$scope', 'fileUpload', function($scope, fileUpload){
 
-    $scope.uploadFile = function(type){
+    $scope.uploadFile = function(id, type){
+        NProgress.start();
         var file = $scope.myFile;
         console.log('file is ' );
         console.dir(file);
-        var uploadUrl = "/import-csv/" + type;
+        var uploadUrl = "/import-csv/" + id + "/" + type;
         fileUpload.uploadFileToUrl($scope, file, uploadUrl);
+        NProgress.done();
     };
 
 }]);

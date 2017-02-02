@@ -4,8 +4,8 @@
     No employees found
 </div>
 
-    <select ng-model="selectedName" ng-options="item for item in names">
-    </select>
+    <!--<select ng-model="selectedName" ng-options="item for item in names">-->
+    <!--</select>-->
 
     <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="fetchEmpList()" style="margin-bottom: 10px" title="Refresh">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
@@ -74,37 +74,48 @@
     </tr>
     </tbody>
 </table>
-    <dir-pagination-controls
+
+    <div style="padding-bottom: 35px;">
+        <dir-pagination-controls style="float: left;"
             direction-links="true"
             boundary-links="true"
+            auto-hide = "false"
             pagination-id="employee">
-    </dir-pagination-controls>
+        </dir-pagination-controls>
+        <select ng-model="selectedName" ng-options="item for item in names" class="form-control" style="float: left; width: 100px; margin: -11px 10px;">
+        </select>
+    </div>
 
-    <script type="text/ng-template" id="updateNotifTemplate.html">
+    <script type="text/ng-template" id="sendNotifTemplate.html">
         <div class="modal-header">
             <button type="button" class="close" ng-click="close()">&times;</button>
-            <h3 class="modal-title">Update Template</h3>
+            <h3 class="modal-title">Send Message</h3>
         </div>
         <div class="modal-body">
             <div style="padding: 5px" ng-form="" name="addTemplForm">
 
                 <div class="form-group">
-                    <label for="email"> Email Employeer </label>
+                    <label for="email"> Email Employee </label>
                     <input id="email" name="email" class="form-control" ng-model="editRecord.email" >
                     </input>
                 </div>
 
+                <div class="form-group">
+                    <label for="order"> Select Order </label>
+                    <select id="order" class="form-control" ng-model="currentOrder" ng-options="order.inventoryNum for order in orders" ng-change="updateText(currentOrder,editRecord)">
+                    </select>
+                </div>
 
                 <label>
-                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.temp_1"/>
+                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.temp_1" ng-change="updateText1(currentOrder,editRecord)"/>
                     Template 1
                 </label><br/>
                 <label>
-                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.id"/>
+                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.id" ng-change="updateText2(currentOrder,editRecord)"/>
                     Template 2
                 </label><br/>
                 <label>
-                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.num"/>
+                    <input type="radio" ng-model="editRecord.template" ng-value="editRecord.num" ng-change="updateText3(currentOrder,editRecord)"/>
                     Template 3
                 </label><br/>
 

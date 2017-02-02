@@ -41,5 +41,6 @@ public class OrderServiceImpl implements OrderService {
     public ErrorText deleteOrder(OrderCursor order) {
         return orderDao.deleteOrder(order);
     }
+
 }
 

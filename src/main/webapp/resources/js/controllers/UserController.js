@@ -9,9 +9,9 @@
 
     app.controller("UserController", function ($scope, $http) {
 
-        $scope.pageSize=5;
+        //$scope.pageSize=5;
         $scope.names = [5,10,25,50,100];
-        $scope.selectedName=5;
+        $scope.selectedName=10;
 
         $scope.submitAddUserForm = function(user) {
             var sendUser = {fullName : user.fullName, eMail : user.eMail, phoneNumber : user.phoneNumber, password : user.password};
@@ -79,6 +79,11 @@
         $scope.sort = function (keyname) {
             $scope.sortKey=keyname;
             $scope.reverse=!$scope.reverse;
+        };
+
+        $scope.startsWith = function (actual, expected) {
+            var lowerStr = (actual + "").toLowerCase();
+            return lowerStr.indexOf(expected.toLowerCase()) === 0;
         };
 
         $scope.fetchUserList();

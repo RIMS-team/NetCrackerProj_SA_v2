@@ -14,9 +14,9 @@
 
         $scope.editRecord = {};
         $scope.invStatuses = [];
-        $scope.pageSize=5;
+        //$scope.pageSize=5;
         $scope.names = [5,10,25,50,100];
-        $scope.selectedName=5;
+        $scope.selectedName=10;
 
         $scope.fetchCardsList = function () {
             $http.get('accesscards/accesscardlist.json').success(function (cardList) {
@@ -71,13 +71,18 @@
 
 
         $scope.sort = function (keyname) {
-            $scope.sortKey=keyname;
+            $scope.sortKey = keyname;
             $scope.reverse = !$scope.reverse;
         };
 
         $scope.isSortKey = function(keyname) {
             return $scope.sortKey == keyname;
-        }
+        };
+
+        $scope.startsWith = function (actual, expected) {
+            var lowerStr = (actual + "").toLowerCase();
+            return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
 
         $scope.fetchCardsList();
 

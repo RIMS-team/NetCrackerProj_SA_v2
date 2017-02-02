@@ -1,9 +1,14 @@
-package com.xvitcoder.springmvcangularjs.dao;
+package com.xvitcoder.springmvcangularjs.dao.impl;
 
+import com.xvitcoder.springmvcangularjs.dao.EmployeeDao;
 import com.xvitcoder.springmvcangularjs.dao.Mappers.EmployeeMapper;
+import com.xvitcoder.springmvcangularjs.dao.Mappers.OrderMiniMapper;
 import com.xvitcoder.springmvcangularjs.model.Employee;
+import com.xvitcoder.springmvcangularjs.model.OrderCursor;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -13,8 +18,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by netcracker on 29.11.2016.
@@ -25,9 +32,18 @@ public class JdbcEmployeeDao implements EmployeeDao {
     private JdbcTemplate jdbcTemplateObject;
     private PlatformTransactionManager transactionManager;
 
+    private Logger logger = Logger.getLogger(JdbcEmployeeDao.class);
+
+    private SimpleJdbcCall orderSelectByEmployeeSP;
+
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+
+        orderSelectByEmployeeSP = new SimpleJdbcCall(jdbcTemplateObject.getDataSource());
+        orderSelectByEmployeeSP.withCatalogName("DM_ORDER");
+        orderSelectByEmployeeSP.withProcedureName("ORDER_SELECT_BY_EMPLOYEE");
+        orderSelectByEmployeeSP.returningResultSet("P_OUT_CURSOR", new OrderMiniMapper());
     }
 
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
@@ -138,6 +154,28 @@ public class JdbcEmployeeDao implements EmployeeDao {
             throw e;
         }
         return employees;
+    }
+
+    @Override
+    public List<OrderCursor> findOrdersByEmployeeId(int id) {
+        logger.debug("Entering JdbcEmployeeDao.findOrdersByEmployeeId(employeeId=" + id + ")");
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        List<OrderCursor> orders;
+        Map<String, Object> args = new HashMap<>(1);
+        Map<String, Object> result = new HashMap<>(1);
+        try {
+            args.put("P_EMPLOYEE_ID", id);
+            result.put("P_OUT_CURSOR", "");
+            result = orderSelectByEmployeeSP.execute(args);
+            orders = (List<OrderCursor>) result.get("P_OUT_CURSOR");
+            transactionManager.commit(status);
+        } catch (DataAccessException ex) {
+            logger.error("Error selection orders, rolling back", ex);
+            transactionManager.rollback(status);
+            throw ex;
+        }
+        logger.debug("Leaving JdbcEmployeeDao.findOrdersByEmployeeId(employeeId=" + id + ")");
+        return orders;
     }
 
 }

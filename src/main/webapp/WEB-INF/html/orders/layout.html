@@ -5,11 +5,10 @@
         No orders found
     </div>
 
+    <!--<select ng-model="selectedName" ng-options="item for item in names">-->
+    <!--</select>-->
     <div class="row">
         <div class="col-md-4">
-            <select ng-model="selectedName" ng-options="item for item in names">
-            </select>
-
             <button type="button" class="btn btn-default btn-mini btn-top-grid" ng-click="openInsertEditor()" style="margin-bottom: 10px" title="Add new Card Order">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
@@ -245,11 +244,16 @@
         </tbody>
     </table>
 
-    <dir-pagination-controls
-        direction-links="true"
-        boundary-links="true"
-        pagination-id="order">
-    </dir-pagination-controls>
+    <div style="padding-bottom: 35px;">
+        <dir-pagination-controls style="float: left;"
+            direction-links="true"
+            boundary-links="true"
+            auto-hide = "false"
+            pagination-id="order">
+        </dir-pagination-controls>
+        <select ng-model="selectedName" ng-options="item for item in names" class="form-control" style="float: left; width: 100px; margin: -11px 10px;">
+        </select>
+    </div>
 
     <script type="text/ng-template" id="updateOrder.html">
         <div class="modal-header">
@@ -356,18 +360,6 @@
                         <!--User is required.-->
                     <!--</p>-->
                 </div>
-
-                <!--<div class="form-group" ng-if="editRecord.id"-->
-                     <!--ng-class="{ 'has-error' : addOrderForm.user.$invalid &amp;&amp; !addOrderForm.editor.$pristine }">-->
-                    <!---->
-                    <!--&lt;!&ndash;<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<select id="user" name="user" class="form-control" ng-model="editRecord.selectedUser"&ndash;&gt;-->
-                    <!--&lt;!&ndash;ng-options="user.fullName for user in ordUsers | orderBy:'fullName' track by user.id" required="required">&ndash;&gt;-->
-                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<p ng-show="addOrderForm.user.$error.required &amp;&amp; !addOrderForm.user.$pristine" class="help-block">&ndash;&gt;-->
-                    <!--&lt;!&ndash;User is required.&ndash;&gt;-->
-                    <!--&lt;!&ndash;</p>&ndash;&gt;-->
-                <!--</div>-->
 
                 <div class="modal-footer">
                     <!--<button type="submit" class="btn btn-default btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>-->

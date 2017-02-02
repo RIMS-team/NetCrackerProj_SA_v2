@@ -14,9 +14,9 @@
 
         $scope.invStatuses = [];
 
-        $scope.pageSize = 5;
+        //$scope.pageSize = 5;
         $scope.names = [5,10,25,50,100];
-        $scope.selectedName=5;
+        $scope.selectedName=10;
 
         $scope.fetchNotebookList = function() {
             $http.get('notebook/all').success(function(notebookList){
@@ -46,7 +46,12 @@
 
         $scope.isSortKey = function(keyname) {
             return $scope.sortKey == keyname;
-        }
+        };
+
+        $scope.startsWith = function (actual, expected) {
+            var lowerStr = (actual + "").toLowerCase();
+            return lowerStr.indexOf(expected.toLowerCase()) === 0;
+        };
 
     });
 

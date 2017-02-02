@@ -3,8 +3,8 @@
 <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="users.length == 0">
     No users found
 </div>
-    <select ng-model="selectedName" ng-options="item for item in names">
-    </select>
+    <!--<select ng-model="selectedName" ng-options="item for item in names">-->
+    <!--</select>-->
     <div class="form-group">
         <button id="addUserForm-button" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#addUser" style="margin-bottom: 10px">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -39,11 +39,17 @@
     </tr>
     </tbody>
 </table>
-    <dir-pagination-controls style="float: right;"
+
+    <div style="padding-bottom: 35px;">
+        <dir-pagination-controls style="float: left;"
             direction-links="true"
             boundary-links="true"
+            auto-hide = "false"
             pagination-id="user">
-    </dir-pagination-controls>
+        </dir-pagination-controls>
+        <select ng-model="selectedName" ng-options="item for item in names" class="form-control" style="float: left; width: 100px; margin: -11px 10px;">
+        </select>
+    </div>
 
 <div class="modal fade" id="addUser" role="dialog">
     <div class="modal-dialog">

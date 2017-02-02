@@ -17,8 +17,8 @@
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
         <property name="username" value="kurator2" />
         <property name="password" value="12345" />
-        <property name="initialSize" value="10" />
-        <property name="maxActive" value="100" />
+        <property name="initialSize" value="5" />
+        <property name="maxActive" value="10" />
         <property name="maxIdle" value="50" />
         <property name="minIdle" value="10" />
         <property name="maxWait" value="-1" />

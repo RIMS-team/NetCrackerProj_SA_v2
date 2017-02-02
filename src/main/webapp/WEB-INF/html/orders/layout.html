@@ -100,9 +100,9 @@
                             Search by Open date
                             <br/>
                             From
-                            <input type="date" ng-model="from_open_date"/>
+                            <input type="date" ng-model="from_date_create"/>
                             To
-                            <input type="date" ng-model="to_open_date"/>
+                            <input type="date" ng-model="to_date_create"/>
                         </span>
                 </a>
                 <button class="btn btn-mini btn-tab-header" ng-class="{'sort':isSortKey('createDate')}" ng-click="sort('createDate')" style="float: right;">
@@ -213,7 +213,7 @@
         </thead>
 
         <tbody>
-        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref : startsWith | dateRange : from_date : to_date | dateRangeCreate : from_date_create : to_date_create| itemsPerPage: selectedName " pagination-id="order">
+        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref : startsWith | dateRangeCreate : from_date_create : to_date_create |  dateRange : from_date : to_date| itemsPerPage: selectedName " pagination-id="order">
             <td ng-hide="true">{{order.id}}</td>
             <td>{{order.createDate|date:'dd.MM.yyyy'}}</td>
             <td>{{order.date|date:'dd.MM.yyyy'}}</td>

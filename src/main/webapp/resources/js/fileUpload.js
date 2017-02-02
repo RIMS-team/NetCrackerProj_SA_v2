@@ -63,6 +63,7 @@ myApp.directive('fileModel', ['$parse', function ($parse) {
 
 myApp.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(scope, file, uploadUrl){
+        NProgress.start();
         var fd = new FormData();
         fd.append('file', file);
         $http.post(uploadUrl, fd, {
@@ -70,24 +71,29 @@ myApp.service('fileUpload', ['$http', function ($http) {
             headers: {'Content-Type': undefined}
         })
             .success(function(data){
-                scope.data = data.split('|');
+                var dataArr = data.split('|');
+                for (i = 0; i < dataArr.length; i++) {
+                    dataArr[i] = dataArr[i].replace('*', '<span class="glyphicon glyphicon-ok icon-green" aria-hidden="true"></span>');
+                    dataArr[i] = dataArr[i].replace('!', '<span class="glyphicon glyphicon-remove icon-red" aria-hidden="true"></span>');
+                    dataArr[i] = dataArr[i].replace('?', '<span class="glyphicon glyphicon-info-sign icon-yellow" aria-hidden="true"></span>');
+                }
+                NProgress.done();
+                scope.data = dataArr;
             })
             .error(function(data){
-                scope.data = ['Please choose the CSV-file.'];
+                NProgress.done();
+                scope.data = ['<span class="glyphicon glyphicon-remove icon-red" aria-hidden="true"></span> Please choose the CSV-file.'];
             });
     }
 }]);
 
 myApp.controller('fileUploadController', ['$scope', 'fileUpload', function($scope, fileUpload){
-
     $scope.uploadFile = function(id, type){
-        NProgress.start();
         var file = $scope.myFile;
         console.log('file is ' );
         console.dir(file);
         var uploadUrl = "/import-csv/" + id + "/" + type;
         fileUpload.uploadFileToUrl($scope, file, uploadUrl);
-        NProgress.done();
     };
 
 }]);

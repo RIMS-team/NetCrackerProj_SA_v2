@@ -55,12 +55,12 @@ public class FileUploadController {
                 return new ResponseEntity<>(importService.fileProcessing(serverFile.getAbsolutePath(), id, type), HttpStatus.OK);
             } catch (Exception e) {
                 logger.debug("Failed to upload " + file.getOriginalFilename(), e);
-                return new ResponseEntity<>("Failed to upload "   + file.getOriginalFilename(), HttpStatus.OK);
+                return new ResponseEntity<>("! Failed to upload "   + file.getOriginalFilename(), HttpStatus.OK);
             }
         } else {
             logger.debug("Failed to upload " + file.getOriginalFilename()
                     + " because the file was empty.");
-            return new ResponseEntity<>("Failed to upload " + file.getOriginalFilename()
+            return new ResponseEntity<>("! Failed to upload " + file.getOriginalFilename()
                     + " because the file was empty", HttpStatus.OK);
         }
     }

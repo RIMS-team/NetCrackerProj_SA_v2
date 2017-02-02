@@ -282,7 +282,7 @@
                     <div>
                         <label>Upload logs:</label>
                         <div id="import-logs">
-                            <p ng-repeat="value in data track by $index">{{value}}</p>
+                            <p ng-repeat="value in data track by $index" ng-bind-html="value"></p>
                         </div>
                     </div>
                 </div>

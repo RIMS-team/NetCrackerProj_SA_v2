@@ -318,6 +318,18 @@ select.form-control + .chosen-container .chosen-search input[type=text]:focus {
     border: 1px solid #ddd;
     overflow: auto;
 }
+
+.icon-red {
+    color: red;
+}
+
+.icon-green {
+    color: #00a800;
+}
+
+.icon-yellow {
+    color: #edea05;
+}
 /*--------------*/
 
 

@@ -119,13 +119,14 @@
                     Template 3
                 </label><br/>
 
-                <div class="form-group">
+                <div class="form-group" ng-class="{ 'has-error' : addTemplForm.tempText.$invalid &amp;&amp; !addTemplForm.tempText.$pristine}">
                     <label for="tempText"> Temp Text </label>
-                    <textarea id="tempText" name="tempText" class="form-control" ng-model="editRecord.template" >
+                    <textarea id="tempText" name="tempText" class="form-control" ng-model="editRecord.template" required="required">
                     </textarea>
+                    <p ng-show="addTemplForm.tempText.$error.required &amp;&amp; !addTemplForm.tempText.$pristine" class="help-block">Mail text is required.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-mini "  ng-click="ok()" ng-disabled="addStatForm.$invalid" style="width: 80px; ">Send</button>
+                    <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()" ng-disabled="addTemplForm.$invalid" style="width: 80px; ">Send</button>
                 </div>
             </div>
         </div>

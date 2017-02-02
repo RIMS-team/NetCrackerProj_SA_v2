@@ -26,7 +26,7 @@
         </div>
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.number.$invalid &amp;&amp; !settingsUpdate.number.$pristine }">
             <label for="settings-phone">Change Phone Number:</label>
-            <input name="number" type="text" class="form-control" id="settings-phone" placeholder="Phone" ng-pattern="/^[0-9]{1,12}$/" ng-model="user.phoneNumber" required="required"/>
+            <input name="number" type="text" class="form-control" id="settings-phone" placeholder="Phone" ng-pattern="/^[0-9]{1,16}$/" ng-model="user.phoneNumber" required="required"/>
             <p ng-show="settingsUpdate.number.$error.required" class="help-block">Phone Number is required.</p>
             <p ng-show="settingsUpdate.number.$error.pattern" class="help-block">Phone Number is not valid.</p>
         </div>

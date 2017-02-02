@@ -27,9 +27,7 @@ public class MailSettingsController {
     public @ResponseBody
     MailSettings getMailSettings() {
         logger.debug("Request URL: /mailSettings/getMailSettings; Entering getMailSettings()");
-        MailSettings mailSettings=mailSettingsService.getMailSettings();
-        mailSettings.setPassword("");
-        return mailSettings;
+        return mailSettingsService.getMailSettings();
     }
 
     @RequestMapping(value = "/updateMailSettings", method = RequestMethod.PUT)

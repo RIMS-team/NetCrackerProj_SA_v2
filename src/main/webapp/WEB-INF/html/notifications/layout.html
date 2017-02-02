@@ -282,13 +282,14 @@
                     <div id="menu1" class="tab-pane fade in active">
                             <div class="modal-body">
                                 <div style="padding: 5px" ng-form="" name="addTempl">
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{ 'has-error' : addTempl.templateText1.$invalid &amp;&amp; !addTempl.templateText1.$pristine }">
                                         <label for="templateText1"> Template Text </label>
-                                        <textarea id="templateText1" name="templateText1" class="form-control" ng-model="editRecord.temp_1" >
-                    </textarea>
+                                        <textarea id="templateText1" name="templateText1" class="form-control" ng-model="editRecord.temp_1" required="required">
+                                        </textarea>
+                                        <p ng-show="addTempl.templateText1.$error.required &amp;&amp; !addTempl.templateText1.$pristine" class="help-block">Template is required.</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()"  style="width: 80px; ">Update</button>
+                                        <button type="submit" class="btn btn-primary btn-mini" ng-disabled="addTempl.$invalid" ng-click="ok()"  style="width: 80px; ">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -296,26 +297,28 @@
                     <div id="menu2" class="tab-pane fade">
                             <div class="modal-body">
                                 <div style="padding: 5px" ng-form="" name="addTemplForm">
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{ 'has-error' : addTemplForm.templateText2.$invalid &amp;&amp; !addTemplForm.templateText2.$pristine }">
                                         <label for="templateText2"> Template Text </label>
-                                        <textarea id="templateText2" name="templateText2" class="form-control" ng-model="editRecord.id" >
-                    </textarea>
+                                        <textarea id="templateText2" name="templateText2" class="form-control" ng-model="editRecord.id" required="required">
+                                        </textarea>
+                                        <p ng-show="addTemplForm.templateText2.$error.required &amp;&amp; !addTempForm.templateText2.$pristine" class="help-block">Template is required.</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()"  style="width: 80px; ">Update</button></div>
+                                        <button type="submit" class="btn btn-primary btn-mini" ng-disabled="addTemplForm.$invalid" ng-click="ok()"  style="width: 80px; ">Update</button></div>
                                 </div>
                             </div>
                     </div>
                     <div id="menu3" class="tab-pane fade">
                             <div class="modal-body">
                                 <div style="padding: 5px" ng-form="" name="addTemp">
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{ 'has-error' : addTemp.templateText3.$invalid &amp;&amp; !addTemp.templateText3.$pristine }">
                                         <label for="templateText3"> Template Text </label>
-                                        <textarea id="templateText3" name="templateText3" class="form-control" ng-model="editRecord.num" >
-                    </textarea>
+                                        <textarea id="templateText3" name="templateText3" class="form-control" ng-model="editRecord.num" required="required">
+                                        </textarea>
+                                        <p ng-show="addTemp.templateText3.$error.required &amp;&amp; !addTemp.templateText3.$pristine" class="help-block">Template is required.</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary btn-mini"  ng-click="ok()"  style="width: 80px; ">Update</button>
+                                        <button type="submit" class="btn btn-primary btn-mini" ng-disabled="addTemp.$invalid" ng-click="ok()"  style="width: 80px; ">Update</button>
                                     </div>
                                 </div>
                             </div>

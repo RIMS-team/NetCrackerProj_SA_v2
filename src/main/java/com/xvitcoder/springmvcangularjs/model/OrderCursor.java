@@ -37,13 +37,14 @@ public class OrderCursor extends Entity {
     protected String inventoryNumNew;
 
     public OrderCursor() {
+
     }
 
     public OrderCursor(int id, Date date, String inventoryType, String inventoryNum) {
-            this.id = id;
-            this.date = date;
-            this.inventoryType = inventoryType;
-            this.inventoryNum = inventoryNum;
+        this.id = id;
+        this.date = date;
+        this.inventoryType = inventoryType;
+        this.inventoryNum = inventoryNum;
     }
 
     public OrderCursor(int id, long rowNum, Date date, int statusId, String statusName,

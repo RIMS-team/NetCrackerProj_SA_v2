@@ -214,7 +214,7 @@
 
         <tbody>
         <!--<tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRange : from_date : to_date | itemsPerPage: selectedName " pagination-id="order">-->
-        <tr dir-paginate="order in orders = ( orders | orderBy:sortKey:reverse | filter: ref | dateRangeCreate : from_open_date : to_open_date | dateRange : from_date : to_date ) | orderBy:sortKey:reverse | filter: ref | dateRangeCreate : from_open_date : to_open_date | dateRange : from_date : to_date | itemsPerPage: selectedName " pagination-id="order">
+        <tr dir-paginate="order in orders | orderBy:sortKey:reverse | filter: ref | dateRangeCreate : from_open_date : to_open_date | dateRange : from_date : to_date | itemsPerPage: selectedName " pagination-id="order">
             <td ng-hide="true">{{order.id}}</td>
             <td>{{order.createDate|date:'dd.MM.yy'}}</td>
             <td>{{order.date|date:'dd.MM.yy'}}</td>

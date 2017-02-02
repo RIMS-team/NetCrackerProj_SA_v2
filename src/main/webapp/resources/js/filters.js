@@ -10,23 +10,6 @@ AppFilters.filter('interpolate', ['version', function (version) {
     }
 }]);
 
-AppFilters.filter('dateRangeCreate', function() {
-    return function( items, fromDate, toDate ) {
-        var filtered = [];
-        var from_date = Date.parse(fromDate);
-        var to_date = Date.parse(toDate);
-        if ((!isNaN(from_date)) && (!isNaN(to_date))) {
-            angular.forEach(items, function(item) {
-                if(Date.parse(item.createDate) >= from_date && Date.parse(item.createDate) <= to_date) {
-                    filtered.push(item);
-                }
-            });
-            return filtered;
-        }
-        return items;
-    };
-});
-
 AppFilters.filter('dateRangeOpen', function() {
     return function( items, fromDate, toDate ) {
         var filtered = [];

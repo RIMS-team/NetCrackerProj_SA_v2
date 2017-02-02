@@ -2,7 +2,7 @@
     <div class="alert alert-info" style="width:400px;margin-left:100px;" ng-show="success == true">
         Settings successfully changed.
     </div>
-    <h1>Settings</h1>
+    <h1>Mail Settings</h1>
     <form name="settingsUpdate" ng-submit="updateMailSettings(mailSettings)" class="form-horizontal">
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.host.$invalid &amp;&amp; !settingsUpdate.host.$pristine }">
             <label for="settings-host">HOST:</label>
@@ -20,11 +20,11 @@
             <input name="socketFactoryClass" type="text" class="form-control" id="settings-socketFactoryClass" placeholder="socketFactoryClass" ng-model="mailSettings.socketFactoryClass"  required="required"/>
             <p ng-show="settingsUpdate.socketFactoryClass.$error.required &amp;&amp; !settingsUpdate.socketFactoryClass.$pristine" class="help-block">Factory Class is required.</p>
         </div>
-        <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.auth.$invalid &amp;&amp; !settingsUpdate.auth.$pristine }">
-            <label for="settings-auth">Auth:</label>
-            <input name="auth" type="text" class="form-control" id="settings-auth" placeholder="auth"  ng-model="mailSettings.auth" required="required"/>
-            <p ng-show="settingsUpdate.auth.$error.required &amp;&amp; !settingsUpdate.auth.$pristine" class="help-block">Auth is required.</p>
-        </div>
+        <!--<div class="form-group" ng-class="{ 'has-error' : settingsUpdate.auth.$invalid &amp;&amp; !settingsUpdate.auth.$pristine }">-->
+            <!--<label for="settings-auth">Auth:</label>-->
+            <!--<input name="auth" type="text" class="form-control" id="settings-auth" placeholder="auth"  ng-model="mailSettings.auth" required="required"/>-->
+            <!--<p ng-show="settingsUpdate.auth.$error.required &amp;&amp; !settingsUpdate.auth.$pristine" class="help-block">Auth is required.</p>-->
+        <!--</div>-->
         <div class="form-group" ng-class="{ 'has-error' : settingsUpdate.port.$invalid &amp;&amp; !settingsUpdate.port.$pristine }">
             <label for="settings-port">Port:</label>
             <input name="port" type="text" class="form-control" id="settings-port" placeholder="port" ng-pattern="/^[0-9]{1,16}$/" ng-model="mailSettings.port" required="required"/>

@@ -287,15 +287,17 @@
                 </div>
 
                 <div class="form-group" ng-if = "editRecord.id">
+                    <label>Card Number</label>
+                    <input class="form-control" type="text" ng-model="editRecord.inventoryNum" ng-readonly="true"/>
+                </div>
+
+                <div class="form-group" ng-if = "editRecord.id">
+                    <label>Pick Another Card</label>
                     <input type="text" id="inventory-id" style="display:none" ng-model="editRecord.inventoryId"/>
-                    <p>
-                    <label> Card number   </label>
-                    <input type="text" ng-model="editRecord.inventoryNum" ng-readonly="true"/>
-                    </p>
                     <select id="inventory" name="inventory" class="form-control" ng-model="$parent.editRecord.selectedInv"
                             ng-options="inventory.inventoryNum for inventory in ordInventoryNums | filter: {statusId: 2} track by inventory.id"
                             chosen = "ordInventoryNums">
-                        <option style="display:none" value="">select else inventory number</option>
+                        <option style="display:none" value="">Select Another Inventory Number</option>
                     </select>
                     <!--<label for="inventory"> Card Number </label>-->
                     <!--&lt;!&ndash;<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>&ndash;&gt;-->
@@ -310,15 +312,15 @@
 
                 <div class="form-group" ng-if = "!editRecord.id"
                      ng-class="{ 'has-error' : addOrderForm.inventoryn.$invalid &amp;&amp; !addOrderForm.inventoryn.$pristine }">
-                    <label for="inventoryn"> Card number </label>
+                    <label for="inventoryn"> Card Number </label>
                     <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
                     <select id="inventoryn" name="inventoryn" class="form-control" ng-model="$parent.editRecord.selectedInv"
                             ng-options="inventory.inventoryNum for inventory in ordInventoryNums | filter: {statusId: 2} track by inventory.id"
                             chosen = "ordInventoryNums" required="required">
-                        <option style="display:none" value="">select inventory number</option>
+                        <option style="display:none" value="">Select Inventory Number</option>
                     </select>
                     <p ng-show="addOrderForm.inventoryn.$error.required &amp;&amp; !addOrderForm.inventoryn.$pristine" class="help-block">
-                        Inventory number is required.
+                        Inventory Number is required.
                     </p>
                 </div>
 
@@ -334,23 +336,30 @@
                     <select id="employee" name="employee" class="form-control" ng-model="editRecord.selectedEmp"
                             ng-options="employee.fullName for employee in ordEmployees | orderBy:'fullName' track by employee.id"
                             chosen = "ordEmployees" required="required">
-                        <option style="display:none" value="">select employee name</option>
+                        <option style="display:none" value="">Select Employee Name</option>
                     </select>
                     <p ng-show="addOrderForm.employee.$error.required &amp;&amp; !addOrderForm.employee.$pristine" class="help-block">
                         Employee is required.
                     </p>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" id="user-id" style="display:none" ng-model="editRecord.userId"/>
-                    <label for="user"> User </label>
-                    <input type="text" id = "user" ng-model="editRecord.user" ng-readonly="true"/>
-
-                    <div ng-if="editRecord.id" style="float: right;">
-                        <input type="text" id="editor-id" style="display:none" ng-model="editRecord.editorId"/>
-                        <label for="editor"> Last editor </label>
-                        <input type="text" id = "editor" ng-model="editRecord.editor" ng-readonly="true"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" id="user-id" style="display:none" ng-model="editRecord.userId"/>
+                            <label for="user"> User </label>
+                            <input class="form-control" type="text" id = "user" ng-model="editRecord.user" ng-readonly="true"/>
+                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group" ng-if="editRecord.id">
+                            <input type="text" id="editor-id" style="display:none" ng-model="editRecord.editorId"/>
+                            <label for="editor"> Last editor </label>
+                            <input class="form-control" type="text" id = "editor" ng-model="editRecord.editor" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+
                     <!--<p>editRecord.selectedStatus = {{editRecord.selectedStatus}}</p>-->
                     <!--<select id="user" name="user" class="form-control" ng-model="editRecord.selectedUser"-->
                             <!--ng-options="user.fullName for user in ordUsers | orderBy:'fullName' track by user.id" required="required">-->
@@ -358,7 +367,9 @@
                     <!--<p ng-show="addOrderForm.user.$error.required &amp;&amp; !addOrderForm.user.$pristine" class="help-block">-->
                         <!--User is required.-->
                     <!--</p>-->
-                </div>
+
+
+
 
                 <div class="modal-footer">
                     <!--<button type="submit" class="btn btn-default btn-mini"  ng-click="ok()" style="width: 80px; ">Ok</button>-->

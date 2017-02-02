@@ -8,7 +8,7 @@ public class MailSettings {
     private String host;
     private String socketFactoryPort;
     private String socketFactoryClass;
-    private String auth;
+    private String auth = "true";
     private String port;
     private String from;
     private String password;
